@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         transparent: "transparent",
         white: "#ffffff",
-        pink: "#20c997",
+        green: "#20c997",
         mediumPink: "#F3677F",
         LightPink: "rgba(243, 55, 86, 0.25)",
         grey: "rgb(74,77,81)",
