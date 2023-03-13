@@ -1,12 +1,12 @@
 <template>
   <body class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-pink text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
+      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
-    <EasyDataTable buttons-pagination show-index :headers="headers" :items="brandData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
+    <EasyDataTable buttons-pagination :rows-per-page="5" show-index :headers="headers" :items="brandData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
       <!-- <template #header-countDesigner="header">
             <div class="filter-column">
               <img src="/img/halfLogo.png" class="filter-icon" @click.stop="showDesignerFilter = !showDesignerFilter" />
@@ -18,7 +18,7 @@
           </template> -->
 
       <template #loading>
-        <img src="/img/Loading_Table.gif" class="w-28 h-28" />
+        <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
 
       <!-- <template #header-subscriptionplan="header">
@@ -50,7 +50,7 @@
       </template>
 
       <template #item-operation="item">
-        <div class="operation-wrapper flex">
+        <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
           <router-link to="/"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
           <router-link to="/viewDetailsB"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
@@ -58,9 +58,9 @@
       </template>
 
       <template #item-status="item">
-        <div class="operation-wrapper">
+        <div class="operation-wrapper flex items-center justify-center">
           <button :class="`${item.status ? 'hidden' : ''}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
-          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
+          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
         </div>
       </template>
     </EasyDataTable>
@@ -92,10 +92,10 @@ export default {
       searchValue: "",
       headers: [
         { text: "Name", align: "start", sortable: true, value: "brandName" },
-        { text: "Contact", value: "brandContactnumber" },
-        { text: "Email", value: "brandEmail" },
-        { text: "Address", value: "brandAddress", width: 200 },
-        { text: "Subscription Plan", value: "subscriptionplan", width: 150 },
+        { text: "Contact", value: "brandContactnumber", sortable: true },
+        { text: "Email", value: "brandEmail", sortable: true },
+        { text: "Address", value: "brandAddress", width: 200, sortable: true },
+        { text: "Subscription Plan", value: "subscriptionplan", width: 170, sortable: true },
         {
           text: "No of Designers",
           value: "countDesigner",
@@ -103,7 +103,7 @@ export default {
           width: 150,
         },
         { text: "Status", value: "status", width: 150 },
-        { text: "Operations", value: "operation" },
+        { text: "Operations", value: "operation", width: 150 },
       ],
       brandData: [],
       filterOptionsArray: [],
@@ -350,5 +350,9 @@ export default {
 .vue3-easy-data-table__header th.sortable.none .sortType-icon[data-v-0c3a2656] {
   opacity: 0.5 !important;
   transition: 0.5s ease;
+}
+
+.easy-data-table__rows-selector ul.select-items li.selected[data-v-4ca5de3a] {
+    background-color: #20c997 !important;
 }
 </style>

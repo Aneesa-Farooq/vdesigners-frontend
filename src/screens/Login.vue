@@ -66,13 +66,13 @@
       </div>
     </div>
 
-   <!-- <ForgetPass @close="toggleModal" :modalActive="modalActive"> </ForgetPass> -->
+   <ForgetPass @close="toggleModal" :modalActive="modalActive"> </ForgetPass>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-//import ForgetPass from "../components/forgetPass.vue";
+import ForgetPass from "../components/forgetPass.vue";
 import InputField from "../components/inputField.vue";
 import { ref } from "vue";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -85,7 +85,7 @@ export default {
   components: {
     // Button,
     InputField,
-   // ForgetPass
+    ForgetPass
   },
   setup() {
     const modalActive = ref(false);

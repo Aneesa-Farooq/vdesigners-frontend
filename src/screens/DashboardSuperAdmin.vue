@@ -24,7 +24,7 @@
       <div class="flex flex-col flex-[1] justify-center bg-white features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] gap-5 p-7 rounded h-1/3">
         <div class="flex justify-between">
           <p class="font-poppins font-semibold tracking-normal text-sm text-grey">Registered Brands</p>
-          <router-link to="/viewBrands" class="text-sm font-medium tracking-wide text-pink hover:opacity-60">View All</router-link>
+          <router-link to="/viewBrands" class="text-sm font-medium tracking-wide text-Green hover:opacity-60">View All</router-link>
         </div>
         <div v-for="(brand, index) in slicedData" :key="index" class="flex items-center justify-center">
           <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
@@ -34,11 +34,11 @@
             <p class="font-poppins font-semibold text-sm text-grey">{{ brand.brandName }}</p>
             <p class="font-poppins font-medium text-xs text-navIcons">{{ brand.brandEmail }}</p>
           </div>
-          <router-link class="ml-auto" to="/viewDetailsB"><Icon class="text-2xl text-pink hover:opacity-60" icon="material-symbols:arrow-right-alt-rounded" @click="storeBrand(brand)" /></router-link>
+          <router-link class="ml-auto" to="/viewDetailsB"><Icon class="text-2xl text-Green hover:opacity-60" icon="material-symbols:arrow-right-alt-rounded" @click="storeBrand(brand)" /></router-link>
         </div>
       </div>
       <!----------END----------- -->
-      <div class="flex flex-[1] bg-pink features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] p-5 items-center justify-center rounded h-1/3"></div>
+      <div class="flex flex-[1] bg-Green features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] p-5 items-center justify-center rounded h-1/3"></div>
     </div>
     <!-- Right Cards end-->
   </div>

@@ -31,8 +31,8 @@
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
           <li><a class="link_name" href="#">2. Brands</a></li>
-          <li><router-link to="/user/View Brands/viewBrands">2.1. View Brands</router-link></li>
-          <li><router-link to="/addBrand">2.2. Add Brand</router-link></li>
+          <li><router-link to="/addBrand">2.1. Add Brand</router-link></li>
+          <li><router-link to="/user/View Brands/viewBrands">2.2. View Brands</router-link></li>
         </ul>
       </li>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="py-4 mb-4 flex items-center justify-between">
-    <p class="self-start block font-poppins font-medium text-3xl text-black ml-12">{{ title }}</p>
+    <p class="self-start block font-poppins font-bold text-3xl text-lightBlack ml-12">{{ title }}</p>
     <div class="flex items-center gap-4">
       <ion-icon class="text-2xl rounded-full p-1 text-[#FFB62E] hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)]" name="moon-outline"></ion-icon>
       <button @click="updateProfile" class="flex items-center justify-center h-[34px] w-[34px]">
@@ -10,7 +10,13 @@
     </div>
   </div>
 </template>
+
 <script>
+import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/dist/sweetalert2.css";
+import swal from "sweetalert2";
+
 export default {
   name: "NavBar",
   props: ["title"],

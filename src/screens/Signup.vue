@@ -54,10 +54,10 @@
             <SelectField class="my-2" v-model="formValues.plan" required /> -->
 
             <div class="flex flex-col xl:flex-row gap-4 w-full xl:justify-between mt-4 xl:items-end my-[1.6rem]">
-              <input class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:bg-white" type="submit" value=" Create Account" />
+              <input class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:opacity-80" type="submit" value=" Create Account" />
               <div class="flex items-center mt-1 gap-[.8rem] text-base font-normal">
                 <p>Already have an account?</p>
-                <router-link class="bg-transparent text-[#F33757] border-none cursor-pointer font-medium tracking-[.3px]" to="/login"> SignIn </router-link>
+                <router-link class="bg-transparent text-[#F33757] border-none cursor-pointer font-medium tracking-[.3px] hover:opacity-70" to="/login"> SignIn </router-link>
               </div>
             </div>
           </form>
@@ -71,7 +71,7 @@
 import axios from "axios";
 import InputField from "../components/inputField.vue";
 import SelectField from "../components/selectField.vue";
-//import swal from "sweetalert";
+import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
@@ -188,32 +188,36 @@ export default {
       e.preventDefault();
       (async () => {
         try {
-          // console.log(this.formValues.email);
-          // const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", {brandEmail: this.formValues.email});
-          // console.log("optp");
-          // console.log(optp);
-          const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
-            brandName: this.formValues.brandName,
-            brandEmail: this.formValues.email,
-            brandContactnumber: this.formValues.contact,
-            brandAddress: this.formValues.location,
-            password: this.formValues.password,
-          });
-          console.log(someRes.statusText);
-          if (someRes.statusText == "Created") {
-            swal("Successfully Registered", {
-              icon: "success",
-              button: true,
-            }).then(() => {
-              location.reload();
-            });
-          } else if (someRes.data.msg == "User Already Exists") {
-            swal({
-              title: `${someRes.data.msg}`,
-              icon: "error",
-              button: true,
-            });
-          }
+          console.log(this.formValues.email);
+          const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", {brandEmail: this.formValues.email});
+          console.log("optp");
+          console.log(optp);
+          console.log(optp.data.number);
+          console.log(optp.data.success);
+
+
+          // const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
+          //   brandName: this.formValues.brandName,
+          //   brandEmail: this.formValues.email,
+          //   brandContactnumber: this.formValues.contact,
+          //   brandAddress: this.formValues.location,
+          //   password: this.formValues.password,
+          // });
+          // console.log(someRes.statusText);
+          // if (someRes.statusText == "Created") {
+          //   swal("Successfully Registered", {
+          //     icon: "success",
+          //     button: true,
+          //   }).then(() => {
+          //     location.reload();
+          //   });
+          // } else if (someRes.data.msg == "User Already Exists") {
+          //   swal({
+          //     title: `${someRes.data.msg}`,
+          //     icon: "error",
+          //     button: true,
+          //   });
+          // }
         } catch (e) {
           console.log(e);
         }

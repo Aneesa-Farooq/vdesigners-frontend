@@ -7,7 +7,7 @@ module.exports = {
       colors: {
         transparent: "transparent",
         white: "#ffffff",
-        green: "#20c997",
+          Green: "#20c997",
         mediumPink: "#F3677F",
         LightPink: "rgba(243, 55, 86, 0.25)",
         grey: "rgb(74,77,81)",
@@ -18,7 +18,8 @@ module.exports = {
         textGrey: "rgba(74,77,81,0.75)",
         red: "#FF0000",
         background: "#F3F0F9",
-        navIcons: "#A2A5B9"
+        navIcons: "#A2A5B9",
+        lightBlack: "#42424a",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

@@ -5,7 +5,7 @@
     </div>
     <div class="border-b-[1px] border-[#a5a2a220] flex flex-col items-end pr-5 w-full">
       <p class="text-lg text-[#7b809a] font-medium">{{ heading }}</p>
-      <p class="text-2xl font-semibold text-[#42424a] pb-5">{{ cardValue }}</p>
+      <p class="text-2xl font-semibold text-lightBlack pb-5">{{ cardValue }}</p>
     </div>
     <p class="text-base text-[#7b809a] p-5"><span class="text-[#4CAF50] font-bold">+55% </span>than last week</p>
   </div>
