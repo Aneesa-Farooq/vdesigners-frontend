@@ -1,47 +1,52 @@
 <template>
-  <body></body>
+  <body class="bg-background">
+    <!-- CARDS -->
+    <div class="w-full grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-5 mb-7">
+      <AnalyticsCard heading="Total Brands" cardValue="$100" backGround="bg-gradient-primary" shadow="shadow-primary" icon="mdi:users" />
+      <AnalyticsCard heading="Total Designers" cardValue="$100" backGround="bg-gradient-success" shadow="shadow-success" icon="mdi:user" />
+      <AnalyticsCard heading="Total Revenue" cardValue="$100" backGround="bg-gradient-dark" shadow="shadow-dark" icon="ph:currency-dollar-bold" />
+      <AnalyticsCard heading="Total Projects" cardValue="$100" backGround="bg-gradient-info" shadow="shadow-info" icon="ic:baseline-snippet-folder" />
+    </div>
+    <!-- charts -->
+    <div id="charts" class="flex flex-col lg:flex-row md:flex-col mt-3">
+      <div class="flex flex-col gap-6 mt-[10px]">
+        <div class="p-7 features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] box-border bg-white rounded">
+          <BubbleChart />
+        </div>
+        <div class="p-7 features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] box-border bg-white rounded">
+          <AreaChart />
+        </div>
+      </div>
+      <!-- Right Cards -->
+      <div class="flex flex-col gap-6 mt-[10px]">
+        
+        <div class="flex flex-[1] bg-white features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] p-5 items-center justify-center rounded h-1/3">
+          <ProgressBar/>
+        </div>
 
-  <!-- CARDS -->
-  <div class="w-full grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-5 mb-7">
-    <AnalyticsCard heading="Total Brands" cardValue="$100" backGround="bg-gradient-primary" shadow="shadow-primary" icon="mdi:users" />
-    <AnalyticsCard heading="Total Designers" cardValue="$100" backGround="bg-gradient-success" shadow="shadow-success" icon="mdi:user" />
-    <AnalyticsCard heading="Total Revenue" cardValue="$100" backGround="bg-gradient-dark" shadow="shadow-dark" icon="ph:currency-dollar-bold" />
-    <AnalyticsCard heading="Total Projects" cardValue="$100" backGround="bg-gradient-info" shadow="shadow-info" icon="ic:baseline-snippet-folder" />
-  </div>
-  <!-- charts -->
-  <div id="charts" class="flex flex-col lg:flex-row md:flex-col mt-3">
-    <div class="flex flex-col gap-6 mt-[10px]">
-      <div class="p-7 features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] box-border bg-white rounded">
-        <BubbleChart />
-      </div>
-      <div class="p-7 features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] box-border bg-white rounded">
-        <AreaChart />
-      </div>
-    </div>
-    <!-- Right Cards -->
-    <div class="flex flex-col gap-6 mt-[10px]">
-      <!-- List of Registered brands -->
-      <div class="flex flex-col flex-[1] justify-center bg-white features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] gap-5 p-7 rounded h-1/3">
-        <div class="flex justify-between">
-          <p class="font-poppins font-semibold tracking-normal text-sm text-grey">Registered Brands</p>
-          <router-link to="/viewBrands" class="text-sm font-medium tracking-wide text-Green hover:opacity-60">View All</router-link>
-        </div>
-        <div v-for="(brand, index) in slicedData" :key="index" class="flex items-center justify-center">
-          <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
-            <img :src="brand.brandImg" alt="" class="w-full" />
+        <!-- List of Registered brands -->
+        <div class="flex flex-col flex-[1] justify-center bg-white features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] gap-5 p-7 rounded h-1/3">
+          <div class="flex justify-between">
+            <p class="font-poppins font-semibold tracking-normal text-sm text-grey">Registered Brands</p>
+            <router-link to="/viewBrands" class="text-sm font-medium tracking-wide text-Green hover:opacity-60">View All</router-link>
           </div>
-          <div class="flex flex-col m-3">
-            <p class="font-poppins font-semibold text-sm text-grey">{{ brand.brandName }}</p>
-            <p class="font-poppins font-medium text-xs text-navIcons">{{ brand.brandEmail }}</p>
+          <div v-for="(brand, index) in slicedData" :key="index" class="flex items-center justify-center">
+            <div class="h-[50px] w-[50px] rounded-full overflow-hidden">
+              <img :src="brand.brandImg" alt="" class="w-full" />
+            </div>
+            <div class="flex flex-col m-3">
+              <p class="font-poppins font-semibold text-sm text-grey">{{ brand.brandName }}</p>
+              <p class="font-poppins font-medium text-xs text-navIcons">{{ brand.brandEmail }}</p>
+            </div>
+            <router-link class="ml-auto" to="/viewDetailsB"><Icon class="text-2xl text-Green hover:opacity-60" icon="material-symbols:arrow-right-alt-rounded" @click="storeBrand(brand)" /></router-link>
           </div>
-          <router-link class="ml-auto" to="/viewDetailsB"><Icon class="text-2xl text-Green hover:opacity-60" icon="material-symbols:arrow-right-alt-rounded" @click="storeBrand(brand)" /></router-link>
         </div>
-      </div>
-      <!----------END----------- -->
-      <div class="flex flex-[1] bg-Green features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] p-5 items-center justify-center rounded h-1/3"></div>
+        <!----------END----------- -->
+        
+        </div>
+      <!-- Right Cards end-->
     </div>
-    <!-- Right Cards end-->
-  </div>
+  </body>
 </template>
 
 <script>
@@ -50,6 +55,7 @@ import { Icon } from "@iconify/vue";
 import AreaChart from "../components/areaChart.vue";
 import BubbleChart from "../components/bubbleChart.vue";
 import AnalyticsCard from "../components/analyticsCard.vue";
+import ProgressBar from "../components/progressBar.vue";
 
 export default {
   name: "DashboardSuperAdmin",
@@ -58,6 +64,7 @@ export default {
     AreaChart,
     BubbleChart,
     AnalyticsCard,
+    ProgressBar
   },
 
   data() {

@@ -13,25 +13,25 @@
 
           <form @submit="submitForm" class="w-full flex flex-col items-center max-w-[500px]">
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Brand Name </label>
-            <InputField type="text" id="name" place_holder="Enter Brand Name" class="my-2" v-model="formValues.brandName" required />
+            <InputField type="text" id="name" place_holder="Enter Brand Name" class="my-2" v-model="formValues.brandName" />
             <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Email </label>
-            <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" required />
+            <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
             <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Contact </label>
-            <InputField type="text" id="contact" place_holder="Enter contact number" class="my-2" v-model="formValues.contact" required />
+            <InputField type="text" id="contact" place_holder="Enter contact number" class="my-2" v-model="formValues.contact" />
             <p id="eContact" class="invalid hidden m-2">11 digit contact number</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Location </label>
-            <InputField type="text" place_holder="Enter Location" class="my-2" v-model="formValues.location" required />
+            <InputField type="text" place_holder="Enter Location" class="my-2" v-model="formValues.location" />
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Password </label>
             <p class="w-full flex relative items-center">
-              <InputField type="Password" id="psw" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" required />
-              <button class="absolute right-[20px] hidden"><font-awesome-icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="eye" /></button>
-              <button class="absolute right-[20px]"><font-awesome-icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="eye-slash" /></button>
+              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" />
+              <button class="absolute right-[20px] hidden"><Icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
+              <button class="absolute right-[20px]"><Icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
             </p>
 
             <div id="message">
@@ -44,14 +44,11 @@
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Confirm Password </label>
             <p class="w-full flex relative items-center">
-              <InputField id="confirm-psw" place_holder="Confirm Password" type="Password" class="my-2" v-model="formValues.confirmPassword" required />
-              <button class="absolute right-[20px] hidden"><font-awesome-icon @click="togglePass('confirm-psw')" class="w-[20px] h-[22px] text-gray-500" icon="eye" /></button>
-              <button class="absolute right-[20px]"><font-awesome-icon @click="togglePass('confirm-psw')" class="w-[20px] h-[22px] text-gray-500" icon="eye-slash" /></button>
+              <InputField id="confirm-psw" place_holder="Confirm Password" type="Password" class="my-2" v-model="formValues.confirmPassword" />
+              <button class="absolute right-[20px] hidden"><Icon @click="togglePass('confirm-psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
+              <button class="absolute right-[20px]"><Icon @click="togglePass('confirm-psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
             </p>
             <p id="eCpsw" class="invalid hidden m-2">Password does not match</p>
-
-            <!-- <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Subscription Plans </label>
-            <SelectField class="my-2" v-model="formValues.plan" required /> -->
 
             <div class="flex flex-col xl:flex-row gap-4 w-full xl:justify-between mt-4 xl:items-end my-[1.6rem]">
               <input class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:opacity-80" type="submit" value=" Create Account" />
@@ -69,6 +66,7 @@
 
 <script>
 import axios from "axios";
+import { Icon } from "@iconify/vue";
 import InputField from "../components/inputField.vue";
 import SelectField from "../components/selectField.vue";
 import swal from "sweetalert";
@@ -81,6 +79,7 @@ export default {
   components: {
     InputField,
     SelectField,
+    Icon,
   },
   data() {
     return {
@@ -90,7 +89,7 @@ export default {
         location: "",
         brandName: "",
         confirmPassword: "",
-        contact: ""
+        contact: "",
       },
     };
   },
@@ -172,7 +171,6 @@ export default {
   },
   methods: {
     togglePass(id) {
-  
       var x = document.getElementById(id);
       if (x.type === "password") {
         x.parentElement.children[1].style.display = "block";
@@ -184,40 +182,65 @@ export default {
         x.type = "password";
       }
     },
+
     submitForm(e) {
       e.preventDefault();
       (async () => {
         try {
-          console.log(this.formValues.email);
-          const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", {brandEmail: this.formValues.email});
-          console.log("optp");
-          console.log(optp);
-          console.log(optp.data.number);
-          console.log(optp.data.success);
+          let isEmpty = Object.values(this.formValues).some((el) => el == "");
+          if (isEmpty) {
+            swal({
+                  title: "All Fields are required",
+                  icon: "error",
+                  button: true,
+                });
+          }
+          
+          else {
+            const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", { brandEmail: this.formValues.email });
+            console.log("optp");
+            console.log(optp.data.number);
 
+            const { value: ipAddress } = await Swal.fire({
+              title: "Enter your optp code",
+              input: "text",
+              inputLabel: "Enter code",
+              showCancelButton: true,
+              inputValidator: (value) => {
+                if (!value) {
+                  return "You need to write something!";
+                } else if (value != optp.data.number) {
+                  return "Invalid optp code";
+                }
+              },
+            });
 
-          // const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
-          //   brandName: this.formValues.brandName,
-          //   brandEmail: this.formValues.email,
-          //   brandContactnumber: this.formValues.contact,
-          //   brandAddress: this.formValues.location,
-          //   password: this.formValues.password,
-          // });
-          // console.log(someRes.statusText);
-          // if (someRes.statusText == "Created") {
-          //   swal("Successfully Registered", {
-          //     icon: "success",
-          //     button: true,
-          //   }).then(() => {
-          //     location.reload();
-          //   });
-          // } else if (someRes.data.msg == "User Already Exists") {
-          //   swal({
-          //     title: `${someRes.data.msg}`,
-          //     icon: "error",
-          //     button: true,
-          //   });
-          // }
+            if (ipAddress == optp.data.number) {
+              const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
+                brandName: this.formValues.brandName,
+                brandEmail: this.formValues.email,
+                brandContactnumber: this.formValues.contact,
+                brandAddress: this.formValues.location,
+                password: this.formValues.password,
+              });
+              console.log(someRes.statusText);
+
+              if (someRes.statusText == "Created") {
+                swal("Successfully Registered", {
+                  icon: "success",
+                  button: true,
+                }).then(() => {
+                  this.$router.push({ name: "Login" });
+                });
+              } else if (someRes.data.msg == "User Already Exists") {
+                swal({
+                  title: `${someRes.data.msg}`,
+                  icon: "error",
+                  button: true,
+                });
+              }
+            }
+          }
         } catch (e) {
           console.log(e);
         }
@@ -240,7 +263,6 @@ export default {
     var length = document.getElementById("length");
     var confirm_password = document.getElementById("confirm-psw");
     var errorConfirmPsw = document.getElementById("eCpsw");
-    
 
     password.onchange = function () {
       if (password.value != confirm_password.value) {
@@ -269,7 +291,6 @@ export default {
     confirm_password.onblur = function () {
       document.getElementById("eCpsw").style.display = "none";
     };
-
 
     // When the user clicks on the password field, show the message box
     password.onfocus = function () {
@@ -399,12 +420,12 @@ export default {
 
 <style>
 .swal-button--confirm {
-  padding: 7px 19px;
+  padding: 7px 19px ;
   border-radius: 2px;
-  background-color: #f3677f;
+  background-color: #f3677f !important;
   font-size: 12px;
-  border: 1px solid #f3677f;
-  text-shadow: 0px -1px 0px rgba(243, 55, 86, 0.25);
+  border: 1px solid #f3677f !important;
+  text-shadow: 0px -1px 0px rgba(243, 55, 86, 0.25) !important;
 }
 
 .swal-button--confirm:hover {

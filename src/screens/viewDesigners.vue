@@ -2,35 +2,34 @@
   <body class="bg-background">
     <div class="flex justify-between items-center">
       <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
-    <EasyDataTable buttons-pagination :rows-per-page="5" show-index :headers="headers" :items="brandData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
-
+    <EasyDataTable buttons-pagination show-index :headers="headers" :items="designerData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-
-      <template #item-brandName="{ brandName, brandImg }">
+<!-- 
+      <template #item-brandName="{ designerName, brandImg }">
         <div class="player-wrapper">
           <img class="avator" :src="brandImg" alt="" />
           {{ brandName }}
         </div>
-      </template>
+      </template> -->
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
-          <router-link to="/viewDetailsB"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link to="/UpdateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link to="/viewDetailsD"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
         </div>
       </template>
 
       <template #item-status="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
-          <button :class="`${!item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
+          <button :class="`${item.status ? 'hidden' : ''}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
+          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
         </div>
       </template>
     </EasyDataTable>
@@ -39,55 +38,45 @@
 
 <script>
 import axios from "axios";
-//import Slider from "@vueform/slider";
 import { Icon } from "@iconify/vue";
-//import "@vueform/slider/themes/default.css";
 import swal from "sweetalert";
 
 export default {
-  name: "ViewBrands",
+  name: "ViewDesigners",
   components: {
     Icon,
-    //Slider,
+    
   },
 
   data() {
     return {
       blocked: false,
       loading: true,
-      sortBy: "brandName",
+      sortBy: "designerName",
       sortType: "asc",
       showDesignerFilter: false,
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", sortable: true, value: "brandName" },
-        { text: "Contact", value: "brandContactnumber", sortable: true },
-        { text: "Email", value: "brandEmail", sortable: true },
-        { text: "Address", value: "brandAddress", width: 200, sortable: true },
-        { text: "Subscription Plan", value: "subscriptionplan", width: 170, sortable: true },
-        {
-          text: "No of Designers",
-          value: "countDesigner",
-          sortable: true,
-          width: 150,
-        },
+        { text: "Name", align: "start", sortable: true, value: "designerName" },
+        //{ text: "Brand", value: "brandId.brandName" },
+        { text: "Contact", value: "designerContactnumber" },
+        { text: "Email", value: "designerEmail" },
+        { text: "Address", value: "designerAddress", width: 200 },
         { text: "Status", value: "status", width: 150 },
-        { text: "Operations", value: "operation", width: 150 },
+        { text: "Operations", value: "operation" },
       ],
-      brandData: [],
+      designerData: [],
       filterOptionsArray: [],
     };
   },
 
   mounted() {
     axios
-      .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
+      .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
       .then((response) => {
-        // console.log(response.data);
-        this.brandData = response.data;
-        console.log("Data is printed");
-        console.log(this.brandData);
+        console.log(response.data);
+        this.designerData = response.data;
         this.loading = false;
       })
       .catch((error) => {
@@ -96,8 +85,8 @@ export default {
   },
 
   methods: {
-    storeBrand(brand) {
-      localStorage.setItem("brand-to-update", JSON.stringify(brand));
+    storeBrand(designer) {
+      localStorage.setItem("designer-to-update", JSON.stringify(designer));
     },
     deleteBrand(id) {
       console.log(id);
@@ -110,7 +99,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteBrand/${id}`)
+            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteDesigner/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {
@@ -273,9 +262,5 @@ export default {
 .vue3-easy-data-table__header th.sortable.none .sortType-icon[data-v-0c3a2656] {
   opacity: 0.5 !important;
   transition: 0.5s ease;
-}
-
-.easy-data-table__rows-selector ul.select-items li.selected[data-v-4ca5de3a] {
-    background-color: #20c997 !important;
 }
 </style>

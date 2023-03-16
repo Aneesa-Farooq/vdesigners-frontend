@@ -31,13 +31,13 @@
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
           <li><a class="link_name" href="#">2. Brands</a></li>
-          <li><router-link to="/addBrand">2.1. Add Brand</router-link></li>
-          <li><router-link to="/user/View Brands/viewBrands">2.2. View Brands</router-link></li>
+          <li><router-link to="/user/Register Brand/addBrand">2.1. Add Brand</router-link></li>
+          <li><router-link to="/user/Brands/viewBrands">2.2. View Brands</router-link></li>
         </ul>
       </li>
 
       <li>
-        <router-link to="/viewDesigners">
+        <router-link to="/user/Designers/viewDesigners">
           <i class="bx bx-group"></i>
           <span class="link_name">3. Designers</span>
         </router-link>
@@ -57,13 +57,13 @@
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
           <li><a class="link_name" href="#">4. Posts</a></li>
-          <li><router-link to="/viewPosts">4.1. View Posts</router-link></li>
-          <li><router-link to="/createPost">4.2. Create Posts</router-link></li>
+          <li><router-link to="/user/Create a new post/createPost">4.1. Create Posts</router-link></li>
+          <li><router-link to="/user/Posts/viewPosts">4.2. View Posts</router-link></li>
         </ul>
       </li>
 
       <li>
-        <router-link to="/editor">
+        <router-link to="/user/Editor/editor">
           <i class="bx bx-edit"></i>
           <span class="link_name">5. Editor</span>
         </router-link>
@@ -73,7 +73,7 @@
       </li>
 
       <li>
-        <router-link to="/viewFeedbacks">
+        <router-link to="/user/Feedbacks/feedbacks">
           <i class="bx bx-like"></i>
           <span class="link_name">6. Feedbacks</span>
         </router-link>
@@ -83,7 +83,7 @@
       </li>
 
       <li>
-        <router-link to="/">
+        <router-link to="/user/Subscription plans/subscriptions">
           <i class="bx bx-dollar-circle"></i>
           <span class="link_name">7. Subscriptions</span>
         </router-link>

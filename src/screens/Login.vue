@@ -207,6 +207,7 @@ export default {
             //window.location.href = "/DbAdmin";
           }
         } catch (e) {
+          console.log(e);
           this.formValues.errorMesg = e.response.data.mesg;
         }
       })();
