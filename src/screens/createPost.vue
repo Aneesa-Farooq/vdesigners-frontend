@@ -1,5 +1,5 @@
 <template>
-  <body class="bg-background px-[48px]">
+  <div class="bg-background px-[48px]">
     <div class="flex flex-col justify-center">
       <div class="w-2/4">
         <button @click="newPost" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
@@ -23,7 +23,7 @@
         <button @click="postImage" class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -74,9 +74,6 @@ export default {
     },
 
     postImage() {
-      // const user = localStorage.getItem("user-info");
-      // console.log(user);
-      // const id = JSON.parse(user)._id;
       const someRes = axios.post(`https://vdesigners.herokuapp.com/api/pattern/`, {
         image: this.urls,
         // designerId: mongoose.Types.ObjectId(),

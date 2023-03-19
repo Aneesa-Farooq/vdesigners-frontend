@@ -1,5 +1,5 @@
 <template>
-  <body class="bg-background">
+  <div class="bg-background">
     <div class="flex flex-col " v-for="(post, index) in postData" :key="index">
       <div class="flex flex-col lg:flex-row lg:gap-6 w-full p-5 bg-white rounded-md mb-3">
         <div class="h-[150px] w-full lg:w-[190px] overflow-hidden bg-lightgrey rounded-md relative flex items-center justify-center mb-2">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>

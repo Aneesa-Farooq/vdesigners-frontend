@@ -7,7 +7,6 @@
     <br />
 
     <EasyDataTable buttons-pagination :rows-per-page="5" show-index :headers="headers" :items="brandData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
-
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
@@ -22,8 +21,13 @@
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
-          <router-link to="/viewDetailsB"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link to="/user/Update Brand/updateBrand"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <button
+            @click="
+              toggleModal();
+              storeBrand(item);">
+            <Icon icon="ic:outline-remove-red-eye" class="operation-icon"></Icon>
+          </button>
         </div>
       </template>
 
@@ -34,25 +38,47 @@
         </div>
       </template>
     </EasyDataTable>
+    <ViewDetail @close="toggleModal" :modalActive="modalActive">
+      <div class="flex flex-col w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center my-3">
+        <div class="relative w-2/4 flex justify-center items-center rounded-t-lg border-[2px]">
+          <img :src="formValues.image" alt="" />
+        </div>
+        <div class="flex flex-col w-full">
+          <p class="lg:text-2xl w-full text-Green mt-2 mb-2 font-bold">{{ formValues.brandName }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="mdi:envelope-outline" />{{ formValues.email }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-gray-700 font-semibold self-start"><Icon class="lg:w-[20px] lg:h-[22px] text-Green" icon="ic:outline-phone-in-talk" />{{ formValues.contact }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-gray-700 font-semibold self-start"><Icon class="lg:w-[20px] lg:h-[22px] text-Green" icon="material-symbols:location-on-outline" />{{ formValues.location }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-gray-700 font-semibold self-start"><Icon class="lg:w-[20px] lg:h-[22px] text-Green" icon="bi:currency-dollar" />{{ formValues.plan }}</p>
+        </div>
+      </div>
+    </ViewDetail>
   </body>
 </template>
 
 <script>
 import axios from "axios";
-//import Slider from "@vueform/slider";
 import { Icon } from "@iconify/vue";
-//import "@vueform/slider/themes/default.css";
 import swal from "sweetalert";
+import ViewDetail from "../components/viewDetail.vue";
+import { ref } from "vue";
 
 export default {
   name: "ViewBrands",
   components: {
     Icon,
-    //Slider,
+    ViewDetail,
   },
 
   data() {
     return {
+      formValues: {
+        email: "",
+        location: "",
+        brandName: "",
+        contact: "",
+        plan: "",
+        image: "",
+      },
       blocked: false,
       loading: true,
       sortBy: "brandName",
@@ -61,9 +87,9 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", sortable: true, value: "brandName" },
-        { text: "Contact", value: "brandContactnumber", sortable: true },
-        { text: "Email", value: "brandEmail", sortable: true },
+        { text: "Name", align: "start", width: 170, sortable: true, value: "brandName" },
+        { text: "Contact",width: 200, value: "brandContactnumber", sortable: true },
+        { text: "Email", value: "brandEmail", width: 200, sortable: true },
         { text: "Address", value: "brandAddress", width: 200, sortable: true },
         { text: "Subscription Plan", value: "subscriptionplan", width: 170, sortable: true },
         {
@@ -78,6 +104,14 @@ export default {
       brandData: [],
       filterOptionsArray: [],
     };
+  },
+
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
   },
 
   mounted() {
@@ -97,6 +131,12 @@ export default {
 
   methods: {
     storeBrand(brand) {
+      this.formValues.brandName = brand.brandName;
+      this.formValues.email = brand.brandEmail;
+      this.formValues.contact = brand.brandContactnumber;
+      this.formValues.location = brand.brandAddress;
+      this.formValues.plan = brand.subscriptionplan;
+      this.formValues.image = brand.brandImg;
       localStorage.setItem("brand-to-update", JSON.stringify(brand));
     },
     deleteBrand(id) {
@@ -148,19 +188,6 @@ export default {
 </script>
 
 <style>
-.swal-button--confirm {
-  padding: 13px 35px;
-  border-radius: 5px;
-  background-color: #41b983;
-  font-size: 12px;
-  border: 1px solid #41b983;
-  text-shadow: 0px -1px 0px rgba(34, 182, 91, 0.897);
-}
-
-.swal-button--confirm:hover {
-  background-color: rgb(243, 55, 86) !important;
-}
-
 .customize-table {
   --easy-table-border: 1px solid #e7edf3;
   --easy-table-row-border: 1px solid #e7edf3;
@@ -276,6 +303,30 @@ export default {
 }
 
 .easy-data-table__rows-selector ul.select-items li.selected[data-v-4ca5de3a] {
-    background-color: #20c997 !important;
+  background-color: #20c997 !important;
+}
+</style>
+
+<style lang="scss" scoped>
+.home {
+  background-color: rgba(0, 176, 234, 0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    h1,
+    p {
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    p {
+      font-size: 18px;
+    }
+  }
 }
 </style>

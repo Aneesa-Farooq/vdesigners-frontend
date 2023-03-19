@@ -20,7 +20,7 @@
           <li><a class="link_name" href="#">1. Dashboard</a></li>
         </ul>
       </li>
-
+      
       <li>
         <div class="iocn-link" @click="toggleSubMenu">
           <a href="#">
@@ -63,60 +63,70 @@
       </li>
 
       <li>
-        <router-link to="/user/Editor/editor">
-          <i class="bx bx-edit"></i>
-          <span class="link_name">5. Editor</span>
+        <router-link to="/user/3D View/3d">
+          <i class="bx bx-layer"></i>
+          <span class="link_name">5. 3D</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">5. Editor</a></li>
+          <li><a class="link_name" href="#">5. 3D</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <router-link to="/user/Editor/editor">
+          <i class="bx bx-edit"></i>
+          <span class="link_name">6. Editor</span>
+        </router-link>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">6. Editor</a></li>
         </ul>
       </li>
 
       <li>
         <router-link to="/user/Feedbacks/feedbacks">
           <i class="bx bx-like"></i>
-          <span class="link_name">6. Feedbacks</span>
+          <span class="link_name">7. Feedbacks</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">6. Feedbacks</a></li>
+          <li><a class="link_name" href="#">7. Feedbacks</a></li>
         </ul>
       </li>
 
       <li>
         <router-link to="/user/Subscription plans/subscriptions">
           <i class="bx bx-dollar-circle"></i>
-          <span class="link_name">7. Subscriptions</span>
+          <span class="link_name">8. Subscriptions</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">7. Subscriptions</a></li>
+          <li><a class="link_name" href="#">8. Subscriptions</a></li>
         </ul>
       </li>
 
       <li>
         <router-link to="/">
           <i class="bx bx-wallet"></i>
-          <span class="link_name">8. Payments</span>
+          <span class="link_name">9. Payments</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">8. Payments</a></li>
+          <li><a class="link_name" href="#">9. Payments</a></li>
         </ul>
       </li>
 
       <li>
         <router-link to="/">
           <i class="bx bx-bookmark-alt"></i>
-          <span class="link_name">9. Policies</span>
+          <span class="link_name">10. Policies</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">9. Policies</a></li>
+          <li><a class="link_name" href="#">10. Policies</a></li>
         </ul>
       </li>
 
-      <li>
+      <!-- <li>
         <div class="iocn-link" @click="toggleSubMenu">
           <a href="#">
             <i class="bx bx-cog"></i>
-            <span class="link_name">10. Settings</span>
+            <span class="link_name">1. Settings</span>
           </a>
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
@@ -125,7 +135,7 @@
           <li><router-link to="/privacyPolicy">10.1. Privacy Policy</router-link></li>
           <li><router-link to="/">10.2. Update Password</router-link></li>
         </ul>
-      </li>
+      </li> -->
 
       <li>
         <a @click="logout">

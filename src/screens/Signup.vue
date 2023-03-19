@@ -68,7 +68,6 @@
 import axios from "axios";
 import { Icon } from "@iconify/vue";
 import InputField from "../components/inputField.vue";
-import SelectField from "../components/selectField.vue";
 import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -78,7 +77,6 @@ export default {
   name: "Signup",
   components: {
     InputField,
-    SelectField,
     Icon,
   },
   data() {

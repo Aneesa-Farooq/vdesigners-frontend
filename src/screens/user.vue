@@ -1,6 +1,6 @@
 <template>
    <div class="app">
-     <SideBar/>
+     <SideBar />
      <main class="bg-background">
       <NavBar :title= "$route.params.pageName"/>
      <router-view></router-view>

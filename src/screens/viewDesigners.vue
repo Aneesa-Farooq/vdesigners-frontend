@@ -1,5 +1,5 @@
 <template>
-  <body class="bg-background">
+  <div class="bg-background">
     <div class="flex justify-between items-center">
       <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
@@ -10,7 +10,7 @@
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-<!-- 
+      <!-- 
       <template #item-brandName="{ designerName, brandImg }">
         <div class="player-wrapper">
           <img class="avator" :src="brandImg" alt="" />
@@ -20,9 +20,16 @@
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/UpdateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
-          <router-link to="/viewDetailsD"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <Icon icon="tabler:trash" class="operation-icon" @click="deleteDesigner(item._id)"></Icon>
+          <router-link to="/user/Update Designer/updateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <button
+            @click="
+              toggleModal();
+              storeBrand(item);
+            "
+          >
+          <Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon>
+          </button>
         </div>
       </template>
 
@@ -33,23 +40,51 @@
         </div>
       </template>
     </EasyDataTable>
-  </body>
+
+    <ViewDetail @close="toggleModal" :modalActive="modalActive">
+      <div class="flex flex-col w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center my-3">
+        <div class="relative w-2/4 flex justify-center items-center rounded-t-lg border-[2px]">
+          <img :src="formValues.image" alt="" />
+        </div>
+        <div class="flex flex-col w-full">
+          <p class="lg:text-2xl w-full text-Green mt-2 mb-2 font-bold">{{ formValues.designerName }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:work-outline" />{{ formValues.brandName }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="mdi:envelope-outline" />{{ formValues.email }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="bx:images" />{{ formValues.posts }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:folder-copy-outline-sharp" />{{ formValues.projects }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-gray-700 font-semibold self-start"><Icon class="lg:w-[20px] lg:h-[22px] text-Green" icon="ic:outline-phone-in-talk" />{{ formValues.contact }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-gray-700 font-semibold self-start"><Icon class="lg:w-[20px] lg:h-[22px] text-Green" icon="material-symbols:location-on-outline" />{{ formValues.location }}</p>        </div>
+      </div>
+    </ViewDetail>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
+import ViewDetail from "../components/viewDetail.vue";
+import { ref } from "vue";
 
 export default {
   name: "ViewDesigners",
   components: {
     Icon,
-    
+    ViewDetail,
   },
 
   data() {
     return {
+      formValues: {
+        designerName: "",
+        brandName: "",
+        email: "",
+        location: "",
+        posts: "",
+        projects: "",
+        contact: "",
+        image: "",
+      },
       blocked: false,
       loading: true,
       sortBy: "designerName",
@@ -71,6 +106,14 @@ export default {
     };
   },
 
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
+  },
+
   mounted() {
     axios
       .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
@@ -86,9 +129,16 @@ export default {
 
   methods: {
     storeBrand(designer) {
+      this.formValues.brandName = designer.designerName;
+      this.formValues.email = designer.designerEmail;
+      this.formValues.contact = designer.designerContactnumber;
+      this.formValues.location = designer.designerAddress;
+      this.formValues.brandName = designer.brandId.brandName;
+      this.formValues.posts = designer.countPost;
+      this.formValues.projects = designer.countProject;
       localStorage.setItem("designer-to-update", JSON.stringify(designer));
     },
-    deleteBrand(id) {
+    deleteDesigner(id) {
       console.log(id);
       swal({
         title: "Are you sure?",

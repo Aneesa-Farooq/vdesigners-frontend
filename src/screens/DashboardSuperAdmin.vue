@@ -1,5 +1,5 @@
 <template>
-  <body class="bg-background">
+  <div class="bg-background">
     <!-- CARDS -->
     <div class="w-full grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-5 mb-7">
       <AnalyticsCard heading="Total Brands" cardValue="$100" backGround="bg-gradient-primary" shadow="shadow-primary" icon="mdi:users" />
@@ -46,7 +46,7 @@
         </div>
       <!-- Right Cards end-->
     </div>
-  </body>
+  </div>
 </template>
 
 <script>

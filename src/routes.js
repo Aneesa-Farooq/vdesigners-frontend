@@ -5,12 +5,15 @@ import Signup from "./screens/Signup.vue";
 import User from "./screens/user.vue";
 import ViewBrands from "./screens/viewBrands.vue";
 import AddBrand from "./screens/addBrand.vue";
+import UpdateBrand from "./screens/updateBrand.vue";
 import ViewDesigners from "./screens/viewDesigners.vue";
+import UpdateDesigner from "./screens/updateDesigner.vue";
 import CreatePost from "./screens/createPost.vue";
 import ViewPosts from "./screens/viewPosts.vue";
 import Feedbacks from "./screens/feedbacks.vue";
 import Subscriptions from "./screens/subscriptions.vue";
 import Editor from "./screens/Editor.vue";
+import ThreeD from "./screens/3d.vue";
 
 const routes = [
   {
@@ -34,7 +37,11 @@ const routes = [
 
       {name:"AddBrand", path: "addBrand", component: AddBrand },
 
+      {name:"UpdateBrand", path: "updateBrand", component: UpdateBrand },
+
       {name:"ViewDesigners", path: "viewDesigners", component: ViewDesigners },
+
+      {name:"UpdateDesigner", path: "updateDesigner", component: UpdateDesigner },
 
       {name:"CreatePost", path: "createPost", component: CreatePost },
 
@@ -45,6 +52,8 @@ const routes = [
       {name:"Subscriptions", path: "subscriptions", component: Subscriptions },
 
       {name:"Editor", path: "editor", component: Editor },
+
+      {name:"ThreeD", path: "3d", component: ThreeD },
 
 
       // { path: "posts", component: UserPosts }

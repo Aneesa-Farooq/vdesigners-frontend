@@ -15,11 +15,18 @@
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
-import swal from "sweetalert2";
+import swal from "sweetalert";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase";
 
 export default {
   name: "NavBar",
   props: ["title"],
+  data() {
+    return {
+      url: "",
+    };
+  },
   methods: {
     updateProfile() {
       (async () => {
@@ -31,41 +38,63 @@ export default {
               accept: "image/*",
               "aria-label": "Upload your profile picture",
             },
+            inputValidator: (result) => {
+                    return !result && 'Please select an image!'
+                  }
           });
 
           if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              Swal.fire({
-                title: "Your uploaded picture",
-                imageUrl: e.target.result,
-                imageAlt: "The uploaded picture",
-              });
-              console.log(e.target.result);
-            };
-            reader.readAsDataURL(file);
-
-            const user = localStorage.getItem("user-info");
-            console.log(user);
-            const id = JSON.parse(user)._id;
-            console.log(id);
-            const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/admin/updateProfile/${id}`, {
-              adminImg: file,
-            });
-            console.log(111112222233333, someRes);
-            if (someRes.status == "200") {
-              swal("Updated!", {
-                icon: "success",
-                button: true,
-              }).then(() => {
-                this.$emit("close");
-              });
-            }
+                this.uploadImage(file);
           }
+
         } catch (e) {
           console.log(e);
         }
       })();
+    },
+
+    async uploadImage(file) {
+      try {
+        console.log("innnn");
+        if (file == null) {
+          return null;
+        }
+        if (typeof file === "string") {
+          return file;
+        }
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const val = await getDownloadURL(snapshot.ref);
+        this.url = val;
+        console.log("hello" + this.url);
+
+        if (this.url) {
+          const user = localStorage.getItem("user-info");
+          const id = JSON.parse(user)._id;
+          const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/admin/updateProfile/${id}`, {
+            adminImg: this.url,
+          });
+
+          if (someRes.status == "200") {
+            swal("Updated!", {
+              icon: "success",
+              button: true,
+            }).then(() => {
+              this.$emit("close");
+            });
+          }
+        } else {
+          swal("Profile not updated", {
+            icon: "error",
+            button: true,
+          }).then(() => {
+            this.$emit("close");
+          });
+        }
+        return val;
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
