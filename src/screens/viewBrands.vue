@@ -11,7 +11,7 @@
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
 
-      <template #header-status="header">
+      <!-- <template #header-status="header">
         <div class="filter-column">
           <img src="../eglass-filter.png" class="filter-icon" @click="showStatusFilter = !showStatusFilter" />
           {{ header.text }}
@@ -23,9 +23,9 @@
             </select>
           </div>
         </div>
-      </template>
+      </template> -->
 
-      <template #header-subscriptionplan="header">
+      <!-- <template #header-subscriptionplan="header">
         <div class="filter-column">
           <img src="../eglass-filter.png" class="filter-icon" @click="showSubFilter = !showSubFilter" />
           {{ header.text }}
@@ -39,7 +39,7 @@
             </select>
           </div>
         </div>
-      </template>
+      </template> -->
 
       <template #item-brandName="{ brandName, brandImg }">
         <div class="player-wrapper">
@@ -65,8 +65,8 @@
 
       <template #item-status="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
-          <button :class="`${!item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
+          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, false)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
+          <button :class="`${!item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, true)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
         </div>
       </template>
     </EasyDataTable>
@@ -187,6 +187,26 @@ export default {
       });
   },
   methods: {
+    async changeStatus(brand,status){
+      try{
+        console.log(brand);
+      console.log(status);
+      const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateStatus/${brand._id}`, {
+            status: status
+      });
+      console.log(someRes);
+      if (someRes.status === 200) {
+        swal("Status Updated!", "Brand status has been updated!", "success");
+        location.reload();
+      }
+      else {
+        swal("Status Not Updated!", "Brand status has not been updated!", "error");
+      }
+    }
+      catch(err){
+        console.log(err);
+      }
+    },
     storeBrand(brand) {
       this.formValues.brandName = brand.brandName;
       this.formValues.email = brand.brandEmail;

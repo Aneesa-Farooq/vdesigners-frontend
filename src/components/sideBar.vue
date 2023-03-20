@@ -121,23 +121,13 @@
         </ul>
       </li>
 
-      <li>
-        <router-link to="/">
-          <i class="bx bx-bookmark-alt"></i>
-          <span class="link_name">10. Policies</span>
-        </router-link>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">10. Policies</a></li>
-        </ul>
-      </li>
-
-      <li>
+     <li>
         <a @click="logout">
           <i class="bx bx-log-out"></i>
-          <span class="link_name">11. Logout</span>
+          <span class="link_name">10. Logout</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">11. Logout</a></li>
+          <li><a class="link_name" href="#">10. Logout</a></li>
         </ul>
       </li>
     </ul>

@@ -13,7 +13,7 @@ import CreatePost from "./screens/createPost.vue";
 import ViewPosts from "./screens/viewPosts.vue";
 import Feedbacks from "./screens/feedbacks.vue";
 import Subscriptions from "./screens/subscriptions.vue";
-import Editor from "./screens/Editor.vue";
+import Editor from "./screens/editor.vue";
 import ThreeD from "./screens/3d.vue";
 import Checkout from "./screens/checkout.vue";
 import PatternGeneration from "./screens/patternGeneration.vue";
