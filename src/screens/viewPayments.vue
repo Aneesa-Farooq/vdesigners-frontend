@@ -6,69 +6,96 @@
     </div>
     <br />
 
-    <EasyDataTable buttons-pagination show-index :headers="headers" :items="feedbackData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
+    <EasyDataTable buttons-pagination show-index :rows-per-page="5" :headers="headers" :items="paymentData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-<!-- 
-      <template #item-brandName="{ designerName, brandImg }">
-        <div class="player-wrapper">
-          <img class="avator" :src="brandImg" alt="" />
-          {{ brandName }}
-        </div>
-      </template> -->
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/UpdateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
-          <router-link to="/viewDetailsD"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+           <button
+            @click="
+              toggleModal();
+              storeBrand(item);
+            "
+          >
+            <Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon>
+          </button>
         </div>
       </template>
 
+     
     </EasyDataTable>
+
+    <ViewDetail @close="toggleModal" :modalActive="modalActive">
+      <div class="flex flex-col w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center my-3">
+        <div class="flex flex-col w-full">
+          <p class="lg:text-2xl w-full text-Green mt-2 mb-2 font-bold">Name: {{ formValues.Name }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:work-outline"/>Plan Subscribed: {{ formValues.plan }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="bi:currency-dollar" />Total Amount: {{ formValues.amount }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:nest-clock-farsight-analog-outline" />Date: {{ formValues.date }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="fa6-brands:stripe" />VIA: {{ formValues.method }}</p>
+        </div>
+      </div>
+    </ViewDetail>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { Icon } from "@iconify/vue";
-import swal from "sweetalert";
+import ViewDetail from "../components/viewDetail.vue";
+import { ref } from "vue";
 
 export default {
-  name: "Feedbacks",
+  name: "ViewPayments",
   components: {
     Icon,
-    
+    ViewDetail,
   },
 
   data() {
     return {
+      formValues: {
+        Name: "",
+        plan: "",
+        amount: "",
+        date: "",
+        method: "Stripe",
+      },
       blocked: false,
       loading: true,
-      //sortBy: "brandName",
+      sortBy: "designerName",
       sortType: "asc",
       showDesignerFilter: false,
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Brand Name", align: "start", sortable: true, value: "brandId" },
-        //{ text: "Brand", value: "brandId.brandName" },
-        { text: "Feedback", value: "feedback" },
-        { text: "Time", value: "createdAt" },
+        { text: "Name", align: "start", sortable: true, value: "_id" },
+        { text: "Plan", value: "plan" },
+        { text: "Amount", value: "price" },
+        { text: "Date", value: "createdAt" },
         { text: "Operations", value: "operation" },
       ],
-      feedbackData: [],
+      paymentData: [],
       filterOptionsArray: [],
     };
   },
 
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
+  },
+
   mounted() {
     axios
-      .get("https://vdesigners.herokuapp.com/api/admin/getAllfeedback")
+      .get("https://vdesigners.herokuapp.com/api/subscription/getPayments")
       .then((response) => {
         console.log(response.data);
-        this.feedbackData = response.data;
+        this.paymentData = response.data;
         this.loading = false;
       })
       .catch((error) => {
@@ -77,10 +104,13 @@ export default {
   },
 
   methods: {
-    storeBrand(designer) {
-      localStorage.setItem("designer-to-update", JSON.stringify(designer));
+    storeBrand(item) {
+      this.formValues.Name = item._id;
+      this.formValues.plan = item.plan;
+      this.formValues.amount = item.price;
+      this.formValues.date = item.createdAt;
     },
-    deleteBrand(id) {
+    deleteDesigner(id) {
       console.log(id);
       swal({
         title: "Are you sure?",
@@ -256,11 +286,3 @@ export default {
   transition: 0.5s ease;
 }
 </style>
-
-
-
-
-
-
-
-
