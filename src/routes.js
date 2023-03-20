@@ -18,6 +18,8 @@ import ThreeD from "./screens/3d.vue";
 import Checkout from "./screens/checkout.vue";
 import PatternGeneration from "./screens/patternGeneration.vue";
 import ViewPayments from "./screens/viewPayments.vue";
+import Designer from "./screens/designer.vue";
+import DashboardDesigner from "./screens/DashboardDesigner.vue";
 
 const routes = [
   {
@@ -67,10 +69,34 @@ const routes = [
 
       {name:"ViewPayments", path: "viewPayments", component: ViewPayments },
 
+
       // { path: "posts", component: UserPosts }
 
     ],
-  }
+  },
+
+  {
+    path: "/designer/:pageName",
+    component: Designer,
+    children: [
+      { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
+
+      {name:"PatternGeneration", path: "patternGeneration", component: PatternGeneration },
+
+      {name:"Editor", path: "editor", component: Editor },
+
+      {name:"ThreeD", path: "3d", component: ThreeD },
+
+      {name:"CreatePost", path: "createPost", component: CreatePost },
+
+      {name:"ViewPosts", path: "viewPosts", component: ViewPosts },
+
+    ]
+  },
+
+  
+
+
 
 ];
 

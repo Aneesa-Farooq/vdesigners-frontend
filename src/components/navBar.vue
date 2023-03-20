@@ -2,11 +2,11 @@
   <div class="py-4 mb-4 flex items-center justify-between">
     <p class="self-start block font-poppins font-bold text-3xl text-lightBlack ml-12">{{ title }}</p>
     <div class="flex items-center gap-4">
-      <ion-icon class="text-2xl rounded-full p-1 text-[#FFB62E] hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)]" name="moon-outline"></ion-icon>
+      <!-- <ion-icon class="text-2xl rounded-full p-1 text-[#FFB62E] hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)]" name="moon-outline"></ion-icon> -->
       <button @click="updateProfile" class="flex items-center justify-center h-[34px] w-[34px]">
-        <img src="/img/uploadProfile.png" alt="" class="h-full w-full rounded-full hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)] p-1" />
+        <img :src="image" alt="" class="h-full w-full rounded-full hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)] p-1" />
       </button>
-      <ion-icon class="text-2xl rounded-full text-navIcons hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)] p-1" name="notifications-outline"></ion-icon>
+      <!-- <ion-icon class="text-2xl rounded-full text-navIcons hover:border-[#EDEDED] cursor-pointer hover:bg-white hover:shadow-[-1px_3px_10px_0_rgba(0,0,0,0.1)] p-1" name="notifications-outline"></ion-icon> -->
     </div>
   </div>
 </template>
@@ -25,8 +25,14 @@ export default {
   data() {
     return {
       url: "",
+      image: "",
     };
   },
+  // mounted() {
+  //   const User = localStorage.getItem("user-info");
+  //   const user1 = JSON.parse(User);
+  //   this.image = user1.user.adminImg;
+  // },
   methods: {
     updateProfile() {
       (async () => {
@@ -39,14 +45,13 @@ export default {
               "aria-label": "Upload your profile picture",
             },
             inputValidator: (result) => {
-                    return !result && 'Please select an image!'
-                  }
+              return !result && "Please select an image!";
+            },
           });
 
           if (file) {
-                this.uploadImage(file);
+            this.uploadImage(file);
           }
-
         } catch (e) {
           console.log(e);
         }
@@ -94,6 +99,12 @@ export default {
         return val;
       } catch (e) {
         console.log(e);
+        swal("Profile not updated, Network Error", {
+          icon: "error",
+          button: true,
+        }).then(() => {
+          this.$emit("close");
+        });
       }
     },
   },

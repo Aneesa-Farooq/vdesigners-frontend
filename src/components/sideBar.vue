@@ -40,9 +40,9 @@
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
-          <li><a class="link_name" href="#">2. Brands</a></li>
+          <li><a class="link_name" href="#">3. Designers</a></li>
           <li><router-link to="/user/Register Designer/addDesigner">3.1. Add Designer</router-link></li>
-          <li><router-link to="/user/Designers/viewDesigners">3.2. View Designer</router-link></li>
+          <li><router-link to="/user/Designers/viewDesigners">3.2. View Designers</router-link></li>
         </ul>
       </li>
 

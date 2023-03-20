@@ -164,16 +164,22 @@ export default {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
               this.$router.push({ name: "Admin", params: { pageName: "Dashboard" } });
             }
-          }
-
-          else if (this.formValues.actor == "Brand") {
+          } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-          }
 
-          else if (this.formValues.actor == "Designer") {
-            console.log("designer");
-          }
-          else{
+          } else if (this.formValues.actor == "Designer") {
+            // const someRes = await axios.post("https://vdesigners.herokuapp.com/api/login/loginDesigner", {
+            //   designerEmail: this.formValues.email,
+            //   password: this.formValues.password,
+            // });
+            // console.log(someRes);
+            // if (someRes.status == "200") {
+            //   localStorage.setItem("user-info", JSON.stringify(someRes.data));
+            //   this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" } });
+            // }
+            this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" } });
+            localStorage.setItem("user-info", JSON.stringify(this.formValues));
+          } else {
             swal({
               title: "Please Select Actor",
               text: "Please Fill all Fields",
@@ -181,7 +187,6 @@ export default {
               button: true,
             });
           }
-          
         } catch (e) {
           console.log(e);
           this.formValues.errorMesg = e.response.data.mesg;

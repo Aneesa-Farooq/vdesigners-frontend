@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
+      <router-link to="/user/Subscriptions/subscriptions" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add Payment</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
@@ -71,7 +71,7 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", sortable: true, value: "_id" },
+        { text: "Name", align: "start", sortable: true, value: "userId.brandName" },
         { text: "Plan", value: "plan" },
         { text: "Amount", value: "price" },
         { text: "Date", value: "createdAt" },
@@ -91,6 +91,7 @@ export default {
   },
 
   mounted() {
+
     axios
       .get("https://vdesigners.herokuapp.com/api/subscription/getPayments")
       .then((response) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
+      <router-link to="/user/Register Brand/addBrand" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
@@ -10,36 +10,6 @@
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-
-      <!-- <template #header-status="header">
-        <div class="filter-column">
-          <img src="../eglass-filter.png" class="filter-icon" @click="showStatusFilter = !showStatusFilter" />
-          {{ header.text }}
-          <div class="filter-menu filter-status-menu" v-if="showStatusFilter">
-            <select class="status-selector" v-model="statusCriteria" name="status">
-              <option value="all">All</option>
-              <option value="false">Blocked</option>
-              <option value="true">Active</option>
-            </select>
-          </div>
-        </div>
-      </template> -->
-
-      <!-- <template #header-subscriptionplan="header">
-        <div class="filter-column">
-          <img src="../eglass-filter.png" class="filter-icon" @click="showSubFilter = !showSubFilter" />
-          {{ header.text }}
-          <div class="filter-menu filter-status-menu" v-if="showSubFilter">
-            <select class="status-selector" v-model="subscriptionCriteria" name="subscriptionplan">
-              <option value="all">All</option>
-              <option value="false">basic</option>
-              <option value="free">Free</option>
-              <option value="monthly">Monthly</option>
-              <option value="premium">Premium</option>
-            </select>
-          </div>
-        </div>
-      </template> -->
 
       <template #item-brandName="{ brandName, brandImg }">
         <div class="player-wrapper">
