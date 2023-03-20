@@ -4,12 +4,7 @@
       <button :class="`${isSidebarClosed ? '' : 'f-hidden'}`" class="bx bx-chevrons-right cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
       <button :class="`${isSidebarClosed ? 'f-hidden' : ''}`" class="bx bx-chevrons-left cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
     </div>
-    <div class="logo-details">
-      <a href="#" class="flex items-center justify-center">
-        <img class="h-10" src="/img/halfLogo.png" alt="" />
-      </a>
-      <span class="logo_name">VDesigners</span>
-    </div>
+    
     <ul class="nav-links">
       <li>
         <router-link to="/user/Dashboard/dbAdmin">
@@ -37,15 +32,19 @@
       </li>
 
       <li>
-        <router-link to="/user/Designers/viewDesigners">
-          <i class="bx bx-group"></i>
-          <span class="link_name">3. Designers</span>
-        </router-link>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">3. Designers</a></li>
+        <div class="iocn-link" @click="toggleSubMenu">
+          <a href="#">
+            <i class="bx bx-user"></i>
+            <span class="link_name">3. Designers</span>
+          </a>
+          <i class="bx bxs-chevron-down arrow"></i>
+        </div>
+        <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
+          <li><a class="link_name" href="#">2. Brands</a></li>
+          <li><router-link to="/user/Register Designer/addDesigner">3.1. Add Designer</router-link></li>
+          <li><router-link to="/user/Designers/viewDesigners">3.2. View Designer</router-link></li>
         </ul>
       </li>
-
 
       <li>
         <div class="iocn-link" @click="toggleSubMenu">
@@ -63,12 +62,22 @@
       </li>
 
       <li>
-        <router-link to="/user/3D View/3d">
+        <router-link to="/user/3D/3d">
           <i class="bx bx-layer"></i>
           <span class="link_name">5. 3D</span>
         </router-link>
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">5. 3D</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <router-link to="/user/AI/patternGeneration">
+          <i class="bx bx-layer"></i>
+          <span class="link_name">5. Pattern Generation</span>
+        </router-link>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">5. Pattern Generation</a></li>
         </ul>
       </li>
 
@@ -103,7 +112,7 @@
       </li>
 
       <li>
-        <router-link to="/">
+        <router-link to="/user/Payments/viewPayments">
           <i class="bx bx-wallet"></i>
           <span class="link_name">9. Payments</span>
         </router-link>
@@ -121,21 +130,6 @@
           <li><a class="link_name" href="#">10. Policies</a></li>
         </ul>
       </li>
-
-      <!-- <li>
-        <div class="iocn-link" @click="toggleSubMenu">
-          <a href="#">
-            <i class="bx bx-cog"></i>
-            <span class="link_name">1. Settings</span>
-          </a>
-          <i class="bx bxs-chevron-down arrow"></i>
-        </div>
-        <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
-          <li><a class="link_name" href="#">10. Settings</a></li>
-          <li><router-link to="/privacyPolicy">10.1. Privacy Policy</router-link></li>
-          <li><router-link to="/">10.2. Update Password</router-link></li>
-        </ul>
-      </li> -->
 
       <li>
         <a @click="logout">

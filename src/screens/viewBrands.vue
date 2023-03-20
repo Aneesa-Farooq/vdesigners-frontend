@@ -1,5 +1,5 @@
 <template>
-  <body class="bg-background">
+  <div class="bg-background">
     <div class="flex justify-between items-center">
       <router-link to="/" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
@@ -9,6 +9,36 @@
     <EasyDataTable buttons-pagination :rows-per-page="5" show-index :headers="headers" :items="brandData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
+      </template>
+
+      <template #header-status="header">
+        <div class="filter-column">
+          <img src="../eglass-filter.png" class="filter-icon" @click="showStatusFilter = !showStatusFilter" />
+          {{ header.text }}
+          <div class="filter-menu filter-status-menu" v-if="showStatusFilter">
+            <select class="status-selector" v-model="statusCriteria" name="status">
+              <option value="all">All</option>
+              <option value="false">Blocked</option>
+              <option value="true">Active</option>
+            </select>
+          </div>
+        </div>
+      </template>
+
+      <template #header-subscriptionplan="header">
+        <div class="filter-column">
+          <img src="../eglass-filter.png" class="filter-icon" @click="showSubFilter = !showSubFilter" />
+          {{ header.text }}
+          <div class="filter-menu filter-status-menu" v-if="showSubFilter">
+            <select class="status-selector" v-model="subscriptionCriteria" name="subscriptionplan">
+              <option value="all">All</option>
+              <option value="false">basic</option>
+              <option value="free">Free</option>
+              <option value="monthly">Monthly</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
+        </div>
       </template>
 
       <template #item-brandName="{ brandName, brandImg }">
@@ -25,7 +55,9 @@
           <button
             @click="
               toggleModal();
-              storeBrand(item);">
+              storeBrand(item);
+            "
+          >
             <Icon icon="ic:outline-remove-red-eye" class="operation-icon"></Icon>
           </button>
         </div>
@@ -52,7 +84,7 @@
         </div>
       </div>
     </ViewDetail>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -60,7 +92,7 @@ import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
 import ViewDetail from "../components/viewDetail.vue";
-import { ref } from "vue";
+import { ref,computed } from "vue";
 
 export default {
   name: "ViewBrands",
@@ -88,7 +120,7 @@ export default {
       searchValue: "",
       headers: [
         { text: "Name", align: "start", width: 170, sortable: true, value: "brandName" },
-        { text: "Contact",width: 200, value: "brandContactnumber", sortable: true },
+        { text: "Contact", width: 200, value: "brandContactnumber", sortable: true },
         { text: "Email", value: "brandEmail", width: 200, sortable: true },
         { text: "Address", value: "brandAddress", width: 200, sortable: true },
         { text: "Subscription Plan", value: "subscriptionplan", width: 170, sortable: true },
@@ -107,11 +139,37 @@ export default {
   },
 
   setup() {
+    const statusCriteria = ref("all");
+    const showStatusFilter = ref(false);
+
+    const subscriptionCriteria = ref("all");
+    const showSubFilter = ref(false);
+
+    const filterOptions = computed(() => {
+      const filterOptionsArray = [];
+      if (statusCriteria.value !== "all") {
+        filterOptionsArray.push({
+          field: "status",
+          comparison: "=",
+          criteria: statusCriteria.value,
+        });
+      }
+
+      if (subscriptionCriteria.value !== "all") {
+        filterOptionsArray.push({
+          field: "subscriptionplan",
+          comparison: "=",
+          criteria: subscriptionCriteria.value,
+        });
+      }
+      return filterOptionsArray;
+    });
+
     const modalActive = ref(false);
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal };
+    return { modalActive, toggleModal,showStatusFilter,statusCriteria,filterOptions};
   },
 
   mounted() {
@@ -128,7 +186,6 @@ export default {
         console.log(error);
       });
   },
-
   methods: {
     storeBrand(brand) {
       this.formValues.brandName = brand.brandName;
@@ -228,6 +285,7 @@ export default {
   justify-items: center;
   position: relative;
 }
+
 .filter-icon {
   cursor: pointer;
   display: inline-block;
@@ -235,6 +293,7 @@ export default {
   height: 15px !important;
   margin-right: 4px;
 }
+
 .filter-menu {
   padding: 15px 30px;
   z-index: 1;
@@ -244,13 +303,16 @@ export default {
   background-color: #fff;
   border: 1px solid #e0e0e0;
 }
+
 .filter-age-menu {
   height: 40px;
 }
+
 .slider {
   margin-top: 36px;
 }
-.favouriteSport-selector {
+
+.status-selector {
   width: 100%;
 }
 

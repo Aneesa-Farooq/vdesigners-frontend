@@ -1,8 +1,5 @@
 <template>
-  <div>
     <div id="tui-image-editor-container"></div>
-  </div>
-
 </template>
   
 <script>
@@ -16,7 +13,7 @@ export default {
           path: '/img/white-panel.jpg',
           name: 'SampleImage',
         },
-        theme: whiteTheme, // or whiteTheme
+        theme: blackTheme, // or whiteTheme
         initMenu: 'filter',
         menuBarPosition: 'bottom',
       },
@@ -56,6 +53,12 @@ body {
 .tui-image-editor-header-buttons {
   display: flex;
   gap: .5rem;
+}
+
+.tui-image-editor-menu use.normal.use-default, .tui-image-editor-help-menu use.normal.use-default {
+    fill-rule: evenodd;
+    fill: white !important;
+    stroke: white !important;
 }
 </style>
   

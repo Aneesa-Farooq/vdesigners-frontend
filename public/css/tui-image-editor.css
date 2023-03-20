@@ -136,7 +136,7 @@ body > textarea {
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  background-color: #20c997;
+  background-color: white;
 }
 .tui-image-editor-container .tui-image-editor-menu > .tui-image-editor-item,
 .tui-image-editor-container .tui-image-editor-help-menu > .tui-image-editor-item {

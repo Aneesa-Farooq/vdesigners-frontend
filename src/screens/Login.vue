@@ -173,6 +173,14 @@ export default {
           else if (this.formValues.actor == "Designer") {
             console.log("designer");
           }
+          else{
+            swal({
+              title: "Please Select Actor",
+              text: "Please Fill all Fields",
+              icon: "error",
+              button: true,
+            });
+          }
           
         } catch (e) {
           console.log(e);

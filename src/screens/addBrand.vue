@@ -262,44 +262,57 @@ export default {
   },
 
   methods: {
-     submitForm(e) {
+    submitForm(e) {
       e.preventDefault();
       (async () => {
         try {
           let isEmpty = Object.values(this.formValues).some((el) => el == "");
           if (isEmpty) {
             swal({
-                  title: "All Fields are required",
-                  icon: "error",
-                  button: true,
-                });
-          }
-          else {
-              const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
-                brandName: this.formValues.brandName,
-                brandEmail: this.formValues.email,
-                brandContactnumber: this.formValues.contact,
-                brandAddress: this.formValues.location,
-                password: this.formValues.password,
+              title: "All Fields are required",
+              icon: "error",
+              button: true,
+            });
+          } else {
+            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
+              brandName: this.formValues.brandName,
+              brandEmail: this.formValues.email,
+              brandContactnumber: this.formValues.contact,
+              brandAddress: this.formValues.location,
+              password: this.formValues.password,
+            });
+            console.log(someRes);
+
+            if (someRes.statusText == "Created") {
+              const id = someRes.data._id;
+              console.log(id);
+              const someRes1 = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateProfile/${id}`, {
                 brandImg: this.formValues.url,
               });
-              console.log(someRes.statusText);
 
-              if (someRes.statusText == "Created") {
+              if (someRes1.status == "200") {
                 swal("Successfully Registered", {
                   icon: "success",
                   button: true,
                 }).then(() => {
-                  this.$router.push({ name: "Login" });
+                  this.$router.push({ name: "ViewBrands", params: { pageName: "Brands" } });
                 });
-              } else if (someRes.data.msg == "User Already Exists") {
+              }
+              else{
                 swal({
-                  title: `${someRes.data.msg}`,
+                  title: "profile not updated!",
                   icon: "error",
                   button: true,
                 });
               }
-            
+             } 
+            else if (someRes.data.msg == "User Already Exists") {
+              swal({
+                title: `${someRes.data.msg}`,
+                icon: "error",
+                button: true,
+              });
+            }
           }
         } catch (e) {
           console.log(e);
@@ -325,7 +338,7 @@ export default {
       }
     },
 
-   updateProfile() {
+    updateProfile() {
       (async () => {
         try {
           const { value: file } = await Swal.fire({
@@ -336,14 +349,13 @@ export default {
               "aria-label": "Upload your profile picture",
             },
             inputValidator: (result) => {
-                    return !result && 'Please select an image!'
-                  }
+              return !result && "Please select an image!";
+            },
           });
 
           if (file) {
-                this.uploadImage(file);
+            this.uploadImage(file);
           }
-
         } catch (e) {
           console.log(e);
         }

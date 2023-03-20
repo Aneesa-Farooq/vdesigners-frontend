@@ -1,5 +1,4 @@
 <template>
-  
     <div class="bg-background flex flex-col justify-center items-center">
     <h2
       class="text-center text-xl font-bold tablet:font-bold tablet:text-2xl"
@@ -7,6 +6,7 @@
       Choose your Subscription!
     </h2>
     <div class="flex gap-3">
+      <router-link to="/user/Checkout/checkout/price_1Mht7sBRretLP9OvbEjwoxDw/Standard Plan/10" class="text-center text-xl font-bold tablet:font-bold tablet:text-2xl">Subscriptions</router-link>
       <!-- Build your card component -->
       <SubsCard
         :title="'Standard Plan'"
@@ -53,12 +53,26 @@ export default {
       const priceId = "price_1Mhsg9BRretLP9OvwtWcfhWs";
       const price = "10.00";
       const plan = "Basic";
+      this.$router.push({
+        name: "Checkout",
+        params: {priceId, price, plan },
+      });
     },
 
     premiumPlan() {
       const priceId = "price_1Mht7sBRretLP9OvbEjwoxDw";
       const price = "20.00";
       const plan = "Premium";
+      this.$router.push({
+        name: "Checkout",
+        params: { priceId, price, plan },
+      });
+    },
+
+    standardPlan() {
+      const priceId = "price_1Mhsg9BRretLP9OvwtWcfhWs";
+      const price = "10.00";
+      const plan = "Basic";
       this.$router.push({
         name: "Checkout",
         params: { priceId, price, plan },

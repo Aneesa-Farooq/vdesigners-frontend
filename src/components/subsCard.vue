@@ -25,7 +25,7 @@
         <span class="text-base font-normal leading-tight text-gray-500">{{ icon2 }}</span>
       </li>
     </ul>
-    <router-link to="/dbDesigner" class="text-white bg-Green hover:opacity-70 focus:ring-4 focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"> Choose plan </router-link>
+    <button class="text-white bg-Green hover:opacity-70 focus:ring-4 focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"> Choose plan </button>
   </div>
 </template>
 <script>
