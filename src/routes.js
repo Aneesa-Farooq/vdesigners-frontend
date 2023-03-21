@@ -22,6 +22,7 @@ import Designer from "./screens/designer.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
 import CreatePostD from "./screens/createPostD.vue";
 import ViewPostsD from "./screens/viewPostsD.vue";
+import ViewPost from "./screens/viewPost.vue"
 
 const routes = [
   {
@@ -92,6 +93,8 @@ const routes = [
       {name:"CreatePostD", path: "createPostd", component: CreatePostD },
 
       {name:"ViewPostsD", path: "viewPostsd", component: ViewPostsD },
+
+      {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
 
     ]
   },

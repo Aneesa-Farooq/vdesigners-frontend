@@ -2,7 +2,8 @@
   <div class="bg-background">
     <div class="flex flex-col " v-for="(post, index) in postData" :key="index">
       <div class="flex flex-col lg:flex-row lg:gap-6 w-full p-5 bg-white rounded-md mb-3">
-        <div class="h-[150px] w-full lg:w-[190px] overflow-hidden bg-lightgrey rounded-md relative flex items-center justify-center mb-2">
+        <div
+          class="h-[150px] w-full lg:w-[190px] overflow-hidden bg-lightgrey rounded-md relative flex items-center justify-center mb-2">
           <img class="img-fluid absolute" :src="post.image" alt="" />
         </div>
         <div class="self-center">
@@ -15,11 +16,18 @@
           </div>
           <p class="text-base font-semibold text-[#616161] mb-2">{{ post.patternName }}</p>
           <p class="text-xs tracking-wide text-navIcons mb-2">{{ post.description }}</p>
-          <p class="inline-block bg-Green text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category }}</p>
+          <p class="inline-block bg-Green text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category
+          }}</p>
         </div>
         <div class="flex ml-auto self-center mr-2 gap-4">
           <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
-          <button class="bg-Green text-white px-8 py-2 rounded-md">View Post</button>
+
+          <router-link :to="{
+            name: 'ViewPost',
+            params: { id: post._id },
+          }">
+            <button class="bg-Green text-white px-8 py-2 rounded-md">View Post</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -117,5 +125,4 @@ export default {
   50% {
     opacity: 0;
   }
-}
-</style>
+}</style>
