@@ -1650,6 +1650,11 @@ video {
   color: rgb(66 66 74 / var(--tw-text-opacity));
 }
 
+.text-mediumPink {
+  --tw-text-opacity: 1;
+  color: rgb(243 103 127 / var(--tw-text-opacity));
+}
+
 .text-navIcons {
   --tw-text-opacity: 1;
   color: rgb(162 165 185 / var(--tw-text-opacity));

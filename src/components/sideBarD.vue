@@ -46,8 +46,8 @@
           </div>
           <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
             <li><a class="link_name" href="#">4. Posts</a></li>
-            <li><router-link to="/designer/Create a new post/createPost">4.1. Create Posts</router-link></li>
-            <li><router-link to="/designer/Posts/viewPosts">4.2. View Posts</router-link></li>
+            <li><router-link to="/designer/Create a new post/createPostd">4.1. Create Posts</router-link></li>
+            <li><router-link to="/designer/Posts/viewPostsd">4.2. View Posts</router-link></li>
           </ul>
         </li>
   
