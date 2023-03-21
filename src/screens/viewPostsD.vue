@@ -22,8 +22,7 @@
           }}</p>
         </div>
         <div class="flex ml-auto self-center mr-2 gap-4">
-          <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
-
+          <button @click="deletePost(post._id)" class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
           <router-link :to="{
             name: 'ViewPost',
             params: { id: post._id },
@@ -68,7 +67,7 @@ export default {
   },
 
   methods: {
-    deleteBrand(id) {
+    deletePost(id) {
       swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this file!",
@@ -78,21 +77,29 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5000/api/admin/deleteBrand/${id}`)
+            .delete(`https://vdesigners.herokuapp.com/api/pattern/deletePost/${id}`)
             .then((response) => {
               console.log(response.status);
+              if (response.status == 200) {
+                swal("Deleted!", {
+                  icon: "success",
+                  button: true,
+                }).then(() => {
+                  location.reload();
+                });
+              }
+              else {
+                swal("Something went wrong!", {
+                  icon: "error",
+                  button: true,
+                }).then(() => {
+                  location.reload();
+                });
+              }
             })
-
             .catch((error) => {
-              console.log(error.response.status);
+              console.log(error);
             });
-
-          swal("Deleted!", {
-            icon: "success",
-            button: true,
-          }).then(() => {
-            location.reload();
-          });
         }
       });
     },
