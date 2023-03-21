@@ -18,7 +18,7 @@
             <p class="inline-block bg-Green text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category }}</p>
           </div>
           <div class="flex ml-auto self-center mr-2 gap-4">
-            <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
+            <button @click="deletePost(post._id)" class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
             <button class="bg-mediumPink text-white px-8 py-2 rounded-md">View Post</button>
           </div>
         </div>
@@ -58,7 +58,7 @@
     },
   
     methods: {
-      deleteBrand(id) {
+      deletePost(id) {
         swal({
           title: "Are you sure?",
           text: "Once deleted, you will not be able to recover this file!",
@@ -68,21 +68,31 @@
         }).then((willDelete) => {
           if (willDelete) {
             axios
-              .delete(`http://localhost:5000/api/admin/deleteBrand/${id}`)
+              .delete(`https://vdesigners.herokuapp.com/api/pattern/deletePost/${id}`)
               .then((response) => {
                 console.log(response.status);
+                if(response.status == 200){
+                  swal("Deleted!", {
+                    icon: "success",
+                    button: true,
+                  }).then(() => {
+                    location.reload();
+                  });
+                }
+                else{
+                  swal("Something went wrong!", {
+                    icon: "error",
+                    button: true,
+                  }).then(() => {
+                    location.reload();
+                  });
+                }
               })
   
               .catch((error) => {
-                console.log(error.response.status);
+                console.log(error);
               });
   
-            swal("Deleted!", {
-              icon: "success",
-              button: true,
-            }).then(() => {
-              location.reload();
-            });
           }
         });
       },
