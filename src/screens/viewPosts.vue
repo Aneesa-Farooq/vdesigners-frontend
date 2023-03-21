@@ -11,7 +11,7 @@
               <img class="h-auto w-auto" src="/img/profile.jpg" alt="" />
             </div>
             <p class="flex items-center text-base lg:text-lg font-medium text-green-600">{{ post.designerId }}</p>
-            <p class="blink_me bg-yellow-400 flex items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
+            <p :class="`${(post.status== 'pending') ? 'blink_me' : 'bg-Green'}`" class="flex items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
           </div>
           <p class="text-base font-semibold text-[#616161] mb-2">{{ post.patternName }}</p>
           <p class="text-xs tracking-wide text-navIcons mb-2">{{ post.description }}</p>

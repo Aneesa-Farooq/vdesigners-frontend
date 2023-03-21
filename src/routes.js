@@ -20,6 +20,8 @@ import PatternGeneration from "./screens/patternGeneration.vue";
 import ViewPayments from "./screens/viewPayments.vue";
 import Designer from "./screens/designer.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
+import CreatePostD from "./screens/createPostD.vue";
+import ViewPostsD from "./screens/viewPostsD.vue";
 
 const routes = [
   {
@@ -87,9 +89,9 @@ const routes = [
 
       {name:"ThreeD", path: "3d", component: ThreeD },
 
-      {name:"CreatePost", path: "createPost", component: CreatePost },
+      {name:"CreatePostD", path: "createPostd", component: CreatePostD },
 
-      {name:"ViewPosts", path: "viewPosts", component: ViewPosts },
+      {name:"ViewPostsD", path: "viewPostsd", component: ViewPostsD },
 
     ]
   },
