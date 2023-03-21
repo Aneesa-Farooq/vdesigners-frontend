@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background p-4">
     <form @submit="submitForm" class="w-full flex flex-col items-center">
-      <div class="flex w-full gap-6">
+      <div class="flex flex-col md:flex-row w-full gap-6">
         <div class="flex flex-col flex-[1]">
           <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Brand Name </label>
           <InputField type="text" id="name" place_holder="Enter Brand Name" class="my-2" v-model="formValues.brandName" />
@@ -46,7 +46,7 @@
           <p id="eCpsw" class="invalid hidden m-2">Password does not match</p>
 
           <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Profile Picture </label>
-          <div class="flex my-2 items-center justify-between">
+          <div class="flex gap-4 my-2 items-center justify-between">
             <button type="button" @click="updateProfile" class="bg-white h-[180px] w-[200px] overflow-hidden rounded-xl flex justify-center items-center">
               <img :class="`${isUrl ? 'hidden' : ''}`" class="h-auto w-auto" src="/img/uploadProfile.png" alt="" />
               <img :class="`${isUrl ? '' : 'hidden'}`" class="h-auto w-auto" :src="formValues.url" alt="" />

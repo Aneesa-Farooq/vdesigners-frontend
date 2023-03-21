@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-lightgrey ">
+  <div class="bg-white ">
     <div class="flex h-full">
       <div class="flex flex-col flex-[4] h-full mb-6 mx-6">
         <div>
-          <p class="self-start block font-poppins font-medium text-2xl text-grey pt-5 mb-5 px-3">Posts</p>
+          <p class="self-start block font-poppins font-medium text-2xl text-grey pt-5 mb-5">Posts</p>
         </div>
         <router-link to="/viewPost" class="text-sm font-medium tracking-wide text-pink hover:opacity-60"> View All </router-link>
         <EasyDataTable show-index :headers="headers" :items="slicedData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="200vh">

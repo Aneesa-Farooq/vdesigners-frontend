@@ -305,7 +305,7 @@ export default {
 .sidebar .nav-links li .sub-menu a {
   color: white;
   font-size: 17px;
-  padding: 7px 0;
+  padding: 7px 16px;
   white-space: nowrap;
   opacity: 1;
   transition: all 0.3s ease;
@@ -313,7 +313,6 @@ export default {
 
 .sidebar .nav-links li .sub-menu a:hover {
   opacity: 1;
-  
 }
 
 .sidebar.close .nav-links li .sub-menu {

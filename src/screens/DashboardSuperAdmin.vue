@@ -242,7 +242,8 @@ button {
   display: flex;
 
   main {
-    width: calc(100vw - var(--sidebar-width) - 10px);
+    // width: calc(100vw - var(--sidebar-width) - 10px);
+    width: calc(100vw - var(--sidebar-width));
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-right: 1rem;
@@ -250,7 +251,8 @@ button {
   }
   @media (max-width: 700px) {
     main {
-      width: calc(100vw - 10px);
+      // width: calc(100vw - 10px);
+      width: calc(100vw);
     }
   }
 }

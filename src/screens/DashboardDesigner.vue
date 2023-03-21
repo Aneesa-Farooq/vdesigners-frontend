@@ -1,15 +1,15 @@
 <template>
       <!-- WELCOME CARD -->
       <div class="flex items-center justify-center min-h-[185px] w-full features feature-primary bg-white rounded shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] px-8 py-4">
-        <div class="h-[100px] w-[100px]">
-          <img src="/img/profile.jpg" alt="" class="w-full h-full rounded-full" />
+        <div class="h-[100px] w-[100px] rounded-full overflow-hidden">
+          <img src="/img/profile.jpg" alt="" class="w-full h-auto" />
         </div>
 
         <div class="mx-9">
           <p class="self-start block font-poppins font-bold text-2xl text-grey">Welcome Back.</p>
           <p class="self-start block font-poppins font-light text-base text-navIcons">Its's really nice to see you again.</p>
         </div>
-        <div class="bg-mediumPink ml-auto flex items-center justify-center shadow-[-1px_3px_10px_0_rgba(0,0,0,0.125)] my-4 min-h-[120px] w-3/12 rounded-[10px] p-4">
+        <div class="bg-mediumPink ml-auto hidden md:flex items-center justify-center shadow-[-1px_3px_10px_0_rgba(0,0,0,0.125)] my-4 min-h-[120px] w-3/12 rounded-[10px] p-4">
           <p class="text-white flex flex-[2] font-sm font-thin">Start using our team and project management tools</p>
           <ion-icon class="text-[#fd92a4] flex flex-[1] text-8xl" name="diamond-outline"></ion-icon>
         </div>
@@ -21,7 +21,7 @@
           <div class="px-5 py-5 box-border bg-white border-pink rounded-[10px]">
             <apexchart type="bar" :options="optionsCol" :series="seriesCol"></apexchart>
           </div>
-          <div class="px-5 py-5 box-border bg-white border-pink rounded-[10px]">
+          <div class="box-border bg-white border-pink rounded-[10px] overflow-x-scroll">
             <viewPostTable />
           </div>
         </div>
@@ -393,8 +393,9 @@ button {
   display: flex;
 
   main {
-    width: calc(100vw - 88px);
-    width: calc(100vw - var(--sidebar-width) - 10px);
+    // width: calc(100vw - 88px);
+    // width: calc(100vw - var(--sidebar-width) - 10px);
+    width: calc(100vw - var(--sidebar-width));
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-right: 4rem;
@@ -408,7 +409,8 @@ button {
     }
     @media (max-width: 700px) {
       main {
-        width: calc(100vw - 10px);
+        // width: calc(100vw - 10px);
+        width: calc(100vw);
       }
     }
   }

@@ -3,7 +3,7 @@ var blackTheme = {
   'common.bisize.width': '251px',
   'common.bisize.height': '21px',
   'common.backgroundImage': 'none',
-  'common.backgroundColor': '#1e1e1e',
+  'common.backgroundColor': '#f3f4f6',
   'common.border': '0px',
 
   // header
@@ -40,21 +40,21 @@ var blackTheme = {
   'submenu.iconSize.height': '32px',
 
   // submenu primary color
-  'submenu.backgroundColor': '#1e1e1e',
+  'submenu.backgroundColor': '#f3f4f6',
   'submenu.partition.color': '#3c3c3c',
 
   // submenu labels
   'submenu.normalLabel.color': '#8a8a8a',
   'submenu.normalLabel.fontWeight': 'lighter',
-  'submenu.activeLabel.color': '#fff',
+  'submenu.activeLabel.color': '#1e1e1e',
   'submenu.activeLabel.fontWeight': 'lighter',
 
   // checkbox style
   'checkbox.border': '0px',
-  'checkbox.backgroundColor': '#fff',
+  'checkbox.backgroundColor': '#8a8a8a',
 
   // range style
-  'range.pointer.color': '#fff',
+  'range.pointer.color': '#1e1e1e',
   'range.bar.color': '#666',
   'range.subbar.color': '#d1d1d1',
 
@@ -62,15 +62,15 @@ var blackTheme = {
   'range.disabledBar.color': '#282828',
   'range.disabledSubbar.color': '#414141',
 
-  'range.value.color': '#fff',
+  'range.value.color': '#1e1e1e',
   'range.value.fontWeight': 'lighter',
   'range.value.fontSize': '11px',
   'range.value.border': '1px solid #353535',
   'range.value.backgroundColor': '#151515',
-  'range.title.color': '#fff',
+  'range.title.color': '#1e1e1e',
   'range.title.fontWeight': 'lighter',
 
   // colorpicker style
   'colorpicker.button.border': '1px solid #1e1e1e',
-  'colorpicker.title.color': '#fff',
+  'colorpicker.title.color': '#1e1e1e',
 };

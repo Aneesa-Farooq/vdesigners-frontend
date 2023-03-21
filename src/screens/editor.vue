@@ -45,6 +45,10 @@ body {
   height: 100vh !important;
 }
 
+.tui-image-editor-help-menu{
+  background-color: #1e1e1e !important;
+}
+
 .tui-image-editor-download-btn {
   background-color: #F33757 !important;
   border: #F33757 !important;
@@ -59,6 +63,10 @@ body {
     fill-rule: evenodd;
     fill: white !important;
     stroke: white !important;
+}
+svg[display=none]{
+  display: none !important;
+  height: 0 !important;
 }
 </style>
   
