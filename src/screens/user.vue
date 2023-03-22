@@ -1,6 +1,6 @@
 <template>
    <div class="app">
-     <SideBar />
+     <SideBar :userType="$route.params.type"/>
      <main class="bg-background">
       <NavBar :class="`${is3d ? 'hidden' : ''}`" :title= "$route.params.pageName"/>
      <router-view></router-view>

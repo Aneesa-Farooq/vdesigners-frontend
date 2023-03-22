@@ -4,130 +4,140 @@
       <button :class="`${isSidebarClosed ? '' : 'f-hidden'}`" class="bx bx-chevrons-right cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
       <button :class="`${isSidebarClosed ? 'f-hidden' : ''}`" class="bx bx-chevrons-left cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
     </div>
-    
+
     <ul class="nav-links">
       <li>
         <router-link to="/user/Dashboard/dbAdmin">
           <i class="bx bx-category"></i>
-          <span class="link_name">1. Dashboard</span>
+          <span class="link_name">Dashboard</span>
         </router-link>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">1. Dashboard</a></li>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Dashboard</a></li>
         </ul>
       </li>
-      
-      <li>
+
+      <li v-if="userType == 'admin'">
         <div class="iocn-link" @click="toggleSubMenu">
           <a href="#">
             <i class="bx bx-user"></i>
-            <span class="link_name">2. Brands</span>
+            <span class="link_name">Brands</span>
           </a>
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
-          <li><a class="link_name" href="#">2. Brands</a></li>
-          <li><router-link to="/user/Register Brand/addBrand">2.1. Add Brand</router-link></li>
-          <li><router-link to="/user/Brands/viewBrands">2.2. View Brands</router-link></li>
+          <li><a class="link_name" href="#">Brands</a></li>
+          <li><router-link to="/user/Register Brand/addBrand">Add Brand</router-link></li>
+          <li><router-link to="/user/Brands/viewBrands">View Brands</router-link></li>
         </ul>
       </li>
 
-      <li>
+      <li v-if="userType === 'admin' || userType === 'brand'">
         <div class="iocn-link" @click="toggleSubMenu">
           <a href="#">
             <i class="bx bx-user"></i>
-            <span class="link_name">3. Designers</span>
+            <span class="link_name">Designers</span>
           </a>
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
-          <li><a class="link_name" href="#">3. Designers</a></li>
-          <li><router-link to="/user/Register Designer/addDesigner">3.1. Add Designer</router-link></li>
-          <li><router-link to="/user/Designers/viewDesigners">3.2. View Designers</router-link></li>
+          <li><a class="link_name" href="#">Designers</a></li>
+          <li><router-link to="/user/Register Designer/addDesigner">Add Designer</router-link></li>
+          <li><router-link to="/user/Designers/viewDesigners">View Designers</router-link></li>
         </ul>
       </li>
 
-      <li>
+      <li v-if="userType === 'admin' || userType === 'designer'">
         <div class="iocn-link" @click="toggleSubMenu">
           <a href="#">
             <i class="bx bx-images"></i>
-            <span class="link_name">4. Posts</span>
+            <span class="link_name">Posts</span>
           </a>
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <ul class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
-          <li><a class="link_name" href="#">4. Posts</a></li>
-          <li><router-link to="/user/Create a new post/createPost">4.1. Create Posts</router-link></li>
-          <li><router-link to="/user/Posts/viewPosts">4.2. View Posts</router-link></li>
+          <li><a class="link_name" href="#">Posts</a></li>
+          <li><router-link to="/user/Create a new post/createPost">Create Posts</router-link></li>
+          <li><router-link to="/user/Posts/viewPosts">View Posts</router-link></li>
         </ul>
       </li>
 
-      <li>
-        <router-link to="/user/3D/3d">
+      <li v-if="userType == 'brand'">
+        <router-link to="/user/Posts/viewPosts">
           <i class="bx bx-layer"></i>
-          <span class="link_name">5. 3D</span>
+          <span class="link_name">Posts</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">5. 3D</a></li>
+          <li><a class="link_name" href="#">Posts</a></li>
         </ul>
       </li>
 
-      <li>
+      <li v-if="userType === 'admin' || userType === 'designer'">
         <router-link to="/user/AI/patternGeneration">
           <i class="bx bx-layer"></i>
-          <span class="link_name">5. Pattern Generation</span>
+          <span class="link_name">Pattern Generation</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">5. Pattern Generation</a></li>
+          <li><a class="link_name" href="#">Pattern Generation</a></li>
         </ul>
       </li>
 
-      <li>
+      <li v-if="userType === 'admin' || userType === 'designer'">
         <router-link to="/user/Editor/editor">
           <i class="bx bx-edit"></i>
-          <span class="link_name">6. Editor</span>
+          <span class="link_name">Editor</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">6. Editor</a></li>
+          <li><a class="link_name" href="#">Editor</a></li>
+        </ul>
+      </li>
+
+      <li v-if="userType === 'admin' || userType === 'designer'">
+        <router-link to="/user/3D/3d">
+          <i class="bx bx-layer"></i>
+          <span class="link_name">3D</span>
+        </router-link>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">3D</a></li>
         </ul>
       </li>
 
       <li>
         <router-link to="/user/Feedbacks/feedbacks">
           <i class="bx bx-like"></i>
-          <span class="link_name">7. Feedbacks</span>
+          <span class="link_name">Feedbacks</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">7. Feedbacks</a></li>
+          <li><a class="link_name" href="#">Feedbacks</a></li>
         </ul>
       </li>
 
-      <li>
+      <li v-if="userType === 'admin' || userType === 'brand'">
         <router-link to="/user/Subscription plans/subscriptions">
           <i class="bx bx-dollar-circle"></i>
-          <span class="link_name">8. Subscriptions</span>
+          <span class="link_name">Subscriptions</span>
         </router-link>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">8. Subscriptions</a></li>
+          <li><a class="link_name" href="#">Subscriptions</a></li>
+        </ul>
+      </li>
+
+      <li v-if="userType === 'admin'">
+        <router-link to="/user/Payments/viewPayments">
+          <i class="bx bx-wallet"></i>
+          <span class="link_name">Payments</span>
+        </router-link>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Payments</a></li>
         </ul>
       </li>
 
       <li>
-        <router-link to="/user/Payments/viewPayments">
-          <i class="bx bx-wallet"></i>
-          <span class="link_name">9. Payments</span>
-        </router-link>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">9. Payments</a></li>
-        </ul>
-      </li>
-
-     <li>
         <a @click="logout">
           <i class="bx bx-log-out"></i>
-          <span class="link_name">10. Logout</span>
+          <span class="link_name">Logout</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">10. Logout</a></li>
+          <li><a class="link_name" href="#">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -136,9 +146,13 @@
 
 <script>
 export default {
-  name:"SideBar",
+  name: "SideBar",
+  props: {
+    userType: String,
+  },
   data() {
     return {
+      number: 1,
       isSidebarClosed: true,
       isSubMenuOpen: false,
     };
@@ -146,8 +160,8 @@ export default {
   methods: {
     toggleSidebar() {
       this.isSidebarClosed = !this.isSidebarClosed;
-      localStorage.setItem("is_closed", this.isSidebarClosed)
-      if(this.isSidebarClosed) {
+      localStorage.setItem("is_closed", this.isSidebarClosed);
+      if (this.isSidebarClosed) {
         document.documentElement.style.setProperty("--sidebar-width", "78px");
       } else {
         document.documentElement.style.setProperty("--sidebar-width", "260px");
@@ -163,6 +177,37 @@ export default {
     },
   },
   mounted() {
+    if (this.userType === "admin") {
+      const sideBar = document.getElementsByClassName("sidebar");
+      const submenu = document.getElementsByClassName("sub-menu");
+      for (var i = 0; i < sideBar.length; i++) {
+        sideBar[i].style.backgroundColor = "#20c997";
+      }
+      for (var i = 0; i < submenu.length; i++) {
+        submenu[i].style.backgroundColor = "#20c997";
+      }
+
+    } else if (this.userType === "designer") {
+      const sideBar = document.getElementsByClassName("sidebar");
+      const submenu = document.getElementsByClassName("sub-menu");
+      for (var i = 0; i < sideBar.length; i++) {
+        sideBar[i].style.backgroundColor = "#F3677F";
+      }
+      for (var i = 0; i < submenu.length; i++) {
+        submenu[i].style.backgroundColor = "#F3677F";
+      }
+      
+    } else {
+      const sideBar = document.getElementsByClassName("sidebar");
+      const submenu = document.getElementsByClassName("sub-menu");
+      for (var i = 0; i < sideBar.length; i++) {
+        sideBar[i].style.backgroundColor = "#20c997";
+      }
+      for (var i = 0; i < submenu.length; i++) {
+        submenu[i].style.backgroundColor = "#20c997";
+      }
+    }
+
     if (localStorage.getItem("is_closed") === "true") {
       this.isSidebarClosed = true;
       document.documentElement.style.setProperty("--sidebar-width", "78px");
@@ -170,7 +215,7 @@ export default {
       this.isSidebarClosed = false;
       document.documentElement.style.setProperty("--sidebar-width", "260px");
     }
-  }
+  },
 };
 </script>
 
@@ -181,11 +226,10 @@ export default {
   left: 0;
   height: 100vh;
   width: var(--sidebar-width);
-  background:#20c997;
+  /* background: #20c997; */
   z-index: 100;
   transition: all 0.5s ease;
 }
-
 .sidebar.close {
   width: var(--sidebar-width);
 }
@@ -240,7 +284,7 @@ export default {
 }
 
 .sidebar .nav-links li:hover {
-  background:#b6dfb894;
+  background: #b6dfb894;
 }
 
 .sidebar .nav-links li .iocn-link {
@@ -294,7 +338,7 @@ export default {
 .sidebar .nav-links li .sub-menu {
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
-  background:#20c997;
+  /* background:#20c997; */
   display: none;
 }
 
@@ -414,8 +458,8 @@ export default {
 .sidebar .profile-details .job {
   font-size: 12px;
 }
-.f-hidden{
-    display: none !important; 
+.f-hidden {
+  display: none !important;
 }
 
 @media screen and (max-width: 700px) {

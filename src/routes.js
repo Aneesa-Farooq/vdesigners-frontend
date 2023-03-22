@@ -18,7 +18,6 @@ import ThreeD from "./screens/3d.vue";
 import Checkout from "./screens/checkout.vue";
 import PatternGeneration from "./screens/patternGeneration.vue";
 import ViewPayments from "./screens/viewPayments.vue";
-import Designer from "./screens/designer.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
 import CreatePostD from "./screens/createPostD.vue";
 import ViewPostsD from "./screens/viewPostsD.vue";
@@ -36,7 +35,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/user/:pageName",
+    path: "/user/:pageName/:type",
     component: User,
     children: [
 
@@ -72,35 +71,34 @@ const routes = [
 
       {name:"ViewPayments", path: "viewPayments", component: ViewPayments },
 
+      { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
+
 
       // { path: "posts", component: UserPosts }
 
     ],
   },
 
-  {
-    path: "/designer/:pageName",
-    component: Designer,
-    children: [
-      { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
+  // {
+  //   path: "/designer/:pageName",
+  //   component: Designer,
+  //   children: [
+      
 
-      {name:"PatternGeneration", path: "patternGeneration", component: PatternGeneration },
+  //     {name:"PatternGeneration", path: "patternGeneration", component: PatternGeneration },
 
-      {name:"Editor", path: "editor", component: Editor },
+  //     {name:"Editor", path: "editor", component: Editor },
 
-      {name:"ThreeD", path: "3d", component: ThreeD },
+  //     {name:"ThreeD", path: "3d", component: ThreeD },
 
-      {name:"CreatePostD", path: "createPostd", component: CreatePostD },
+  //     {name:"CreatePostD", path: "createPostd", component: CreatePostD },
 
-      {name:"ViewPostsD", path: "viewPostsd", component: ViewPostsD },
+  //     {name:"ViewPostsD", path: "viewPostsd", component: ViewPostsD },
 
-      {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
+  //     {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
 
-    ]
-  },
-
-  
-
+  //   ]
+  // },
 
 
 ];

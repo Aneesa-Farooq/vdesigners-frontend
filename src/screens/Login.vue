@@ -118,7 +118,7 @@ export default {
                         button: true,
                       }).then(() => {
                         localStorage.setItem("user-info", JSON.stringify(repayload));
-                        window.location.href = "/user/Dashboard/dbAdmin";
+                        this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
                       });
                     }
                   } catch (e) {
@@ -134,7 +134,7 @@ export default {
             })();
           } else {
             localStorage.setItem("user-info", JSON.stringify(repayload));
-            window.location.href = "/user/Dashboard/dbAdmin";
+            this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
           }
         })
         .catch((error) => {
@@ -169,18 +169,26 @@ export default {
             console.log(someRes);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
-              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" } });
+              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "admin"} });
             }
           } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/admin/loginAdmin", {
-              adminEmail: this.formValues.email,
+            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/login", {
+              brandEmail: this.formValues.email,
               password: this.formValues.password,
             });
-            console.log(someRes);
+            console.log(someRes.response.status);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
-              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" } });
+              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
+            }
+            else {
+              swal({
+                title: "User does not exist",
+                text: "User does not exist",
+                icon: "error",
+                button: true,
+              });
             }
           } else if (this.formValues.actor == "Designer") {
             const someRes = await axios.post("https://vdesigners.herokuapp.com/api/designers/login", {
@@ -190,7 +198,7 @@ export default {
             console.log(someRes);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
-              this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" } });
+              this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" , type: "designer"} });
             }
           } else {
             swal({
