@@ -6,17 +6,17 @@
     </div>
     <br />
 
-    <EasyDataTable buttons-pagination show-index :headers="headers" :items="designerData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
+    <EasyDataTable buttons-pagination show-index :rows-per-page="5" :headers="headers" :items="designerData" header-text-direction="center" body-text-direction="center" theme-color="#F3677F" fixed-header table-class-name="customize-table" :search-value="searchValue" :filter-options="filterOptions" :sort-by="sortBy" :sort-type="sortType" :loading="loading" height="100vh">
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-      <!-- 
-      <template #item-brandName="{ designerName, brandImg }">
+      
+      <template #item-designerName="{ designerName, designerImg }">
         <div class="player-wrapper">
-          <img class="avator" :src="brandImg" alt="" />
-          {{ brandName }}
+          <img class="avator" :src="designerImg" alt="" />
+          {{ designerName }}
         </div>
-      </template> -->
+      </template>
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
@@ -35,8 +35,8 @@
 
       <template #item-status="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <button :class="`${item.status ? 'hidden' : ''}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
-          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="blocked = !blocked"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
+          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, false)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
+          <button :class="`${item.status ? 'hidden' : ''}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, true)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
         </div>
       </template>
     </EasyDataTable>
@@ -93,13 +93,14 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", sortable: true, value: "designerName" },
-        //{ text: "Brand", value: "brandId.brandName" },
-        { text: "Contact", value: "designerContactnumber" },
-        { text: "Email", value: "designerEmail" },
+        { text: "Name", align: "start", sortable: true, value: "designerName" ,width: 200},
+        { text: "Brand", value: "brandId.brandName",width: 200 },
+        { text: "Email", value: "designerEmail",width: 200 },
+        { text: "Projects", value: "countProject",width: 100 },
+        { text: "Contact", value: "designerContactnumber",width: 200 },
         { text: "Address", value: "designerAddress", width: 200 },
         { text: "Status", value: "status", width: 150 },
-        { text: "Operations", value: "operation" },
+        { text: "Operations", value: "operation",width: 200 },
       ],
       designerData: [],
       filterOptionsArray: [],
@@ -115,7 +116,12 @@ export default {
   },
 
   mounted() {
-    axios
+    this.getData();
+  },
+
+  methods: {
+    getData(){
+      axios
       .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
       .then((response) => {
         console.log(response.data);
@@ -125,9 +131,25 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-  },
+    },
 
-  methods: {
+    async changeStatus(designer, status) {
+      try {
+        const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updateStatus/${designer._id}`, {
+          status: status,
+        });
+        console.log(someRes);
+        if (someRes.status === 200) {
+          swal("Status Updated!", "Account status has been updated!", "success");
+          this.getData();
+        } else {
+          swal("Status Not Updated!", "Account status has not been updated!", "error");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    
     storeBrand(designer) {
       this.formValues.brandName = designer.designerName;
       this.formValues.email = designer.designerEmail;
@@ -158,7 +180,7 @@ export default {
                   button: true,
                 }).then(() => {
                   this.$emit("close");
-                  location.reload();
+                  this.getData();
                 });
               } else {
                 swal("Something went wrong!", {

@@ -14,7 +14,7 @@
       <template #item-brandName="{ brandName, brandImg }">
         <div class="player-wrapper">
           <img class="avator" :src="brandImg" alt="" />
-          {{ brandName }}
+          <p>{{ brandName }}</p>
         </div>
       </template>
 
@@ -62,7 +62,7 @@ import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
 import ViewDetail from "../components/viewDetail.vue";
-import { ref,computed } from "vue";
+import { ref, computed } from "vue";
 
 export default {
   name: "ViewBrands",
@@ -89,7 +89,7 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", width: 170, sortable: true, value: "brandName" },
+        { text: "Name", align: "start", width: 200, sortable: true, value: "brandName" },
         { text: "Contact", width: 200, value: "brandContactnumber", sortable: true },
         { text: "Email", value: "brandEmail", width: 200, sortable: true },
         { text: "Address", value: "brandAddress", width: 200, sortable: true },
@@ -139,41 +139,43 @@ export default {
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal,showStatusFilter,statusCriteria,filterOptions};
+    return { modalActive, toggleModal, showStatusFilter, statusCriteria, filterOptions };
   },
 
   mounted() {
-    axios
-      .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
-      .then((response) => {
-        // console.log(response.data);
-        this.brandData = response.data;
-        console.log("Data is printed");
-        console.log(this.brandData);
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getData();
   },
   methods: {
-    async changeStatus(brand,status){
-      try{
+    getData() {
+      axios
+        .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
+        .then((response) => {
+          // console.log(response.data);
+          this.brandData = response.data;
+          console.log("Data is printed");
+          console.log(this.brandData);
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async changeStatus(brand, status) {
+      try {
         console.log(brand);
-      console.log(status);
-      const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateStatus/${brand._id}`, {
-            status: status
-      });
-      console.log(someRes);
-      if (someRes.status === 200) {
-        swal("Status Updated!", "Brand status has been updated!", "success");
-        location.reload();
-      }
-      else {
-        swal("Status Not Updated!", "Brand status has not been updated!", "error");
-      }
-    }
-      catch(err){
+        console.log(status);
+        const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateStatus/${brand._id}`, {
+          status: status,
+        });
+        console.log(someRes);
+        if (someRes.status === 200) {
+          swal("Status Updated!", "Brand status has been updated!", "success");
+          this.getData();
+        } else {
+          swal("Status Not Updated!", "Brand status has not been updated!", "error");
+        }
+      } catch (err) {
         console.log(err);
       }
     },
@@ -206,7 +208,7 @@ export default {
                   button: true,
                 }).then(() => {
                   this.$emit("close");
-                  location.reload();
+                  this.getData();
                 });
               } else {
                 swal("Something went wrong!", {
