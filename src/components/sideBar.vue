@@ -1,28 +1,31 @@
 <template>
   <div class="sidebar" :class="{ close: isSidebarClosed }">
-    <div class="bg-white inline-flex items-center justify-center top-7 -right-4 absolute translate-x-full p-2 rounded-full">
-      <button :class="`${isSidebarClosed ? '' : 'f-hidden'}`" class="bx bx-chevrons-right cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
-      <button :class="`${isSidebarClosed ? 'f-hidden' : ''}`" class="bx bx-chevrons-left cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
+    <div
+      class="bg-white inline-flex items-center justify-center top-7 -right-4 absolute translate-x-full p-2 rounded-full">
+      <button :class="`${isSidebarClosed ? '' : 'f-hidden'}`"
+        class="bx bx-chevrons-right cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
+      <button :class="`${isSidebarClosed ? 'f-hidden' : ''}`"
+        class="bx bx-chevrons-left cursor-pointer text-[25px] text-[#64748b]" @click="toggleSidebar"></button>
     </div>
 
     <ul class="nav-links">
-      <li v-for="(item,index) in menuItems" :key="index">
+      <li v-for="(item, index) in menuItems" :key="index">
         <div v-if="item.hasOwnProperty('submenu')" class="iocn-link" @click="toggleSubMenu">
           <a href="#">
             <i :class="`${item.icon}`" class="bx"></i>
-            <span class="link_name">{{index+1}}. {{ item.name }}</span>
+            <span class="link_name">{{ index + 1 }}. {{ item.name }}</span>
           </a>
           <i class="bx bxs-chevron-down arrow"></i>
         </div>
         <router-link v-else :to="item.path">
           <i :class="`${item.icon}`" class="bx"></i>
-          <span class="link_name">{{index+1}}. {{ item.name }}</span>
+          <span class="link_name">{{ index + 1 }}. {{ item.name }}</span>
         </router-link>
 
         <ul v-if="item.hasOwnProperty('submenu')" class="sub-menu" :class="{ showMenu: isSubMenuOpen }">
           <li><a class="link_name" href="#">{{ item.name }}</a></li>
-          <li><router-link :to="item.submenu[0].path">{{index+1}}.1. {{ item.submenu[0].name }}</router-link></li>
-          <li><router-link :to="item.submenu[1].path">{{index+1}}.2. {{ item.submenu[1].name }}</router-link></li>
+          <li><router-link :to="item.submenu[0].path">{{ index + 1 }}.1. {{ item.submenu[0].name }}</router-link></li>
+          <li><router-link :to="item.submenu[1].path">{{ index + 1 }}.2. {{ item.submenu[1].name }}</router-link></li>
         </ul>
         <ul v-else class="sub-menu">
           <li><a class="link_name" href="#">{{ item.name }}</a></li>
@@ -225,39 +228,36 @@ export default {
       localStorage.clear();
       this.$router.push({ name: "Login" });
     },
+    applyImportantStyleToClass(className, property, value) {
+      var style = document.createElement('style');
+      var cssRule = `.${className} { ${property}: ${value} !important; }`;
+
+      if (style.styleSheet) {
+        // For Internet Explorer
+        style.styleSheet.cssText = cssRule;
+      } else {
+        // For other browsers
+        style.appendChild(document.createTextNode(cssRule));
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    },
   },
   mounted() {
     if (this.userType === "admin") {
       this.menuItems = this.forAdmin;
-      const sideBar = document.getElementsByClassName("sidebar");
-      const sub_menu = document.getElementsByClassName("sub-menu");
-      for (var i = 0; i < sideBar.length; i++) {
-        sideBar[i].style.backgroundColor = "#20c997";
-      }
-      console.log(sub_menu);
-      for (var i = 0; i < sub_menu.length; i++) {
-        sub_menu[i].style.backgroundColor = "#20c997";
-      }
+
+      this.applyImportantStyleToClass("sidebar", "background-color", "#20c997")
+      this.applyImportantStyleToClass("sub-menu", "background-color", "#20c997")
     } else if (this.userType === "designer") {
       this.menuItems = this.forDesigner;
-      const sideBar = document.getElementsByClassName("sidebar");
-      const submenu = document.getElementsByClassName("sub-menu");
-      for (var i = 0; i < sideBar.length; i++) {
-        sideBar[i].style.backgroundColor = "#F3677F";
-      }
-      for (var i = 0; i < submenu.length; i++) {
-        submenu[i].style.backgroundColor = "#F3677F";
-      }
+
+      this.applyImportantStyleToClass("sidebar", "background-color", "#F3677F")
+      this.applyImportantStyleToClass("sub-menu", "background-color", "#F3677F")
     } else {
       this.menuItems = this.forBrand;
-      const sideBar = document.getElementsByClassName("sidebar");
-      const submenu = document.getElementsByClassName("sub-menu");
-      for (var i = 0; i < sideBar.length; i++) {
-        sideBar[i].style.backgroundColor = "#20c997";
-      }
-      for (var i = 0; i < submenu.length; i++) {
-        submenu[i].style.backgroundColor = "#20c997";
-      }
+
+      this.applyImportantStyleToClass("sidebar", "background-color", "#20c997")
+      this.applyImportantStyleToClass("sub-menu", "background-color", "#20c997")
     }
 
     if (localStorage.getItem("is_closed") === "true") {
@@ -272,6 +272,14 @@ export default {
 </script>
 
 <style scoped>
+.bg-admin-submenu {
+  background-color: #20c997 !important;
+}
+
+.bg-designer-submenu {
+  background-color: #F3677F !important;
+}
+
 .sidebar {
   position: sticky;
   top: 0;
@@ -282,6 +290,7 @@ export default {
   z-index: 100;
   transition: all 0.5s ease;
 }
+
 .sidebar.close {
   width: var(--sidebar-width);
 }
@@ -293,7 +302,7 @@ export default {
   align-items: center;
 }
 
-.sidebar .logo-details > a {
+.sidebar .logo-details>a {
   font-size: 30px;
   height: 50px;
   min-width: 78px;
@@ -510,6 +519,7 @@ export default {
 .sidebar .profile-details .job {
   font-size: 12px;
 }
+
 .f-hidden {
   display: none !important;
 }
@@ -536,5 +546,4 @@ export default {
   .sidebar.close .profile-details {
     width: var(--sidebar-width);
   }
-}
-</style>
+}</style>
