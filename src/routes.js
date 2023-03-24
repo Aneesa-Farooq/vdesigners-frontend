@@ -19,8 +19,6 @@ import Checkout from "./screens/checkout.vue";
 import PatternGeneration from "./screens/patternGeneration.vue";
 import ViewPayments from "./screens/viewPayments.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
-import CreatePostD from "./screens/createPostD.vue";
-import ViewPostsD from "./screens/viewPostsD.vue";
 import ViewPost from "./screens/viewPost.vue"
 
 const routes = [
@@ -72,6 +70,8 @@ const routes = [
       {name:"ViewPayments", path: "viewPayments", component: ViewPayments },
 
       { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
+
+      {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
 
 
       // { path: "posts", component: UserPosts }
