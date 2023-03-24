@@ -5,7 +5,7 @@
         <div class="flex flex-col md:flex-row w-full gap-6">
           <div class="flex flex-col flex-[1]">
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Designer Name </label>
-            <InputField type="text" id="name" place_holder="Enter Designer Name" class="my-2" v-model="formValues.brandName" />
+            <InputField type="text" id="name" place_holder="Enter Designer Name" class="my-2" v-model="formValues.designerName" />
             <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Email </label>
