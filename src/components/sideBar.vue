@@ -272,14 +272,6 @@ export default {
 </script>
 
 <style scoped>
-.bg-admin-submenu {
-  background-color: #20c997 !important;
-}
-
-.bg-designer-submenu {
-  background-color: #F3677F !important;
-}
-
 .sidebar {
   position: sticky;
   top: 0;
