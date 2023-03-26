@@ -105,7 +105,7 @@ export default {
       ],
       brandData: [],
       filterOptionsArray: [],
-      userType: ""
+      userType: "",
     };
   },
 
@@ -150,7 +150,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
+        .get("http://localhost:5000/api/admin/getAllbrands")
         .then((response) => {
           // console.log(response.data);
           this.brandData = response.data;
@@ -167,7 +167,7 @@ export default {
       try {
         console.log(brand);
         console.log(status);
-        const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateStatus/${brand._id}`, {
+        const someRes = await axios.put(`http://localhost:5000/api/brands/updateStatus/${brand._id}`, {
           status: status,
         });
         console.log(someRes);
@@ -200,8 +200,9 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
+          console.log("delete")
           axios
-            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteBrand/${id}`)
+            .delete(`http://localhost:5000/api/admin/deleteBrand/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {

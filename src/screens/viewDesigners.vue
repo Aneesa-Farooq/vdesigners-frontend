@@ -35,8 +35,8 @@
 
       <template #item-status="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <button :class="`${item.status ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, false)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
-          <button :class="`${item.status ? 'hidden' : ''}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, true)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
+          <button :class="`${item.status=='true'? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, false)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Block user</button>
+          <button :class="`${item.status=='false' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(item, true)"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Unblock</button>
         </div>
       </template>
     </EasyDataTable>
@@ -124,7 +124,7 @@ export default {
   methods: {
     getData(){
       axios
-      .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
+      .get("http://localhost:5000/api/designers/getAlldesigners")
       .then((response) => {
         console.log(response.data);
         this.designerData = response.data;
@@ -137,7 +137,7 @@ export default {
 
     async changeStatus(designer, status) {
       try {
-        const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updateStatus/${designer._id}`, {
+        const someRes = await axios.put(`http://localhost:5000/api/designers/updateStatus/${designer._id}`, {
           status: status,
         });
         console.log(someRes);
@@ -160,6 +160,7 @@ export default {
       this.formValues.brandName = designer.brandId.brandName;
       this.formValues.posts = designer.countPost;
       this.formValues.projects = designer.countProject;
+      this.formValues.image = designer.designerImg;
       localStorage.setItem("designer-to-update", JSON.stringify(designer));
     },
     deleteDesigner(id) {
@@ -173,7 +174,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteDesigner/${id}`)
+            .delete(`http://localhost:5000/api/designers/deletedesigner/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {

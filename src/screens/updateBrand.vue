@@ -117,7 +117,8 @@ export default {
       e.preventDefault();
       (async () => {
         try {
-          const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updatebrand/${this.formValues.id}`, {
+          console.log(this.formValues);
+          const someRes = await axios.put(`http://localhost:5000/api/brands/updatebrand/${this.formValues.id}`, {
             brandName: this.formValues.brandName,
             brandEmail: this.formValues.email,
             brandContactnumber: this.formValues.contact,
@@ -126,6 +127,8 @@ export default {
             password: this.formValues.password,
             brandImg: this.formValues.url,
           });
+
+          console.log(someRes);
 
           if (someRes.statusText == "OK") {
             swal("Updated Successfully", {

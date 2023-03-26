@@ -277,7 +277,7 @@ export default {
               button: true,
             });
           } else {
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
+            const someRes = await axios.post("http://localhost:5000/api/brands", {
               brandName: this.formValues.brandName,
               brandEmail: this.formValues.email,
               brandContactnumber: this.formValues.contact,
@@ -289,7 +289,7 @@ export default {
             if (someRes.statusText == "Created") {
               const id = someRes.data._id;
               console.log(id);
-              const someRes1 = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateProfile/${id}`, {
+              const someRes1 = await axios.put(`http://localhost:5000/api/brands/updateProfile/${id}`, {
                 brandImg: this.formValues.url,
               });
 

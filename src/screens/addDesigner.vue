@@ -86,19 +86,22 @@ export default {
     return {
       isUrl: false,
       formValues: {
-        brandName: "",
+        designerName: "",
         email: "",
         contact: "",
         location: "",
         password: "",
         confirmPassword: "",
         url: "",
-        brandid: "639607fab6e5bd10f6d19797",
+        brandId: "",
       },
     };
   },
 
   mounted() {
+    const User = localStorage.getItem("user-info");
+    const user1 = JSON.parse(User);
+    this.formValues.brandId= user1.user._id;
     var myName = document.getElementById("name");
     var myEmail = document.getElementById("email");
     var myContact = document.getElementById("contact");
@@ -278,20 +281,20 @@ export default {
               button: true,
             });
           } else {
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/designers/", {
-              designerName: this.formValues.brandName,
+            const someRes = await axios.post("http://localhost:5000/api/designers/", {
+              designerName: this.formValues.designerName,
               designerEmail: this.formValues.email,
               designerContactnumber: this.formValues.contact,
               designerAddress: this.formValues.location,
               password: this.formValues.password,
-              brandid: this.formValues.brandId,
+              brandId: this.formValues.brandId,
             });
             console.log(someRes);
 
             if (someRes.statusText == "Created") {
               const id = someRes.data._id;
               console.log(id);
-              const someRes1 = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updateProfile/${id}`, {
+              const someRes1 = await axios.put(`http://localhost:5000/api/designers/updateProfile/${id}`, {
                 designerImg: this.formValues.url,
               });
 

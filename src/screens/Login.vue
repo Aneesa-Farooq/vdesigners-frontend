@@ -75,7 +75,7 @@ export default {
       console.log(repayload);
 
       axios
-        .get(`https://vdesigners.herokuapp.com/api/brands/checkregister/${repayload.email}`)
+        .get(`http://localhost:5000/api/brands/checkregister/${repayload.email}`)
         .then((response) => {
           if (response.data.msg == "user doesnot exist") {
             console.log(response.data.msg);
@@ -105,7 +105,7 @@ export default {
               if (plan) {
                 (async () => {
                   try {
-                    const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/socialLogin", {
+                    const someRes = await axios.post("http://localhost:5000/api/brands/socialLogin", {
                       brandName: repayload.given_name,
                       brandEmail: repayload.email,
                       subscriptionplan: plan,
@@ -162,7 +162,7 @@ export default {
       (async () => {
         try {
           if (this.formValues.actor == "Admin") {
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/admin/loginAdmin", {
+            const someRes = await axios.post("http://localhost:5000/api/admin/loginAdmin", {
               adminEmail: this.formValues.email,
               password: this.formValues.password,
             });
@@ -173,11 +173,11 @@ export default {
             }
           } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/login", {
+            const someRes = await axios.post("http://localhost:5000/api/brands/login", {
               brandEmail: this.formValues.email,
               password: this.formValues.password,
             });
-            console.log(someRes.response.status);
+            console.log(someRes.status);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
               this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
@@ -191,7 +191,7 @@ export default {
               });
             }
           } else if (this.formValues.actor == "Designer") {
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/designers/login", {
+            const someRes = await axios.post("http://localhost:5000/api/designers/login", {
               designerEmail: this.formValues.email,
               password: this.formValues.password,
             });

@@ -119,19 +119,17 @@
         e.preventDefault();
         (async () => {
           try {
-            if (!this.formValues.password) {
-                this.formValues.password = this.formValues.passBackup;
-            }
-            const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updatedesigner/${this.formValues.id}`, {
+            const someRes = await axios.put(`http://localhost:5000/api/designers/updatedesigner/${this.formValues.id}`, {
               _id:this.formValues.id,
               designerName: this.formValues.designerName,
               designerEmail: this.formValues.email,
               designerContactnumber: this.formValues.contact,
               designerAddress: this.formValues.address,
               password: this.formValues.password,
+              designerImg: this.formValues.url,
               
             });
-            console.log(someRes.statusText);
+            console.log(someRes);
             if (someRes.statusText == "OK") {
               swal("Successfully updated", {
                 icon: "success",
