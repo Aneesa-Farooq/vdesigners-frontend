@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/user/Subscriptions/subscriptions" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add Payment</router-link>
+      <router-link to="/user/Subscriptions/subscriptions" class="flex items-center p-5 justify-center h-[35px] decidedBG  text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add Payment</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />

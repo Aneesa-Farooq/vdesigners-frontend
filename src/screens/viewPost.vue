@@ -23,7 +23,7 @@
             <label for="comment" class="block mb-2">Add a comment:</label>
             <textarea id="comment" v-model="newComment" class="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4"
                 placeholder="Write your comment here..."></textarea>
-            <button type="submit" class="bg-mediumPink text-white px-4 py-2 rounded-lg" @click="addComment">Submit</button>
+            <button type="submit" class="decidedBG  text-white px-4 py-2 rounded-lg" @click="addComment">Submit</button>
         </form>
     </div>
 </template>

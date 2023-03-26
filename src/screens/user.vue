@@ -2,7 +2,7 @@
    <div class="app">
      <SideBar :userType="$route.params.type"/>
      <main class="bg-background">
-      <NavBar :class="`${is3d ? 'hidden' : ''}`" :title= "$route.params.pageName"/>
+      <NavBar :title= "$route.params.pageName"/>
      <router-view></router-view>
      </main>
     
@@ -17,17 +17,42 @@ export default {
   name: "User",
   components:{
       SideBar,
-      NavBar
-
+      NavBar,
+      
    },
    data () {
     return {
-      is3d: false
+      userType: this.$route.params.type,
     }},
    mounted(){
-    if (this.$route.params.pageName =="3D" || this.$route.params.pageName =="AI" || this.$route.params.pageName =="Editor"){
-      this.is3d = true;
-    }
-   }
+    if (this.userType === "admin") {
+      this.applyImportantStyleToClass("decidedBG", "background-color", "#20c997")
+    } else if (this.userType === "designer") {
+      this.applyImportantStyleToClass("decidedBG", "background-color", "#F3677F")
+    } else {
+      this.applyImportantStyleToClass("decidedBG", "background-color", "#20c997")    }
+   },
+   methods: {
+    applyImportantStyleToClass(className, property, value) {
+      var style = document.createElement('style');
+      var cssRule = `.${className} { ${property}: ${value} !important; }`;
+
+      if (style.styleSheet) {
+        // For Internet Explorer
+        style.styleSheet.cssText = cssRule;
+      } else {
+        // For other browsers
+        style.appendChild(document.createTextNode(cssRule));
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    },
 }
+}
+
 </script>
+
+<style>
+.decidedBG{
+  background-color: #F5F5F5;
+}
+</style>

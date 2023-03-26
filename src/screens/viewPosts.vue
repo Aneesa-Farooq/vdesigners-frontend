@@ -20,7 +20,7 @@
         <div class="flex ml-auto self-center mr-2 gap-4">
           <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
           <router-link to="/user/Post Detail/{{userType}}/viewPost/{{ post._id }}">
-            <button class="bg-Green text-white px-8 py-2 rounded-md">View Post</button>
+            <button class="decidedBG text-white px-8 py-2 rounded-md">View Post</button>
           </router-link>
         </div>
       </div>

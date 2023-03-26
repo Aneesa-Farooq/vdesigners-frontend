@@ -51,16 +51,16 @@
                 <img :class="`${isUrl ? '' : 'hidden'}`" class="h-auto w-auto" :src="formValues.url" alt="" />
               </button>
               <div class="flex flex-col gap-6">
-                <button type="button" @click="toggleURL" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
-                <button type="button" @click="updateProfile" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
+                <button type="button" @click="toggleURL" class="block decidedBG  border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
+                <button type="button" @click="updateProfile" class="block decidedBG  border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
               </div>
             </div>
           </div>
         </div>
 
         <div class="flex flex-col md:flex-row w-full gap-6">
-          <router-link to="/user/Dashboard/admin/dbAdmin" class="my-[22px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
-          <input class="my-[22px] w-full self-start block bg-Green border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
+          <router-link to="/user/Dashboard/admin/dbAdmin" class="my-[22px] w-full text-center self-start block bg-white border  text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
+          <input class="my-[22px] w-full self-start block decidedBG  text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
         </div>
       </div>
     </form>
@@ -86,6 +86,7 @@
     data() {
       return {
         isUrl: true,
+        color: "#F3677F",
         formValues: {
         id: "",
         designerName: "",
