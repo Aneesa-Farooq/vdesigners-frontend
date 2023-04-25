@@ -149,7 +149,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteDesigner/${id}`)
+            .delete(`https://vdesigners.herokuapp.com/api/designers/deleteDesigner/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {
