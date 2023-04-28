@@ -22,13 +22,11 @@
         <svg class="w-8 h-8 text-gray-600" viewBox="0 0 24 24">
           <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
         </svg>
-
       </li>
     </ul>
     <div class="mt-5">
       <!-- stripe -->
-      <div ref="card" class="mx-3 p-2.5 rounded-md border-2 border-solid">
-      </div>
+      <div ref="card" class="mx-3 p-2.5 rounded-md border-2 border-solid"></div>
 
       <div id="card-errors" role="alert" class="mx-3 text-error-message text-lg font-semibold"></div>
       <div class="justify-center mx-3">
@@ -43,6 +41,11 @@ import axios from "axios";
 import swal from "sweetalert";
 export default {
   name: "Checkout",
+  data() {
+    return {
+      id: "",
+    };
+  },
   setup() {
     const disabled = ref(false);
     const card = ref(null);
@@ -78,6 +81,10 @@ export default {
     }
 
     onMounted(() => {
+      const User = localStorage.getItem("user-info");
+      const user1 = JSON.parse(User);
+      this.id = user1.user._id;
+
       el.mount(card.value);
       card.value = el;
       el.on("change", (event) => {
@@ -117,7 +124,7 @@ export default {
           price: result.paymentIntent.amount,
           status: result.paymentIntent.status,
           stripeSubscriptionId: subscriptionId,
-          userid: "639607fab6e5bd10f6d19797",
+          userid: this.id,
         });
         if (response.data.newSubscription.status == "succeeded" && result.paymentIntent.status == "succeeded") {
           swal("Transaction Successful", {
@@ -126,7 +133,7 @@ export default {
           }).then(() => {
             this.$router.push({
               name: "ViewPayments",
-              params: {pageName: "ViewPayments" }
+              params: { pageName: "ViewPayments" },
             });
           });
         }

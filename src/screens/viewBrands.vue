@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background">
     <div class="flex gap-4 justify-between items-center">
-      <router-link to="/user/Register Brand/addBrand" class="flex items-center p-5 justify-center h-[35px] bg-Green text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
+      <router-link to="/user/Register Brand/{{userType}}/addBrand" class="decidedBG flex items-center p-5 justify-center h-[35px] text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
       <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
@@ -14,14 +14,14 @@
       <template #item-brandName="{ brandName, brandImg }">
         <div class="player-wrapper">
           <img class="avator" :src="brandImg" alt="" />
-          {{ brandName }}
+          <p>{{ brandName }}</p>
         </div>
       </template>
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/user/Update Brand/updateBrand"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link to="/user/Update Brand/{{userType}}/updateBrand"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
           <button
             @click="
               toggleModal();
@@ -62,7 +62,7 @@ import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
 import ViewDetail from "../components/viewDetail.vue";
-import { ref,computed } from "vue";
+import { ref, computed } from "vue";
 
 export default {
   name: "ViewBrands",
@@ -89,7 +89,7 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", width: 170, sortable: true, value: "brandName" },
+        { text: "Name", align: "start", width: 200, sortable: true, value: "brandName" },
         { text: "Contact", width: 200, value: "brandContactnumber", sortable: true },
         { text: "Email", value: "brandEmail", width: 200, sortable: true },
         { text: "Address", value: "brandAddress", width: 200, sortable: true },
@@ -105,6 +105,7 @@ export default {
       ],
       brandData: [],
       filterOptionsArray: [],
+      userType: "",
     };
   },
 
@@ -139,41 +140,44 @@ export default {
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal,showStatusFilter,statusCriteria,filterOptions};
+    return { modalActive, toggleModal, showStatusFilter, statusCriteria, filterOptions };
   },
 
   mounted() {
-    axios
-      .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
-      .then((response) => {
-        // console.log(response.data);
-        this.brandData = response.data;
-        console.log("Data is printed");
-        console.log(this.brandData);
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.userType = this.$route.params.type;
+    this.getData();
   },
   methods: {
-    async changeStatus(brand,status){
-      try{
+    getData() {
+      axios
+        .get("http://localhost:5000/api/admin/getAllbrands")
+        .then((response) => {
+          // console.log(response.data);
+          this.brandData = response.data;
+          console.log("Data is printed");
+          console.log(this.brandData);
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async changeStatus(brand, status) {
+      try {
         console.log(brand);
-      console.log(status);
-      const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updateStatus/${brand._id}`, {
-            status: status
-      });
-      console.log(someRes);
-      if (someRes.status === 200) {
-        swal("Status Updated!", "Brand status has been updated!", "success");
-        location.reload();
-      }
-      else {
-        swal("Status Not Updated!", "Brand status has not been updated!", "error");
-      }
-    }
-      catch(err){
+        console.log(status);
+        const someRes = await axios.put(`http://localhost:5000/api/brands/updateStatus/${brand._id}`, {
+          status: status,
+        });
+        console.log(someRes);
+        if (someRes.status === 200) {
+          swal("Status Updated!", "Brand status has been updated!", "success");
+          this.getData();
+        } else {
+          swal("Status Not Updated!", "Brand status has not been updated!", "error");
+        }
+      } catch (err) {
         console.log(err);
       }
     },
@@ -196,8 +200,9 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
+          console.log("delete")
           axios
-            .delete(`https://vdesigners.herokuapp.com/api/admin/deleteBrand/${id}`)
+            .delete(`http://localhost:5000/api/admin/deleteBrand/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {
@@ -206,7 +211,7 @@ export default {
                   button: true,
                 }).then(() => {
                   this.$emit("close");
-                  location.reload();
+                  this.getData();
                 });
               } else {
                 swal("Something went wrong!", {

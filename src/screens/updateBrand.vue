@@ -1,67 +1,71 @@
 <template>
-  <h5 class="mb-3 text-center font-bold text-3xl text-Green">Update {{ formValues.brandName }}'s details</h5>
-  <form @submit="submitForm" class="w-full flex flex-col items-center">
-    <div class="flex w-full gap-6">
-      <div class="flex flex-col flex-[1]">
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Brand Name </label>
-        <InputField type="text" id="name" place_holder="Enter Brand Name" class="my-2" v-model="formValues.brandName" />
-        <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
+  <div class="bg-background p-4">
+    <h5 class="mb-3 text-center font-bold text-3xl text-Green">Update {{ formValues.brandName }}'s details</h5>
+    <form @submit="submitForm" class="w-full flex flex-col items-center">
+      <div class="flex flex-col w-full">
+        <div class="flex flex-col md:flex-row w-full gap-6">
+          <div class="flex flex-col flex-[1]">
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Brand Name </label>
+            <InputField type="text" id="name" place_holder="Enter Brand Name" class="my-2" v-model="formValues.brandName" />
+            <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Email </label>
-        <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
-        <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Email </label>
+            <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
+            <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Contact </label>
-        <InputField type="text" id="contact" place_holder="Enter contact number" class="my-2" v-model="formValues.contact" />
-        <p id="eContact" class="invalid hidden m-2">11 digit contact number</p>
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Contact </label>
+            <InputField type="text" id="contact" place_holder="Enter contact number" class="my-2" v-model="formValues.contact" />
+            <p id="eContact" class="invalid hidden m-2">11 digit contact number</p>
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Location </label>
-        <InputField type="text" place_holder="Enter Location" class="my-2" v-model="formValues.location" />
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Location </label>
+            <InputField type="text" place_holder="Enter Location" class="my-2" v-model="formValues.location" />
+          </div>
 
-        <router-link to="/user/Brands/viewBrands" class="mt-[42px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
-      </div>
+          <div class="flex flex-col flex-[1]">
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Password </label>
+            <p class="w-full flex relative items-center">
+              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" />
+              <button type="button" @click="togglePass('psw')" class="absolute right-[20px] hidden"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
+              <button type="button" @click="togglePass('psw')" class="absolute right-[20px]"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
+            </p>
 
-      <div class="flex flex-col flex-[1]">
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Password </label>
-        <p class="w-full flex relative items-center">
-          <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" />
-          <button type="button" @click="togglePass('psw')" class="absolute right-[20px] hidden"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
-          <button type="button" @click="togglePass('psw')" class="absolute right-[20px]"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
-        </p>
+            <div id="message">
+              <h3>Password must contain the following:</h3>
+              <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+              <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+              <p id="number" class="invalid">A <b>number</b></p>
+              <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            </div>
 
-        <div id="message">
-          <h3>Password must contain the following:</h3>
-          <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-          <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-          <p id="number" class="invalid">A <b>number</b></p>
-          <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-        </div>
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Confirm Password </label>
+            <p class="w-full flex relative items-center">
+              <InputField id="confirm-psw" place_holder="Confirm Password" type="Password" class="my-2" v-model="formValues.confirmPassword" />
+              <button type="button" @click="togglePass('confirm-psw')" class="absolute right-[20px] hidden"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
+              <button type="button" @click="togglePass('confirm-psw')" class="absolute right-[20px]"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
+            </p>
+            <p id="eCpsw" class="invalid hidden m-2">Password does not match</p>
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Confirm Password </label>
-        <p class="w-full flex relative items-center">
-          <InputField id="confirm-psw" place_holder="Confirm Password" type="Password" class="my-2" v-model="formValues.confirmPassword" />
-          <button type="button" @click="togglePass('confirm-psw')" class="absolute right-[20px] hidden"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
-          <button type="button" @click="togglePass('confirm-psw')" class="absolute right-[20px]"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
-        </p>
-        <p id="eCpsw" class="invalid hidden m-2">Password does not match</p>
-
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Profile Picture </label>
-        <div class="flex my-2 items-center justify-between">
-          <button type="button" @click="updateProfile" class="bg-white h-[180px] w-[200px] overflow-hidden rounded-xl flex justify-center items-center">
-            <img :class="`${isUrl ? 'hidden' : ''}`" class="h-auto w-auto" src="/img/uploadProfile.png" alt="" />
-              <img :class="`${isUrl ? '' : 'hidden'}`" class="h-auto w-auto" :src="formValues.url" alt="" />
-          </button>
-          <div class="flex flex-col gap-6">
-            <button type="button" @click="toggleURL" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
-            <button type="button" @click="updateProfile" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
+            <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Profile Picture </label>
+            <div class="flex gap-4 my-2 items-center justify-between">
+              <button type="button" @click="updateProfile" class="bg-white h-[180px] w-[200px] overflow-hidden rounded-xl flex justify-center items-center">
+                <img :class="`${isUrl ? 'hidden' : ''}`" class="h-auto w-auto" src="/img/uploadProfile.png" alt="" />
+                <img :class="`${isUrl ? '' : 'hidden'}`" class="h-auto w-auto" :src="formValues.url" alt="" />
+              </button>
+              <div class="flex flex-col gap-6">
+                <button type="button" @click="toggleURL" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
+                <button type="button" @click="updateProfile" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
+              </div>
+            </div>
           </div>
         </div>
-        <input class="my-[22px] w-full self-start block bg-Green border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
+        <div class="flex flex-col md:flex-row w-full gap-6">
+          <router-link to="/user/Dashboard/admin/dbAdmin" class="my-[22px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
+          <input class="my-[22px] w-full self-start block bg-Green border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
-
 <script>
 import axios from "axios";
 import InputField from "../components/inputField.vue";
@@ -113,7 +117,8 @@ export default {
       e.preventDefault();
       (async () => {
         try {
-          const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/brands/updatebrand/${this.formValues.id}`, {
+          console.log(this.formValues);
+          const someRes = await axios.put(`http://localhost:5000/api/brands/updatebrand/${this.formValues.id}`, {
             brandName: this.formValues.brandName,
             brandEmail: this.formValues.email,
             brandContactnumber: this.formValues.contact,
@@ -122,6 +127,8 @@ export default {
             password: this.formValues.password,
             brandImg: this.formValues.url,
           });
+
+          console.log(someRes);
 
           if (someRes.statusText == "OK") {
             swal("Updated Successfully", {

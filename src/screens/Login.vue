@@ -8,7 +8,8 @@
         <p class="self-start block font-poppins font-extrabold text-2xl text-grey">Sign In to V-Designers</p>
         <br />
         <GoogleLogin class="flex self-start" :callback="callback" />
-        <hr class="border-t-[1px] border-solid w-full border-[#e0e0e0] overflow-visible m-12 after:content-['or'] after:relative text-center after:bg-white after:px-[16px] after:top-[-14px]" />
+        <hr
+          class="border-t-[1px] border-solid w-full border-[#e0e0e0] overflow-visible m-12 after:content-['or'] after:relative text-center after:bg-white after:px-[16px] after:top-[-14px]" />
         <form @submit="submitForm" class="w-full flex flex-col items-center max-w-[500px]">
           <!-- <label class="self-start block font-poppins tracking-[1px] text-base">Email</label> -->
           <SelectField class="my-2" v-model="formValues.actor" />
@@ -17,16 +18,22 @@
           <InputField type="text" place_holder="Enter email" class="my-2" v-model="formValues.email" />
           <div class="flex items-center w-full justify-between mt-2">
             <label class="self-start font-poppins tracking-[1px] text-base">Password</label>
-            <button class="self-end block font-poppins font-normal text-sm text-[#F33757] hover:opacity-70" type="button" @click="toggleModal">Forgot Password?</button>
+            <button class="self-end block font-poppins font-normal text-sm text-[#F33757] hover:opacity-70" type="button"
+              @click="toggleModal">Forgot Password?</button>
           </div>
 
           <InputField place_holder="Enter Password" type="Password" class="my-2" v-model="formValues.password" />
           <p class="text-red text-base font-normal self-start">{{ formValues.errorMesg }}</p>
           <div class="flex flex-col xl:flex-row gap-2 w-full xl:justify-between mt-2 xl:items-end my-[1.6rem]">
-            <input class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:opacity-70" type="submit" value="Sign In" />
+            <button id="signin-btn" type="submit" :onClick="signIn"
+              class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:opacity-70">
+              <span class="spinner-border spinner-border-sm d-none mr-4" role="status" aria-hidden="true"></span> Sign In
+            </button>
             <div class="flex items-center mt-1 gap-[.8rem] text-base font-normal">
               <p>Do not have an account?</p>
-              <router-link class="bg-transparent text-[#F33757] border-none cursor-pointer font-medium tracking-[.3px] hover:opacity-70" to="/">Signup</router-link>
+              <router-link
+                class="bg-transparent text-[#F33757] border-none cursor-pointer font-medium tracking-[.3px] hover:opacity-70"
+                to="/">Signup</router-link>
             </div>
           </div>
         </form>
@@ -68,7 +75,7 @@ export default {
       console.log(repayload);
 
       axios
-        .get(`https://vdesigners.herokuapp.com/api/brands/checkregister/${repayload.email}`)
+        .get(`http://localhost:5000/api/brands/checkregister/${repayload.email}`)
         .then((response) => {
           if (response.data.msg == "user doesnot exist") {
             console.log(response.data.msg);
@@ -98,7 +105,7 @@ export default {
               if (plan) {
                 (async () => {
                   try {
-                    const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/socialLogin", {
+                    const someRes = await axios.post("http://localhost:5000/api/brands/socialLogin", {
                       brandName: repayload.given_name,
                       brandEmail: repayload.email,
                       subscriptionplan: plan,
@@ -111,7 +118,7 @@ export default {
                         button: true,
                       }).then(() => {
                         localStorage.setItem("user-info", JSON.stringify(repayload));
-                        window.location.href = "/user/Dashboard/dbAdmin";
+                        this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
                       });
                     }
                   } catch (e) {
@@ -127,7 +134,7 @@ export default {
             })();
           } else {
             localStorage.setItem("user-info", JSON.stringify(repayload));
-            window.location.href = "/user/Dashboard/dbAdmin";
+            this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
           }
         })
         .catch((error) => {
@@ -155,30 +162,44 @@ export default {
       (async () => {
         try {
           if (this.formValues.actor == "Admin") {
-            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/admin/loginAdmin", {
+            const someRes = await axios.post("http://localhost:5000/api/admin/loginAdmin", {
               adminEmail: this.formValues.email,
               password: this.formValues.password,
             });
             console.log(someRes);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
-              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" } });
+              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "admin"} });
             }
           } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-
+            const someRes = await axios.post("http://localhost:5000/api/brands/login", {
+              brandEmail: this.formValues.email,
+              password: this.formValues.password,
+            });
+            console.log(someRes.status);
+            if (someRes.status == "200") {
+              localStorage.setItem("user-info", JSON.stringify(someRes.data));
+              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
+            }
+            else {
+              swal({
+                title: "User does not exist",
+                text: "User does not exist",
+                icon: "error",
+                button: true,
+              });
+            }
           } else if (this.formValues.actor == "Designer") {
-            // const someRes = await axios.post("https://vdesigners.herokuapp.com/api/login/loginDesigner", {
-            //   designerEmail: this.formValues.email,
-            //   password: this.formValues.password,
-            // });
-            // console.log(someRes);
-            // if (someRes.status == "200") {
-            //   localStorage.setItem("user-info", JSON.stringify(someRes.data));
-            //   this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" } });
-            // }
-            this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" } });
-            localStorage.setItem("user-info", JSON.stringify(this.formValues));
+            const someRes = await axios.post("http://localhost:5000/api/designers/login", {
+              designerEmail: this.formValues.email,
+              password: this.formValues.password,
+            });
+            console.log(someRes);
+            if (someRes.status == "200") {
+              localStorage.setItem("user-info", JSON.stringify(someRes.data));
+              this.$router.push({ name: "DashboardDesigner", params: { pageName: "Dashboard" , type: "designer"} });
+            }
           } else {
             swal({
               title: "Please Select Actor",
@@ -186,13 +207,27 @@ export default {
               icon: "error",
               button: true,
             });
+            const signinBtn = document.querySelector('#signin-btn');
+            signinBtn.disabled = false;
+            signinBtn.querySelector('span').classList.add('d-none');
           }
         } catch (e) {
           console.log(e);
           this.formValues.errorMesg = e.response.data.mesg;
+          const signinBtn = document.querySelector('#signin-btn');
+          signinBtn.disabled = false;
+          signinBtn.querySelector('span').classList.add('d-none');
         }
       })();
     },
+    signIn(e) {
+      e.preventDefault();
+      const signinBtn = e.target.closest('#signin-btn');
+      signinBtn.disabled = true;
+      signinBtn.querySelector('span').classList.remove('d-none');
+
+      this.submitForm(e);
+    }
   },
 
   // mounted() {
@@ -216,5 +251,49 @@ export default {
 
 .swal2-title {
   color: rgb(74, 77, 81) !important;
+}
+
+
+@-webkit-keyframes spinner-border {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -.125em;
+  border: .25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: .75s linear infinite spinner-border;
+  animation: .75s linear infinite spinner-border
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: .2em
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+  .spinner-border,
+  .spinner-grow {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s
+  }
+}
+
+.d-none {
+  display: none !important;
 }
 </style>
