@@ -20,6 +20,7 @@ import PatternGeneration from "./screens/patternGeneration.vue";
 import ViewPayments from "./screens/viewPayments.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
 import ViewPost from "./screens/viewPost.vue"
+import Gallery from "./screens/gallery.vue"
 
 const routes = [
   {
@@ -72,6 +73,8 @@ const routes = [
       { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
 
       {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
+
+      {name:"Gallery", path: "gallery", component: Gallery }
 
 
       // { path: "posts", component: UserPosts }

@@ -121,6 +121,11 @@ export default {
           icon: "bx-layer",
         },
         {
+          name: "Gallery",
+          path: "/user/Gallery/admin/gallery",
+          icon: "bx-folder-open",
+        },
+        {
           name: "Feedbacks",
           path: "/user/Feedbacks/admin/feedbacks",
           icon: "bx-like",
@@ -206,6 +211,11 @@ export default {
           name: "3D",
           icon: "bx-layer",
           path: "/user/3D/designer/3d",
+        },
+        {
+          name: "Gallery",
+          path: "/user/Gallery/designer/gallery",
+          icon: "bx-folder-open",
         }
       ],
     };
