@@ -1,7 +1,7 @@
 <template>
-    <div id="tui-image-editor-container"></div>
+  <div id="tui-image-editor-container"></div>
 </template>
-  
+
 <script>
 export default {
   name: "Editor",
@@ -11,15 +11,21 @@ export default {
     };
   },
   mounted() {
-    // Image editor
-    console.log("hello");
-    console.log(this.$route.params.type)
-    this.imgPath = atob(this.$route.params.path);
-    console.log(this.imgPath);
-    var imageEditor = new tui.ImageEditor('#tui-image-editor-container', {
+    // Ensure the route param is correctly received
+    console.log("Route param:", this.$route.params.path);
+
+    // Decode and handle the URL as you mentioned
+    let imgUrl = decodeURIComponent(this.$route.params.path);
+    imgUrl = imgUrl.replace('PLACEHOLDER', '%2F');
+
+    this.imgPath = imgUrl;
+    console.log("Image Path:", this.imgPath);
+
+    // Initialize the image editor
+    const imageEditor = new tui.ImageEditor('#tui-image-editor-container', {
       includeUI: {
         loadImage: {
-          path:this.imgPath,
+          path: this.imgPath,
           name: 'SampleImage',
         },
         theme: blackTheme, // or whiteTheme
@@ -30,14 +36,12 @@ export default {
       cssMaxHeight: 600,
       usageStatistics: false,
     });
+
     window.onresize = function () {
       imageEditor.ui.resizeEditor();
     };
-
-    //document.querySelector(".tui-image-editor-header-logo").innerHTML = '<img src="/img/logo.png" style="height:70px; width:auto" alt="logo" />';
   },
 };
-
 </script>
   
 <style>
@@ -54,7 +58,7 @@ body {
   height: 100vh !important;
 }
 
-.tui-image-editor-help-menu{
+.tui-image-editor-help-menu {
   background-color: #1e1e1e !important;
 }
 
@@ -68,12 +72,14 @@ body {
   gap: .5rem;
 }
 
-.tui-image-editor-menu use.normal.use-default, .tui-image-editor-help-menu use.normal.use-default {
-    fill-rule: evenodd;
-    fill: white !important;
-    stroke: white !important;
+.tui-image-editor-menu use.normal.use-default,
+.tui-image-editor-help-menu use.normal.use-default {
+  fill-rule: evenodd;
+  fill: white !important;
+  stroke: white !important;
 }
-svg[display=none]{
+
+svg[display=none] {
   display: none !important;
   height: 0 !important;
 }

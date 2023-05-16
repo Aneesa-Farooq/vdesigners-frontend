@@ -1,14 +1,16 @@
 <template>
   <div class="bg-background">
     <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-        <div class="max-h-[250px] overflow-hidden bg-white relative" v-for="(post, index) in GalleryData" :key="index">
-          <img class="img-fluid" :src="post.image" alt="" />
-          <div class="h-full w-full absolute top-0 bottom-0 left-0 right-0 bg-black opacity-0 hover:opacity-50 flex justify-center items-center">
-            <button @click="navigate(post.image[0])" class="text-white border border-white border-spacing-1 p-2 rounded-xl">Open in Editor</button>
-          </div>
+      <div class="max-h-[250px] overflow-hidden bg-white relative" v-for="(post, index) in GalleryData" :key="index">
+        <img class="img-fluid" :src="post.image" alt="" />
+        <div
+          class="h-full w-full absolute top-0 bottom-0 left-0 right-0 bg-black opacity-0 hover:opacity-50 flex justify-center items-center">
+          <button @click="navigate(post.image[0])"
+            class="text-white border border-white border-spacing-1 p-2 rounded-xl">Open in Editor</button>
         </div>
+      </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -29,22 +31,25 @@ export default {
     };
   },
   mounted() {
-        this.userType = this.$route.params.type;
-        axios
-            .get(`https://vdesigners.herokuapp.com/api/project/getProjects`)
-            .then((response) => {
-                console.log(response.data);
-                this.GalleryData = response.data;
-                console.log(this.GalleryData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    },
+    this.userType = this.$route.params.type;
+    axios
+      .get(`https://vdesigners.herokuapp.com/api/project/getProjects`)
+      .then((response) => {
+        console.log(response.data);
+        this.GalleryData = response.data;
+        console.log(this.GalleryData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   methods: {
     navigate(image) {
+      const encodedPart = '%2F';
+      const placeholder = 'PLACEHOLDER';
+      image = image.replace(encodedPart, placeholder);
       console.log(image);
-      this.$router.push(`/user/Editor/${this.userType}/editor/${btoa(image)}`);
+      this.$router.push(`/user/Editor/${this.userType}/editor/${encodeURIComponent(image)}`);
     },
   },
 };
