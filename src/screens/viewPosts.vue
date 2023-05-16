@@ -76,7 +76,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5000/api/admin/deleteBrand/${id}`)
+            .delete(`http://localhost:5172/api/admin/deleteBrand/${id}`)
             .then((response) => {
               console.log(response.status);
             })

@@ -1,6 +1,6 @@
 <template>
  
-    <iframe class="h-[calc(100vh-68px-3rem)] w-full" src="https://pattern-generation-main-bpovzb29e-alishbaiftikhar.vercel.app/?designerid=4" title="3D viewer"></iframe>
+    <iframe class="h-[calc(100vh-68px-3rem)] w-full" src="https://pattern-generation-main-i38ao3d3e-alishbaiftikhar.vercel.app/" title="3D viewer"></iframe>
   
 </template>
 

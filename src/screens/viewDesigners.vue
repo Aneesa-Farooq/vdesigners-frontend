@@ -124,7 +124,7 @@ export default {
   methods: {
     getData(){
       axios
-      .get("http://localhost:5000/api/designers/getAlldesigners")
+      .get("http://localhost:5172/api/designers/getAlldesigners")
       .then((response) => {
         console.log(response.data);
         this.designerData = response.data;
@@ -137,7 +137,7 @@ export default {
 
     async changeStatus(designer, status) {
       try {
-        const someRes = await axios.put(`http://localhost:5000/api/designers/updateStatus/${designer._id}`, {
+        const someRes = await axios.put(`http://localhost:5172/api/designers/updateStatus/${designer._id}`, {
           status: status,
         });
         console.log(someRes);
@@ -174,7 +174,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5000/api/designers/deletedesigner/${id}`)
+            .delete(`http://localhost:5172/api/designers/deletedesigner/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {

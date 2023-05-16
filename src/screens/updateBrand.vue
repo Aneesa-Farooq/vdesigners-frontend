@@ -118,7 +118,7 @@ export default {
       (async () => {
         try {
           console.log(this.formValues);
-          const someRes = await axios.put(`http://localhost:5000/api/brands/updatebrand/${this.formValues.id}`, {
+          const someRes = await axios.put(`http://localhost:5172/api/brands/updatebrand/${this.formValues.id}`, {
             brandName: this.formValues.brandName,
             brandEmail: this.formValues.email,
             brandContactnumber: this.formValues.contact,

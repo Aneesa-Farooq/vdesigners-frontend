@@ -281,7 +281,7 @@ export default {
               button: true,
             });
           } else {
-            const someRes = await axios.post("http://localhost:5000/api/designers/", {
+            const someRes = await axios.post("http://localhost:5172/api/designers/", {
               designerName: this.formValues.designerName,
               designerEmail: this.formValues.email,
               designerContactnumber: this.formValues.contact,
@@ -294,7 +294,7 @@ export default {
             if (someRes.statusText == "Created") {
               const id = someRes.data._id;
               console.log(id);
-              const someRes1 = await axios.put(`http://localhost:5000/api/designers/updateProfile/${id}`, {
+              const someRes1 = await axios.put(`http://localhost:5172/api/designers/updateProfile/${id}`, {
                 designerImg: this.formValues.url,
               });
 
