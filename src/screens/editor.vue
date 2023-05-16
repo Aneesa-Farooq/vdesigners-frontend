@@ -5,12 +5,21 @@
 <script>
 export default {
   name: "Editor",
+  data() {
+    return {
+      imgPath: "",
+    };
+  },
   mounted() {
     // Image editor
+    console.log("hello");
+    console.log(this.$route.params.type)
+    this.imgPath = atob(this.$route.params.path);
+    console.log(this.imgPath);
     var imageEditor = new tui.ImageEditor('#tui-image-editor-container', {
       includeUI: {
         loadImage: {
-          path: '/img/white-panel.jpg',
+          path:this.imgPath,
           name: 'SampleImage',
         },
         theme: blackTheme, // or whiteTheme

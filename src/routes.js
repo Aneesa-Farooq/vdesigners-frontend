@@ -60,7 +60,7 @@ const routes = [
 
       {name:"Subscriptions", path: "subscriptions", component: Subscriptions },
 
-      {name:"Editor", path: "editor", component: Editor },
+      {name:"Editor", path: "editor/:path", component: Editor },
 
       {name:"ThreeD", path: "3d", component: ThreeD },
 

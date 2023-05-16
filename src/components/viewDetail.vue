@@ -6,7 +6,7 @@
           <i @click="close" class="far fa-times-circle"></i>
           <!-- Modal Content -->
           <slot />
-          <button @click="close" class="rounded-md hover:opacity-70" type="button">Close</button>
+         <!-- <button @click="close" class="rounded-md hover:opacity-70" type="button">Close</button> -->
         </div>
       </transition>
     </div>
@@ -70,7 +70,8 @@ export default {
   .modal-inner {
     position: relative;
     max-width: 640px;
-    width: 80%;
+    width: 30%;
+    height:auto;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     background-color: #fff;
     padding: 44px 40px;

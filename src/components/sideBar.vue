@@ -53,6 +53,7 @@ export default {
   },
   data() {
     return {
+      whiteImg: "/img/white-panel.jpg",
       number: 1,
       isSidebarClosed: true,
       isSubMenuOpen: false,
@@ -112,7 +113,7 @@ export default {
         },
         {
           name: "Editor",
-          path: "/user/Editor/admin/editor",
+          path: "/user/Editor/admin/editor/${this.whiteImg}",
           icon: "bx-edit",
         },
         {
@@ -205,7 +206,7 @@ export default {
         {
           name: "Editor",
           icon: "bx-edit",
-          path: "/user/Editor/designer/editor",
+          path: "/user/Editor/designer/editor/${this.whiteImg}",
         },
         {
           name: "3D",

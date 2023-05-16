@@ -2,15 +2,15 @@
   <div class="bg-background px-[48px]">
     <div class="flex flex-col justify-center">
       <div class="w-2/4">
-        <button @click="newPost" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
-        <div :class="`${isUrls ? 'hidden' : ''}`">
-          <img class="h-36 w-auto rounded-lg" src="/img/uploadImage.png" alt="" />
-          <p class="text-[#526faf]">Upload your image here</p>
-        </div>
-        <div class="overflow-scroll flex gap-2" :class="`${isUrls ? '' : 'hidden'}`">
-          <img v-for="(url, index) in urls" :key="index" class="h-36 w-auto rounded-lg" :src="url" alt="" />
-        </div>
-      </button>
+        <button @click="toggleModal" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
+          <div :class="`${isUrls ? 'hidden' : ''}`">
+            <img class="h-36 w-auto rounded-lg" src="/img/uploadImage.png" alt="" />
+            <p class="text-[#526faf]">Upload your image here</p>
+          </div>
+          <div class="overflow-scroll flex gap-2" :class="`${isUrls ? '' : 'hidden'}`">
+            <img v-for="(url, index) in urls" :key="index" class="h-36 w-auto rounded-lg" :src="url" alt="" />
+          </div>
+        </button>
         <label class="block font-poppins tracking-[1px] text-lg font-bold text-gray-700 mt-4 mb-2"> Name </label>
         <InputField type="text" id="name" place_holder="Enter post Name" v-model="patternName" class="w-full my-2" />
 
@@ -24,6 +24,31 @@
       </div>
     </div>
   </div>
+  <ViewDetail @close="toggleModal" :modalActive="modalActive">
+    <div class="flex w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center gap-[100px]">
+      <button @click="newPost" class="flex flex-col justify-center items-center">
+        <img class="h-20 w-auto rounded-lg" src="/img/PC-icon.png" alt="" />
+        <p>Device</p>
+      </button>
+      <button @click="toggleModal1" class="flex flex-col justify-center items-center">
+        <img class="h-20 w-auto rounded-lg" src="/img/gallery.png" alt="" />
+        <p>Gallery</p>
+      </button>
+    </div>
+  </ViewDetail>
+
+  <ViewDetail @close="toggleModal1" :modalActive="modalActive1">
+    <div class="flex w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center gap-[100px]">
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
+        <div @click="toggleSelected" class="image-container max-h-[250px] bg-white relative z-0" v-for="(post, index) in GalleryData" :key="index">
+          <img class="img-fluid" :src="post.image" alt="" />
+          <div :class="`${selected ? '' : 'hidden'}`"  class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
+            <Icon class="text-2xl text-white" icon="mdi:tick-circle"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ViewDetail>
 </template>
 
 <script>
@@ -31,26 +56,73 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
 import axios from "axios";
 import swal from "sweetalert";
+import ViewDetail from "../components/viewDetail.vue";
 import InputField from "../components/inputField.vue";
+import { ref } from "vue";
 import mongoose from "mongoose";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
+import { Icon } from "@iconify/vue";
 
 export default {
   name: "CreatePost",
   components: {
     InputField,
+    ViewDetail,
+    Icon,
   },
   data() {
     return {
       isUrls: false,
+      selected: false,
       urls: [],
       patternName: "",
       description: "",
       category: "",
+      GalleryData: {},
     };
   },
+
+  setup() {
+    const modalActive = ref(false);
+    const modalActive1 = ref(true);
+    console.log("hello");
+    console.log(modalActive);
+    const toggleModal = () => {
+      console.log("hello");
+      console.log(modalActive);
+      modalActive.value = !modalActive.value;
+    };
+
+    const toggleModal1 = () => {
+      console.log("hello");
+      console.log(modalActive);
+      modalActive1.value = !modalActive1.value;
+    };
+    return { modalActive, toggleModal, modalActive1, toggleModal1 };
+  },
+
+  mounted() {
+    this.getGallery();
+  },
+
   methods: {
+    toggleSelected() {
+      this.selected = !this.selected;
+    },
+    getGallery() {
+      axios
+        .get(`http://localhost:5172/api/project/getProjects`)
+        .then((response) => {
+          console.log(response.data);
+          this.GalleryData = response.data;
+          console.log(this.GalleryData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     newPost() {
       (async () => {
         try {
@@ -74,7 +146,7 @@ export default {
     },
 
     postImage() {
-      const someRes = axios.post(`https://vdesigners.herokuapp.com/api/pattern/`, {
+      const someRes = axios.post(`http://localhost:5172/api/pattern/`, {
         image: this.urls,
         // designerId: mongoose.Types.ObjectId(),
         designerId: "63ff3d6cf4dc279c6e0edc03",
@@ -89,7 +161,7 @@ export default {
           button: true,
         }).then(() => {
           this.$emit("close");
-          this.$router.push({ name: "ViewPosts" , params: { pageName: 'Posts' } });
+          this.$router.push({ name: "ViewPosts", params: { pageName: "Posts" } });
         });
       } else {
         swal("Something went wrong!", {
