@@ -267,8 +267,8 @@ export default {
     } else {
       this.menuItems = this.forBrand;
 
-      this.applyImportantStyleToClass("sidebar", "background-color", "#20c997")
-      this.applyImportantStyleToClass("sub-menu", "background-color", "#20c997")
+      this.applyImportantStyleToClass("sidebar", "background-color", "#F77062")
+      this.applyImportantStyleToClass("sub-menu", "background-color", "#F77062")
     }
 
     if (localStorage.getItem("is_closed") === "true") {
