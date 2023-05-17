@@ -2,7 +2,8 @@
   <div class="bg-background px-[48px]">
     <div class="flex flex-col justify-center">
       <div class="w-2/4">
-        <button @click="toggleModal" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
+        <button @click="toggleModal"
+          class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
           <div :class="`${isUrls ? 'hidden' : ''}`">
             <img class="h-36 w-auto rounded-lg" src="/img/uploadImage.png" alt="" />
             <p class="text-[#526faf]">Upload your image here</p>
@@ -17,10 +18,12 @@
         <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Category</label>
         <InputField type="text" id="category" place_holder="Enter post category" v-model="category" class="w-full my-2" />
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description </label>
+        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description
+        </label>
         <InputField type="text" id="name" place_holder="Add description" v-model="description" class="w-full my-2" />
 
-        <button @click="postImage" class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
+        <button @click="postImage"
+          class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
       </div>
     </div>
   </div>
@@ -38,13 +41,13 @@
   </ViewDetail>
 
   <ViewDetail @close="toggleModal1" :modalActive="modalActive1">
-    <div class="flex w-full max-w-[800px] bg-white h-full overflow-auto items-center justify-center ">
-      <div class="grid h-full w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
-        <div @click="toggleSelected" class="image-container max-h-[250px] bg-white relative z-0" v-for="(post, index) in GalleryData" :key="index">
-          <img class="img-fluid" :src="post.image" alt="" />
-          <div :class="`${selected ? '' : 'hidden'}`"  class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
-            <Icon class="text-2xl text-white" icon="mdi:tick-circle"/>
-          </div>
+    <div class="grid h-[calc(100vh-200px)] w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 overflow-y-auto">
+      <div @click="toggleSelected(post)" class="image-container max-h-[250px] bg-yellow-400 relative z-0"
+        v-for="(post, index) in GalleryData" :key="index">
+        <img class="img-fluid" :src="post.image" alt="" />
+        <div :class="`${post.selected ? '' : 'hidden'}`"
+          class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
+          <Icon class="text-2xl text-white" icon="mdi:tick-circle" />
         </div>
       </div>
     </div>
@@ -107,22 +110,23 @@ export default {
   },
 
   methods: {
-    toggleSelected() {
-      this.selected = !this.selected;
+    toggleSelected(post) {
+      post.selected = !post.selected;
     },
     getGallery() {
       axios
         .get(`http://localhost:5172/api/project/getProjects`)
         .then((response) => {
-          console.log(response.data);
-          this.GalleryData = response.data;
-          console.log(this.GalleryData);
+          this.GalleryData = response.data.map(item => ({
+            ...item,
+            selected: false,  // Add this line
+          }));
+          this.GalleryData = this.GalleryData.filter((item) => !item.image[0].includes("replicate.delivery"));
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
     newPost() {
       (async () => {
         try {
