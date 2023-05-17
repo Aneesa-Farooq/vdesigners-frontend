@@ -30,7 +30,7 @@ export default {
     } else if (this.userType === "designer") {
       this.applyImportantStyleToClass("decidedBG", "background-color", "#F3677F")
     } else {
-      this.applyImportantStyleToClass("decidedBG", "background-color", "#20c997")    }
+      this.applyImportantStyleToClass("decidedBG", "background-color", "#F77062")    }
    },
    methods: {
     applyImportantStyleToClass(className, property, value) {

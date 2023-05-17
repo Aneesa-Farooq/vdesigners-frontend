@@ -180,7 +180,7 @@ export default {
             console.log(someRes.status);
             if (someRes.status == "200") {
               localStorage.setItem("user-info", JSON.stringify(someRes.data));
-              this.$router.push({ name: "Admin", params: { pageName: "Dashboard" , type: "brand"} });
+              this.$router.push({ name: "DashboardBrand", params: { pageName: "Dashboard" , type: "brand"} });
             }
             else {
               swal({

@@ -21,6 +21,7 @@ import ViewPayments from "./screens/viewPayments.vue";
 import DashboardDesigner from "./screens/DashboardDesigner.vue";
 import ViewPost from "./screens/viewPost.vue"
 import Gallery from "./screens/gallery.vue"
+import DashboardBrand from "./screens/DashboardBrand.vue"
 
 const routes = [
   {
@@ -71,6 +72,8 @@ const routes = [
       {name:"ViewPayments", path: "viewPayments", component: ViewPayments },
 
       { name:"DashboardDesigner", path: "dbDesigner", component: DashboardDesigner },
+
+      { name:"DashboardBrand", path: "dbBrand", component: DashboardBrand },
 
       {name:"ViewPost", path: "viewPost/:id", component: ViewPost },
 

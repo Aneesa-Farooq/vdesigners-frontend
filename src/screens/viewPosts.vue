@@ -15,7 +15,7 @@
           </div>
           <p class="text-base font-semibold text-[#616161] mb-2">{{ post.patternName }}</p>
           <p class="text-xs tracking-wide text-navIcons mb-2">{{ post.description }}</p>
-          <p class="inline-block bg-Green text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category }}</p>
+          <p class="inline-block decidedBG text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category }}</p>
         </div>
         <div class="flex ml-auto self-center mr-2 gap-4">
           <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
