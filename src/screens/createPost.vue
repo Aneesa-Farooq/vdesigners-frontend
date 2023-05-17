@@ -38,8 +38,8 @@
   </ViewDetail>
 
   <ViewDetail @close="toggleModal1" :modalActive="modalActive1">
-    <div class="flex w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center gap-[100px]">
-      <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
+    <div class="flex w-full max-w-[800px] bg-white h-full overflow-auto items-center justify-center ">
+      <div class="grid h-full w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
         <div @click="toggleSelected" class="image-container max-h-[250px] bg-white relative z-0" v-for="(post, index) in GalleryData" :key="index">
           <img class="img-fluid" :src="post.image" alt="" />
           <div :class="`${selected ? '' : 'hidden'}`"  class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
