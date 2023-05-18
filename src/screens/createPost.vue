@@ -2,7 +2,8 @@
   <div class="bg-background px-[48px]">
     <div class="flex flex-col justify-center">
       <div class="w-2/4">
-        <button @click="toggleModal" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
+        <button @click="toggleModal"
+          class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
           <div :class="`${isUrls ? 'hidden' : ''}`">
             <img class="h-36 w-auto rounded-lg" src="/img/uploadImage.png" alt="" />
             <p class="text-[#526faf]">Upload your image here</p>
@@ -17,10 +18,12 @@
         <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Category</label>
         <InputField type="text" id="category" place_holder="Enter post category" v-model="category" class="w-full my-2" />
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description </label>
+        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description
+        </label>
         <InputField type="text" id="name" place_holder="Add description" v-model="description" class="w-full my-2" />
 
-        <button @click="postImage" class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
+        <button @click="postImage"
+          class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
       </div>
     </div>
   </div>
@@ -39,14 +42,17 @@
 
   <ViewDetail @close="toggleModal1" :modalActive="modalActive1">
     <div class="grid h-[calc(100vh-200px)] w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 overflow-y-auto">
-      <div @click="toggleSelected(post)" class="image-container max-h-[250px] bg-yellow-400 relative z-0" v-for="(post, index) in GalleryData" :key="index">
+      <div @click="toggleSelected(post)" class="image-container max-h-[250px] bg-yellow-400 relative z-0"
+        v-for="(post, index) in GalleryData" :key="index">
         <img class="img-fluid" :src="post.image" alt="" />
-        <div :class="`${post.selected ? '' : 'hidden'}`" class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
+        <div :class="`${post.selected ? '' : 'hidden'}`"
+          class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
           <Icon class="text-2xl text-white" icon="mdi:tick-circle" />
         </div>
       </div>
     </div>
-    <button @click="checkURL" class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Done</button>
+    <button @click="checkURL"
+      class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Done</button>
   </ViewDetail>
 </template>
 
@@ -57,12 +63,12 @@ import axios from "axios";
 import swal from "sweetalert";
 import ViewDetail from "../components/viewDetail.vue";
 import InputField from "../components/inputField.vue";
-import { ref } from "vue";
+import { ref as vueRef } from "vue";
 import mongoose from "mongoose";
-import { getDownloadURL, uploadBytes } from "firebase/storage";
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { storage } from "../firebase";
 import { Icon } from "@iconify/vue";
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 let socket = io('http://localhost:5171');
 
 export default {
@@ -86,8 +92,8 @@ export default {
   },
 
   setup() {
-    const modalActive = ref(false);
-    const modalActive1 = ref(false);
+    const modalActive = vueRef(false);
+    const modalActive1 = vueRef(false);
     console.log("hello");
     console.log(modalActive);
     const toggleModal = () => {
@@ -103,7 +109,7 @@ export default {
   },
 
   mounted() {
-    let user =localStorage.getItem("user-info");
+    let user = localStorage.getItem("user-info");
     console.log(user);
     this.designerId = JSON.parse(user).user._id;
     console.log(this.designerId);
@@ -134,7 +140,6 @@ export default {
         console.log(this.urls)
       }
       post.selected = !post.selected;
-     
     },
 
     checkURL() {
@@ -180,26 +185,34 @@ export default {
     },
 
     postImage() {
-      const someRes = axios.post(`http://localhost:5172/api/pattern/`, {
-        image: this.urls,
-        designerId: this.designerId,
-        designerId: this.designerId,
-        category: this.category,
-        description: this.description,
-        patternName: this.patternName,
-      });
-      console.log(someRes);
-      if (someRes) {
-        socket.emit('new post', {message: 'new post added', dateTime: new Date(), userId: this.designerId});
-        swal("Uploaded Successfully!", {
-          icon: "success",
-          button: true,
-        }).then(() => {
-          this.$emit("close");
-          this.$router.push({ name: "ViewPosts", params: { pageName: "Posts" } });
+      if (this.urls.length > 0 && this.designerId != "" && this.category != "" && this.patternName != "") {
+        const someRes = axios.post(`http://localhost:5172/api/pattern/`, {
+          image: this.urls,
+          designerId: this.designerId,
+          category: this.category,
+          description: this.description,
+          patternName: this.patternName,
         });
+        console.log(someRes);
+        if (someRes) {
+          socket.emit('new post', { message: 'new post added', dateTime: new Date(), userId: this.designerId });
+          swal("Uploaded Successfully!", {
+            icon: "success",
+            button: true,
+          }).then(() => {
+            this.$emit("close");
+            this.$router.push({ name: "ViewPosts", params: { pageName: "Posts" } });
+          });
+        } else {
+          swal("Something went wrong!", {
+            icon: "error",
+            button: true,
+          }).then(() => {
+            this.$emit("close");
+          });
+        }
       } else {
-        swal("Something went wrong!", {
+        swal("Please fill all the fields!", {
           icon: "error",
           button: true,
         }).then(() => {
@@ -229,6 +242,7 @@ export default {
         }
 
         const storageRef = ref(storage, `images/${file.name}`);
+        console.log("storageRef", storageRef);
         const snapshot = await uploadBytes(storageRef, file);
         const val = await getDownloadURL(snapshot.ref);
         return val;

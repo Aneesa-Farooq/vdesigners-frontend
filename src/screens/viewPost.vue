@@ -17,15 +17,15 @@
       <!-- <img class="img-fluid flex-[1] rounded-lg" :src="postData.image" alt="" /> -->
       <div class="flex flex-col flex-[1]">
         <div class="mb-12">
-            <div class="flex items-center gap-2 lg:gap-5 mb-2">
-            <div class="bg-white h-6 w-6 lg:w-[100px] lg:h-[100px] overflow-hidden rounded-full">
-              <img class="h-auto w-auto" :src="postData.image" alt="" />
-            </div>
-            <p class="flex items-center text-base lg:text-lg font-bold text-black">{{ postData.patternName }}</p>
-            <!-- <p :class="`${post.status == 'pending' ? 'blink_me' : 'bg-Green'}`" class="flex bg-yellow-300 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">status</p> -->
+            <div class="flex items-center gap-3 mb-8">
+              <div class="bg-white h-10 w-10 overflow-hidden rounded-full">
+                <img class="h-auto w-auto" :src="postData.designerId.designerImg" alt="" />
+              </div>
+              <p class="flex items-center text-xl font-bold text-black">{{ postData.designerId.designerName }}</p>
+              <!-- <p :class="`${post.status == 'pending' ? 'blink_me' : 'bg-Green'}`" class="flex bg-yellow-300 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">status</p> -->
           </div>
 
-          <h1 class="text-gray-700 text-2xl font-bold mb-3 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
+          <h1 class="text-gray-700 text-2xl font-bold mb-2 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
           <p class="text-gray-500 mb-8 tracking-wide">{{ $filters.formatDate(postData.createdAt, "MMM dd, yyyy, hh:mm:ss a") }}</p>
           <p class="text-gray-700 text-lg">{{ postData.description }}</p>
         </div>
@@ -70,6 +70,10 @@ export default {
       postData: {
         patternName: "Text",
         createdAt: "2023-03-21T07:19:15.146Z",
+        designerId: {
+          designerImg: "https://i.pravatar.cc/150?img=3",
+          designerName: "Text",
+        },
       },
       settings: {
         itemsToShow: 1,
@@ -100,7 +104,7 @@ export default {
         console.log(response.data);
         this.postData = response.data;
         console.log(this.$route.params.id);
-        console.log(this.postData);
+        console.log("post image --- ",this.postData);
       })
       .catch((error) => {
         console.log(error);
@@ -139,7 +143,7 @@ export default {
 }
 
 .carousel__slide {
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .carousel__prev,
