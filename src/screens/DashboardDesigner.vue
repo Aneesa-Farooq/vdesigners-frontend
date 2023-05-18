@@ -2,7 +2,7 @@
       <!-- WELCOME CARD -->
       <div class="flex items-center justify-center min-h-[185px] w-full features feature-primary bg-white rounded shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] px-8 py-4">
         <div class="h-[100px] w-[100px] rounded-full overflow-hidden">
-          <img src="/img/profile.jpg" alt="" class="w-full h-auto" />
+          <img :src="userImg" alt="" class="w-full h-[100px]" />
         </div>
 
         <div class="mx-9">
@@ -68,6 +68,7 @@ export default {
     return (
       {
         brandData: {},
+        userImg: "/img/user.png",
       },
       {
         series: [76, 67, 61, 90],
@@ -265,6 +266,8 @@ export default {
     if (!user) {
       this.$router.push({ name: "Login" });
     }
+    this.userImg = JSON.parse(user).user.designerImg;
+    console.log(this.userImg, "logged in user", 6767676);
 
     axios
       .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
