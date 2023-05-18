@@ -50038,13 +50038,15 @@ var ImageTracer = /*#__PURE__*/function () {
       },
       download: function download() {
         var dataURL = _this.toDataURL();
-
+        console.log(dataURL);
         var imageName = _this.getImageName();
 
         var blob, type, w;
 
         if (isSupportFileApi() && window.saveAs) {
+          console.log(dataURL);
           blob = base64ToBlob(dataURL);
+          console.log(dataURL);
           type = blob.type.split('/')[1];
 
           if (imageName.split('.').pop() !== type) {
@@ -62205,25 +62207,6 @@ factory_command.register(resize_command);
 
 
  // commands
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,81 +1,150 @@
 <template>
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <div class="flex gap-6 mb-10">
-            <img class="img-fluid w-[200px] rounded-lg" :src="postData.image" alt="" />
-            <div>
-                <h1 class="text-gray-700 text-4xl font-bold mb-3 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
-                <p class="text-gray-500 mb-8 tracking-wide" >{{ $filters.formatDate(postData.createdAt, 'MMM dd, yyyy, hh:mm:ss a') }}</p>
-                <p class="text-gray-700 text-lg">{{ postData.description }}</p>
-            </div>
-        </div>
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="flex gap-10 mb-10">
+      <div class="flex flex-[1] carousel__item">
+        <Carousel itemsToScroll="1" itemsToShow="1" :breakpoints="breakpoints" snapAlign="center">
+          <Slide v-for="slide in postData.image" :key="slide">
+            <img class="carousel__item" :src="slide" />
+          </Slide>
 
-        <p class="text-gray-700 text-2xl font-semibold mb-3 tracking-normal">Comments</p>
-        <div v-if="Object.keys(postData).includes('comments')">
+          <template #addons>
+            <Pagination />
+            <Navigation />
+          </template>
+        </Carousel>
+      </div>
+
+      <!-- <img class="img-fluid flex-[1] rounded-lg" :src="postData.image" alt="" /> -->
+      <div class="flex flex-col flex-[1]">
+        <div class="mb-12">
+            <div class="flex items-center gap-2 lg:gap-5 mb-2">
+            <div class="bg-white h-6 w-6 lg:w-[100px] lg:h-[100px] overflow-hidden rounded-full">
+              <img class="h-auto w-auto" :src="postData.image" alt="" />
+            </div>
+            <p class="flex items-center text-base lg:text-lg font-bold text-black">{{ postData.patternName }}</p>
+            <!-- <p :class="`${post.status == 'pending' ? 'blink_me' : 'bg-Green'}`" class="flex bg-yellow-300 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">status</p> -->
+          </div>
+
+          <h1 class="text-gray-700 text-2xl font-bold mb-3 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
+          <p class="text-gray-500 mb-8 tracking-wide">{{ $filters.formatDate(postData.createdAt, "MMM dd, yyyy, hh:mm:ss a") }}</p>
+          <p class="text-gray-700 text-lg">{{ postData.description }}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 text-2xl font-semibold mb-3 tracking-normal">Comments</p>
+          <div v-if="Object.keys(postData).includes('comments')">
             <div class="bg-gray-100 p-4 rounded-lg">
-                {{ postData.comments }} 
+              {{ postData.comments }}
             </div>
-        </div>
-        <div v-else>
-        No comments to show.
-        </div>
+          </div>
+          <div v-else>No comments to show.</div>
 
-        <form @submit.prevent="addComment" class="mt-6">
+          <form @submit.prevent="addComment" class="mt-6">
             <label for="comment" class="block mb-2">Add a comment:</label>
-            <textarea id="comment" v-model="newComment" class="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4"
-                placeholder="Write your comment here..."></textarea>
-            <button type="submit" class="decidedBG  text-white px-4 py-2 rounded-lg" @click="addComment">Submit</button>
-        </form>
+            <textarea id="comment" v-model="newComment" class="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4" placeholder="Write your comment here..."></textarea>
+            <button type="submit" class="decidedBG text-white px-4 py-2 rounded-lg" @click="addComment">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
-  
+
 <script>
 import axios from "axios";
 import { Icon } from "@iconify/vue";
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 export default {
-    name: "ViewPost",
-    components: {
-        Icon,
-    },
+  name: "ViewPost",
+  components: {
+    Icon,
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+  },
 
-    data() {
-        return {
-            postData: {
-                patternName: 'Text',
-                createdAt: '2023-03-21T07:19:15.146Z',
-            },
-            newComment: '',
-        };
-    },
+  data() {
+    return {
+      postData: {
+        patternName: "Text",
+        createdAt: "2023-03-21T07:19:15.146Z",
+      },
+      settings: {
+        itemsToShow: 1,
+        snapAlign: "center",
+      },
 
-    mounted() {
-        axios
-            .get(`http://localhost:5172/api/pattern/postid/${this.$route.params.id}`)
-            .then((response) => {
-                console.log(response.data);
-                this.postData = response.data;
-                console.log(this.$route.params.id);
-                console.log(this.postData);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    },
-    methods: {
-        addComment() {
-            console.log(this.newComment)
-            axios.put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment })
-            .then(response => {
-                console.log(response.data);
-                this.postData.comments = this.newComment;
-                document.querySelector('#comment').value = "";
-                // handle successful response
-            })
-            .catch(error => {
-                console.error(error);
-                // handle error
-            });
+      breakpoints: {
+        // 700px and up
+        700: {
+          itemsToShow: 1,
+          snapAlign: "center",
         },
+        // 1024 and up
+        1024: {
+          itemsToShow: 1,
+          snapAlign: "center",
+        },
+      },
+      newComment: "",
+    };
+  },
+
+  mounted() {
+    console.log(this.$route.params.id);
+    axios
+      .get(`http://localhost:5172/api/pattern/postid/${this.$route.params.id}`)
+      .then((response) => {
+        console.log(response.data);
+        this.postData = response.data;
+        console.log(this.$route.params.id);
+        console.log(this.postData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  methods: {
+    addComment() {
+      console.log(this.newComment);
+      axios
+        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment })
+        .then((response) => {
+          console.log(response.data);
+          this.postData.comments = this.newComment;
+          document.querySelector("#comment").value = "";
+          // handle successful response
+        })
+        .catch((error) => {
+          console.error(error);
+          // handle error
+        });
     },
+  },
 };
-</script>  
+</script>
+<style>
+.carousel__item {
+  min-height: 200px;
+  width: 100%;
+  background-color: white;
+  color: var(--vc-clr-white);
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding: 10px;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  border: 5px solid white;
+}
+</style>
