@@ -62,6 +62,8 @@ import mongoose from "mongoose";
 import { getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { Icon } from "@iconify/vue";
+import {io} from "socket.io-client";
+let socket = io('http://localhost:5171');
 
 export default {
   name: "CreatePost",
@@ -188,6 +190,7 @@ export default {
       });
       console.log(someRes);
       if (someRes) {
+        socket.emit('new post', {message: 'new post added', dateTime: new Date(), userId: this.designerId});
         swal("Uploaded Successfully!", {
           icon: "success",
           button: true,
