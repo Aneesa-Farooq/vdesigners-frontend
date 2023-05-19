@@ -44,7 +44,12 @@ export default {
       amount: "10",
       icon1: "",
       icon2: "",
+      userType: "",
     };
+  },
+  mounted() {
+    this.userType = this.$route.params.type;
+    console.log(this.userType);
   },
   
   methods: {
@@ -52,30 +57,21 @@ export default {
       const priceId = "price_1Mhsg9BRretLP9OvwtWcfhWs";
       const price = "10.00";
       const plan = "Basic";
-      this.$router.push({
-        name: "Checkout",
-        params: {priceId, price, plan },
-      });
+      this.$router.push(`/user/Checkout/${this.userType}/checkout/${priceId}/${price}/${plan}`);
     },
 
     premiumPlan() {
       const priceId = "price_1Mht7sBRretLP9OvbEjwoxDw";
       const price = "20.00";
       const plan = "Premium";
-      this.$router.push({
-        name: "Checkout",
-        params: { priceId, price, plan },
-      });
+      this.$router.push(`/user/Checkout/${this.userType}/checkout/${priceId}/${price}/${plan}`);
     },
 
     standardPlan() {
       const priceId = "price_1Mhsg9BRretLP9OvwtWcfhWs";
       const price = "10.00";
       const plan = "Basic";
-      this.$router.push({
-        name: "Checkout",
-        params: { priceId, price, plan },
-      });
+      this.$router.push(`/user/Checkout/${this.userType}/checkout/${priceId}/${price}/${plan}`);
     },
   },
 };

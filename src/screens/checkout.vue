@@ -23,7 +23,7 @@
           <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
         </svg>
         <span class="text-2xl font-normal leading-tight text-gray-500"
-          >User Name: <b>{{  }}</b></span
+          >User Name: <b>{{name}}</b></span
         >
       </li>
     </ul>
@@ -43,16 +43,18 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import swal from "sweetalert";
 import { id } from "date-fns/locale";
+import { useRouter, useRoute } from 'vue-router'
+
 export default {
   name: "Checkout",
-  data() {
-    return {
-      id:'',
-    };
-  },
+
   name:'',
   setup() {
+    const router = useRouter()
+    const route = useRoute()
     const Userid=ref('');
+    const name=ref('');
+    const userType=ref(route.params.type);
     const disabled = ref(false);
     const card = ref(null);
     const stripe = window.Stripe("pk_test_51MBkcnBRretLP9OvhqZg2LfOIC47Ld1uXxHuiFJ7jRz5adpDxqkgKr8v8Fiy1Wq5TVCpNAXF9258HuaE3oLPDiWa00QfqSRK0Y");
@@ -86,8 +88,23 @@ export default {
     }
 
     onMounted(() => {
+    
       const User = localStorage.getItem("user-info");
       const user1 = JSON.parse(User);
+      console.log(userType.value)
+      if (userType.value == "admin"){
+        name.value=user1.user.adminName;
+        console.log(name.value,111111);
+      }
+      else if (userName.value == "designer"){
+       name.value=user1.user.designerName;
+       console.log(name.value,22222111);
+      }
+      else if (this.userType == "brand"){
+        name.value=user1.user.brandName;
+        console.log(name.value,333331111);
+      }
+      
       console.log(user1.user._id)
       Userid.value = user1.user._id;
     //  name.value=user1.user.adminName;
@@ -136,7 +153,7 @@ export default {
             icon: "success",
             button: true,
           }).then(() => {
-            this.$router.push({
+            router.push({
               name: "ViewPayments",
               params: { pageName: "ViewPayments" },
             });
@@ -150,6 +167,7 @@ export default {
       disabled,
       card,
       Submit,
+      name
     };
   },
 };
