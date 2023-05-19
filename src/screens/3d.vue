@@ -1,21 +1,18 @@
 <template>
-  <iframe id="iframe_id" class="h-[calc(100vh-68px-3rem)] w-full" src="https://3d-vue-app.vercel.app/?id=3" title="3D viewer"></iframe>
+  <div id="iframeContainer"></div>
+  <!-- <iframe id="iframe_id" class="h-[calc(100vh-68px-3rem)] w-full" src="http://localhost:5174?data=123" title="3D viewer"></iframe> -->
 </template>
 
 <script>
-
 export default {
   name: "ThreeD",
 
-  mounted(){
-    // Obtain a reference to the iframe element
-   const iframe = document.getElementById('iframe_id');
-
-// Send a message to the iframe
-const message = {
-  parameter: 'example value',
-};
-iframe.contentWindow.postMessage(message, 'https://3d-vue-app.vercel.app/?id=3');
-  }
+  mounted() {
+    const message = "Hello-from-the-main-page!";
+    const iframe = document.createElement("iframe");
+    iframe.src = `http://localhost:5174?data=${message}`;
+    iframe.classList.add("h-[calc(100vh-68px-3rem)]", "w-full");
+    document.querySelector("#iframeContainer").appendChild(iframe);
+  },
 };
 </script>
