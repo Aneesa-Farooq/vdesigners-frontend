@@ -22,6 +22,9 @@
         <svg class="w-8 h-8 text-gray-600" viewBox="0 0 24 24">
           <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
         </svg>
+        <span class="text-2xl font-normal leading-tight text-gray-500"
+          >User Name: <b>{{  }}</b></span
+        >
       </li>
     </ul>
     <div class="mt-5">
@@ -39,17 +42,19 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import swal from "sweetalert";
+import { id } from "date-fns/locale";
 export default {
   name: "Checkout",
   data() {
     return {
-      id: "",
+      id:'',
     };
   },
+  name:'',
   setup() {
+    const Userid=ref('');
     const disabled = ref(false);
     const card = ref(null);
-
     const stripe = window.Stripe("pk_test_51MBkcnBRretLP9OvhqZg2LfOIC47Ld1uXxHuiFJ7jRz5adpDxqkgKr8v8Fiy1Wq5TVCpNAXF9258HuaE3oLPDiWa00QfqSRK0Y");
     const elements = stripe.elements();
 
@@ -83,15 +88,15 @@ export default {
     onMounted(() => {
       const User = localStorage.getItem("user-info");
       const user1 = JSON.parse(User);
-      this.id = user1.user._id;
-
+      console.log(user1.user._id)
+      Userid.value = user1.user._id;
+    //  name.value=user1.user.adminName;
       el.mount(card.value);
       card.value = el;
       el.on("change", (event) => {
         displayError(event);
       });
     });
-
     const Submit = async () => {
       const response = await axios.post("https://vdesigners.herokuapp.com/api/subscription/createPayment", {
         email: "alishbaiftikhar2001@gmail.com",
@@ -111,7 +116,7 @@ export default {
           },
         },
       });
-      console.log(result);
+      console.log(".....",result);
       console.log(result.paymentIntent.amount);
       if (result.error) {
         disabled.value = false;
@@ -124,7 +129,7 @@ export default {
           price: result.paymentIntent.amount,
           status: result.paymentIntent.status,
           stripeSubscriptionId: subscriptionId,
-          userid: this.id,
+          userid: Userid.value,
         });
         if (response.data.newSubscription.status == "succeeded" && result.paymentIntent.status == "succeeded") {
           swal("Transaction Successful", {
