@@ -33,7 +33,7 @@
 
       <div id="card-errors" role="alert" class="mx-3 text-error-message text-lg font-semibold"></div>
       <div class="justify-center mx-3">
-        <button class="w-full h-8 mb-3 text-white shadow-md bg-Green border mt-5 rounded-md hover:opaciy-70 pb-1" :disabled="disabled" @click="Submit">Pay with Stripe</button>
+        <button class="w-full h-8 mb-3 text-white shadow-md decidedBG border mt-5 rounded-md hover:opaciy-70 pb-1" :disabled="disabled" @click="Submit">Pay with Stripe</button>
       </div>
     </div>
   </div>

@@ -25,7 +25,7 @@
         <span class="text-base font-normal leading-tight text-gray-500">{{ icon2 }}</span>
       </li>
     </ul>
-    <button class="text-white bg-Green hover:opacity-70 focus:ring-4 focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"> Choose plan </button>
+    <button class="text-white decidedBG hover:opacity-70 focus:ring-4 focus:outline-none focus:ring-indigo-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"> Choose plan </button>
   </div>
 </template>
 <script>

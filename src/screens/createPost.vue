@@ -241,7 +241,7 @@ export default {
         this.imageMesg = "";
       }
       if (this.category == "") {
-        this.catMesg = "Please select category";
+        this.catMesg = "Please enter category";
       }
       if (this.patternName == "") {
         this.nameMesg = "Please enter pattern name";

@@ -8,6 +8,16 @@
             <InputField type="text" id="name" place_holder="Enter Designer Name" class="my-2" v-model="formValues.designerName" />
             <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
+            <div v-if="userType == 'admin'">
+              <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Brand </label>
+              <select v-model="formValues.brandId" class="my-2 w-full h-[50px] p-4 rounded-[7px] font-poppins outline-none text-base tracking-[0.5px] bg-lightgrey border border-borderColor hover:bg-white hover:border-borderColor hover:shadow-[0_0_0_4px_rgba(234,76,137,0.1)] focus:border-border-color-focus focus:shadow-[0_0_0_4px_rgba(234,76,137,0.1)] focus:bg-white">
+                <option value="">Select Brand</option>
+                <option v-for="(option, index) in options" :key="index" :value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Email </label>
             <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
             <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
@@ -50,8 +60,8 @@
                 <img :class="`${isUrl ? '' : 'hidden'}`" class="h-auto w-auto" :src="formValues.url" alt="" />
               </button>
               <div class="flex flex-col gap-6">
-                <button type="button" @click="toggleURL" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
-                <button type="button" @click="updateProfile" class="block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
+                <button type="button" @click="toggleURL" class="block decidedBG border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">Remove</button>
+                <button type="button" @click="updateProfile" class="block decidedBG border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] hover:opacity-70 transition duration-[0.5s]">upload</button>
               </div>
             </div>
           </div>
@@ -59,7 +69,7 @@
 
         <div class="flex flex-col md:flex-row w-full gap-6">
           <router-link to="/user/Dashboard/admin/dbAdmin" class="my-[22px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
-          <input class="my-[22px] w-full self-start block bg-Green border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
+          <input class="my-[22px] w-full self-start block decidedBG border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
         </div>
       </div>
     </form>
@@ -95,13 +105,22 @@ export default {
         url: "",
         brandId: "",
       },
+      options: [],
+      userType: "",
     };
   },
 
   mounted() {
-    const User = localStorage.getItem("user-info");
-    const user1 = JSON.parse(User);
-    this.formValues.brandId= user1.user._id;
+    this.userType = this.$route.params.type;
+    console.log(this.userType);
+    if (this.userType == "admin") {
+      this.getBrands();
+    } else {
+      const User = localStorage.getItem("user-info");
+      const user1 = JSON.parse(User);
+      this.formValues.brandId = user1.user._id;
+    }
+
     var myName = document.getElementById("name");
     var myEmail = document.getElementById("email");
     var myContact = document.getElementById("contact");
@@ -263,12 +282,30 @@ export default {
         length.classList.add("invalid");
       }
     };
-    console.log("hello");
+    console.log("FormValues");
     console.log(this.formValues);
     console.log(this.formValues.email);
   },
 
   methods: {
+    getBrands() {
+      axios
+        .get("https://vdesigners.herokuapp.com/api/admin/getAllbrands")
+        .then((response) => {
+          console.log(response.data);
+          let data = response.data;
+          for (let i = 0; i < data.length; i++) {
+            this.options.push({
+              value: data[i]._id,
+              text: data[i].brandName,
+            });
+          }
+          console.log(111, this.options);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     submitForm(e) {
       e.preventDefault();
       (async () => {
