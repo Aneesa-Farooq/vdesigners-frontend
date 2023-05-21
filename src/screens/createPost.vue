@@ -10,16 +10,20 @@
           <div class="overflow-scroll flex gap-2" :class="`${isUrls ? '' : 'hidden'}`">
             <img v-for="(url, index) in urls" :key="index" class="h-36 w-auto rounded-lg" :src="url" alt="" />
           </div>
-         
         </button>
-        <p class="text-red text-base font-normal self-start">{{ imageMesg }}</p>
-        <label class="block font-poppins tracking-[1px] text-lg font-bold text-gray-700 mt-4 mb-2"> Name </label>
-        <InputField type="text" id="name" place_holder="Enter post Name" v-model="patternName" class="w-full my-2" />
-        <p class="text-red text-base font-normal self-start">{{ nameMesg }}</p>
+        <p class="text-red text-base font-normal self-start">{{ imageMesg }} &emsp;</p>
 
-        <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Category</label>
+        <div class="flex items-end gap-4">
+          <label class="block font-poppins tracking-[1px] text-lg font-bold text-gray-700 mt-4 mb-2"> Name </label>
+          <p class="text-red text-base font-normal self-start mt-4 mb-2">{{ nameMesg }}</p>
+        </div>
+        <InputField type="text" id="name" place_holder="Enter post Name" v-model="patternName" class="w-full my-2" />
+
+        <div class="flex items-end gap-4">
+          <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Category</label>
+          <p class="text-red text-base font-normal self-start my-2">{{ catMesg }}</p>
+        </div>
         <InputField type="text" id="category" place_holder="Enter post category" v-model="category" class="w-full my-2" />
-        <p class="text-red text-base font-normal self-start">{{ catMesg }}</p>
 
         <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description </label>
         <InputField type="text" id="name" place_holder="Add description" v-model="description" class="w-full my-2" />
@@ -67,7 +71,7 @@ import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { storage } from "../firebase";
 import { Icon } from "@iconify/vue";
 import { io } from "socket.io-client";
-let socket = io('http://localhost:5171');
+let socket = io("http://localhost:5171");
 
 export default {
   name: "CreatePost",
@@ -90,6 +94,32 @@ export default {
       nameMesg: "",
       catMesg: "",
     };
+  },
+  watch: {
+    patternName: function (val) {
+      if (val.length == 0) {
+        this.nameMesg = "Please enter pattern name";
+      } else {
+        this.nameMesg = "";
+      }
+    },
+    category: function (val) {
+      if (val.length == 0) {
+        this.catMesg = "Please enter category";
+      } else {
+        this.catMesg = "";
+      }
+    },
+    urls: {
+      handler(val, oldVal) {
+        if (val.length == 0) {
+          this.imageMesg = "Please select image";
+        } else {
+          this.imageMesg = "";
+        }
+      },
+      deep: true,
+    },
   },
 
   setup() {
@@ -130,15 +160,14 @@ export default {
     },
 
     toggleSelected(post) {
-
       if (post.selected === false) {
         this.urls.push(post.image[0]);
-        console.log("added")
-        console.log(this.urls)
+        console.log("added");
+        console.log(this.urls);
       } else {
         this.urls = this.urls.filter((url) => url !== post.image[0]);
-        console.log("removed")
-        console.log(this.urls)
+        console.log("removed");
+        console.log(this.urls);
       }
       post.selected = !post.selected;
     },
@@ -196,7 +225,7 @@ export default {
         });
         console.log(someRes);
         if (someRes) {
-          socket.emit('new post', { message: 'new post added', dateTime: new Date(), userId: this.designerId });
+          socket.emit("new post", { message: "new post added", dateTime: new Date(), userId: this.designerId });
           swal("Uploaded Successfully!", {
             icon: "success",
             button: true,
@@ -204,10 +233,12 @@ export default {
             this.$emit("close");
             this.$router.push({ name: "ViewPosts", params: { pageName: "Posts" } });
           });
-        } 
-      } 
-      if(this.urls.length == 0) {
-        this.imageMesg="Please select image";
+        }
+      }
+      if (this.urls.length == 0) {
+        this.imageMesg = "Please select image";
+      } else {
+        this.imageMesg = "";
       }
       if (this.category == "") {
         this.catMesg = "Please select category";
