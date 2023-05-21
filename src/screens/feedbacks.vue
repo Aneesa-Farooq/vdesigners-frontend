@@ -1,8 +1,7 @@
 <template>
   <div class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/" class="flex items-center p-5 justify-center h-[35px] decidedBG text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <input class="py-3 px-5 text-base text-slate-800 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
@@ -54,9 +53,9 @@ export default {
       headers: [
         { text: "Brand Name", align: "start", sortable: true, value: "brandId" },
         //{ text: "Brand", value: "brandId.brandName" },
-        { text: "Feedback", value: "feedback" },
-        { text: "Time", value: "createdAt" },
-        { text: "Operations", value: "operation" },
+        { text: "Feedback", sortable: true, value: "feedback" },
+        { text: "Time", sortable: true, value: "createdAt" },
+        { text: "Operations", sortable: true, value: "operation" },
       ],
       feedbackData: [],
       filterOptionsArray: [],
@@ -69,6 +68,7 @@ export default {
       .then((response) => {
         console.log(response.data);
         this.feedbackData = response.data;
+        console.log(this.feedbackData);
         this.loading = false;
       })
       .catch((error) => {

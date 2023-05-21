@@ -113,7 +113,7 @@ export default {
         },
         {
           name: "Editor",
-          path: "/user/Editor/admin/editor/${this.whiteImg}",
+          path: "/user/Editor/admin/editor/whitePanel",
           icon: "bx-edit",
         },
         {
@@ -206,7 +206,7 @@ export default {
         {
           name: "Editor",
           icon: "bx-edit",
-          path: "/user/Editor/designer/editor/${this.whiteImg}",
+          path: "/user/Editor/designer/editor/whitePanel",
         },
         {
           name: "3D",

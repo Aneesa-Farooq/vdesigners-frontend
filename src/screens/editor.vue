@@ -11,26 +11,31 @@ export default {
     };
   },
   mounted() {
-    // Ensure the route param is correctly received
-    console.log("Route param:", this.$route.params.path);
+    if (this.$route.params.path == "whitePanel") {
+      this.imgPath = "/img/white-panel.jpg";
+      console.log("Image Path:", this.imgPath);
+    } else {
+      // Ensure the route param is correctly received
+      console.log("Route param:", this.$route.params.path);
 
-    // Decode and handle the URL as you mentioned
-    let imgUrl = decodeURIComponent(this.$route.params.path);
-    imgUrl = imgUrl.replace('PLACEHOLDER', '%2F');
+      // Decode and handle the URL as you mentioned
+      let imgUrl = decodeURIComponent(this.$route.params.path);
+      imgUrl = imgUrl.replace("PLACEHOLDER", "%2F");
 
-    this.imgPath = imgUrl;
-    console.log("Image Path:", this.imgPath);
+      this.imgPath = imgUrl;
+      console.log("Image Path:", this.imgPath);
+    }
 
     // Initialize the image editor
-    const imageEditor = new tui.ImageEditor('#tui-image-editor-container', {
+    const imageEditor = new tui.ImageEditor("#tui-image-editor-container", {
       includeUI: {
         loadImage: {
           path: this.imgPath,
-          name: 'SampleImage',
+          name: "SampleImage",
         },
         theme: blackTheme, // or whiteTheme
-        initMenu: 'filter',
-        menuBarPosition: 'bottom',
+        initMenu: "filter",
+        menuBarPosition: "bottom",
       },
       cssMaxWidth: 1000,
       cssMaxHeight: 600,
@@ -43,7 +48,7 @@ export default {
   },
 };
 </script>
-  
+
 <style>
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans);
 
@@ -63,13 +68,13 @@ body {
 }
 
 .tui-image-editor-download-btn {
-  background-color: #F33757 !important;
-  border: #F33757 !important;
+  background-color: #f33757 !important;
+  border: #f33757 !important;
 }
 
 .tui-image-editor-header-buttons {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .tui-image-editor-menu use.normal.use-default,
@@ -79,9 +84,8 @@ body {
   stroke: white !important;
 }
 
-svg[display=none] {
+svg[display="none"] {
   display: none !important;
   height: 0 !important;
 }
 </style>
-  

@@ -1,8 +1,8 @@
 <template>
   <div class="bg-background">
     <div class="flex justify-between items-center">
-      <router-link to="/user/Subscriptions/subscriptions" class="flex items-center p-5 justify-center h-[35px] decidedBG  text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add Payment</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <router-link :to="`/user/Subscription/${this.userType}/subscriptions`" class="flex items-center p-5 justify-center h-[35px] decidedBG text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add Payment</router-link>
+      <input class="py-3 px-5 text-base text-slate-800 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
@@ -11,9 +11,16 @@
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
 
+      <template #item-userName="{ userName, userImg }">
+        <div class="player-wrapper">
+          <img class="avator" :src="userImg" alt="" />
+          <p>{{ userName }}</p>
+        </div>
+      </template>
+
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
-           <button
+          <button
             @click="
               toggleModal();
               storeBrand(item);
@@ -23,15 +30,13 @@
           </button>
         </div>
       </template>
-
-     
     </EasyDataTable>
 
     <ViewDetail @close="toggleModal" :modalActive="modalActive">
       <div class="flex flex-col w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center my-3">
         <div class="flex flex-col w-full">
           <p class="lg:text-2xl w-full text-Green mt-2 mb-2 font-bold">Name: {{ formValues.Name }}</p>
-          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:work-outline"/>Plan Subscribed: {{ formValues.plan }}</p>
+          <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:work-outline" />Plan Subscribed: {{ formValues.plan }}</p>
           <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="bi:currency-dollar" />Total Amount: {{ formValues.amount }}</p>
           <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="material-symbols:nest-clock-farsight-analog-outline" />Date: {{ formValues.date }}</p>
           <p class="lg:text-xl mb-2 w-full flex items-center gap-2 text-black font-bold self-start"><Icon class="lg:w-[20px] lg:first-letter:h-[22px] mx-1 text-Green" icon="fa6-brands:stripe" />VIA: {{ formValues.method }}</p>
@@ -71,14 +76,15 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Name", align: "start", sortable: true, value: "userId.brandName" },
-        { text: "Plan", value: "plan" },
-        { text: "Amount", value: "price" },
-        { text: "Date", value: "createdAt" },
-        { text: "Operations", value: "operation" },
+        { text: "Name", align: "start", sortable: true, value: "userName" },
+        { text: "Plan", sortable: true, value: "plan" },
+        { text: "Amount", sortable: true, value: "price" },
+        { text: "Date", sortable: true, value: "createdAt" },
+        { text: "Operations", sortable: true, value: "operation" },
       ],
       paymentData: [],
       filterOptionsArray: [],
+      userType: "",
     };
   },
 
@@ -91,12 +97,22 @@ export default {
   },
 
   mounted() {
-
+    this.userType=this.$route.params.type;
+    this.paymentData = [];
     axios
       .get("https://vdesigners.herokuapp.com/api/subscription/getPayments")
       .then((response) => {
         console.log(response.data);
-        this.paymentData = response.data;
+        let data = response.data;
+        for (let i = 0; i < data.length; i++) {
+          this.paymentData.push({
+            userName: data[i].userId.brandName,
+            userImg: data[i].userId.brandImg,
+            plan: data[i].plan,
+            price: data[i].price,
+            createdAt: data[i].createdAt,
+          });
+        }
         this.loading = false;
       })
       .catch((error) => {

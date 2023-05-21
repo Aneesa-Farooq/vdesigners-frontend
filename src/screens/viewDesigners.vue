@@ -2,7 +2,7 @@
   <div class="bg-background">
     <div class="flex gap-4 justify-between items-center">
       <router-link to="/user/Register Designer/{{userType}}/addDesigner" class="flex items-center p-5 justify-center h-[35px] decidedBG  text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-pink" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <input class="py-3 px-5 text-base text-slate-800 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
@@ -15,6 +15,13 @@
         <div class="player-wrapper">
           <img class="avator" :src="designerImg" alt="" />
           {{ designerName }}
+        </div>
+      </template>
+
+      <template #item-brandName="{ brandName, brandImg }">
+        <div class="player-wrapper">
+          <img class="avator" :src="brandImg" alt="" />
+          {{ brandName }}
         </div>
       </template>
 
@@ -94,13 +101,13 @@ export default {
       searchValue: "",
       headers: [
         { text: "Name", align: "start", sortable: true, value: "designerName" ,width: 200},
-        { text: "Brand", value: "brandId.brandName",width: 200 },
-        { text: "Email", value: "designerEmail",width: 200 },
-        { text: "Projects", value: "countProject",width: 100 },
-        { text: "Contact", value: "designerContactnumber",width: 200 },
-        { text: "Address", value: "designerAddress", width: 200 },
-        { text: "Status", value: "status", width: 150 },
-        { text: "Operations", value: "operation",width: 200 },
+        { text: "Brand", sortable: true, value: "brandName",width: 200 },
+        { text: "Email", sortable: true, value: "designerEmail",width: 200 },
+        { text: "Projects", sortable: true, value: "countProject",width: 100 },
+        { text: "Contact", sortable: true, value: "designerContactnumber",width: 200 },
+        { text: "Address", sortable: true, value: "designerAddress", width: 200 },
+        { text: "Status", sortable: true, value: "status", width: 150 },
+        { text: "Operations", sortable: true, value: "operation",width: 200 },
       ],
       designerData: [],
       filterOptionsArray: [],
@@ -123,11 +130,27 @@ export default {
 
   methods: {
     getData(){
+      this.designerData = [];
       axios
       .get("http://localhost:5172/api/designers/getAlldesigners")
       .then((response) => {
         console.log(response.data);
-        this.designerData = response.data;
+        let Data = response.data;
+        for (let i = 0; i < Data.length; i++) {
+          this.designerData.push({
+            designerName: Data[i].designerName,
+            brandName: Data[i].brandId.brandName,
+            brandImg: Data[i].brandId.brandImg,
+            designerImg: Data[i].designerImg,
+            designerEmail: Data[i].designerEmail,
+            designerContactnumber: Data[i].designerContactnumber,
+            designerAddress: Data[i].designerAddress,
+            status: Data[i].status,
+            countProject: Data[i].countProject,
+            _id: Data[i]._id,
+          
+          });
+        }
         this.loading = false;
       })
       .catch((error) => {

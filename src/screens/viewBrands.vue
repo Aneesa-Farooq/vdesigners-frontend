@@ -2,7 +2,7 @@
   <div class="bg-background">
     <div class="flex gap-4 justify-between items-center">
       <router-link to="/user/Register Brand/{{userType}}/addBrand" class="decidedBG flex items-center p-5 justify-center h-[35px] text-white font-[700] text-sm cursor-pointer rounded-[20px]"><Icon class="text-lg mr-2 text-white" icon="material-symbols:add" />Add User</router-link>
-      <input class="py-3 px-5 text-base text-slate-300 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
+      <input class="py-3 px-5 text-base text-slate-800 font-poppins rounded-full border border-[#d8dbdd] focus:outline-Green" type="text" v-model="searchValue" placeholder="Enter value to be searched" />
     </div>
     <br />
 
@@ -90,10 +90,10 @@ export default {
       searchValue: "",
       headers: [
         { text: "Name", align: "start", width: 200, sortable: true, value: "brandName" },
-        { text: "Contact", width: 200, value: "brandContactnumber", sortable: true },
-        { text: "Email", value: "brandEmail", width: 200, sortable: true },
-        { text: "Address", value: "brandAddress", width: 200, sortable: true },
-        { text: "Subscription Plan", value: "subscriptionplan", width: 170, sortable: true },
+        { text: "Contact", width: 200, sortable: true, value: "brandContactnumber", sortable: true },
+        { text: "Email", sortable: true, value: "brandEmail", width: 200, sortable: true },
+        { text: "Address", sortable: true, value: "brandAddress", width: 200, sortable: true },
+        { text: "Subscription Plan", sortable: true, value: "subscriptionplan", width: 170, sortable: true },
         {
           text: "No of Designers",
           value: "countDesigner",
