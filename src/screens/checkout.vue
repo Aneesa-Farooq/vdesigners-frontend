@@ -91,16 +91,17 @@ export default {
     
       const User = localStorage.getItem("user-info");
       const user1 = JSON.parse(User);
-      console.log(userType.value)
-      if (userType.value == "admin"){
+      console.log (route.params.type)
+      console.log(2222,userType.value)
+      if (userType.value == 'admin'){
         name.value=user1.user.adminName;
         console.log(name.value,111111);
       }
-      else if (userName.value == "designer"){
+      else if (userType.value == 'designer'){
        name.value=user1.user.designerName;
        console.log(name.value,22222111);
       }
-      else if (this.userType == "brand"){
+      else if (userType.value== 'brand'){
         name.value=user1.user.brandName;
         console.log(name.value,333331111);
       }

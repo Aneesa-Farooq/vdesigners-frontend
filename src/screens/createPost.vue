@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-background px-[48px]">
-    <div class="flex flex-col justify-center">
+  <div class="bg-background px-[48px] justify-center">
+    <div class="flex flex-col justify-center items-center">
       <div class="w-2/4">
         <button @click="toggleModal" class="bg-[#E3F4F7] h-60 w-full overflow-hidden rounded-xl border border-dashed border-[#799be6] flex flex-col gap-4 justify-center items-center py-4">
           <div :class="`${isUrls ? 'hidden' : ''}`">
@@ -28,7 +28,7 @@
         <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Description </label>
         <InputField type="text" id="name" place_holder="Add description" v-model="description" class="w-full my-2" />
 
-        <button @click="postImage" class="my-[22px] w-full self-center block bg-Green border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
+        <button @click="postImage" class="my-[22px] w-full self-center block decidedBG border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s]">Post</button>
       </div>
     </div>
   </div>

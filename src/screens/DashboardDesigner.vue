@@ -68,7 +68,7 @@ export default {
     return (
       {
         brandData: {},
-        userImg: "/img/user.png",
+        userImg: "",
       },
       {
         series: [76, 67, 61, 90],

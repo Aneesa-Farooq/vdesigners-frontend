@@ -26,6 +26,7 @@
       </template>
 
     </EasyDataTable>
+    
   </div>
 </template>
 

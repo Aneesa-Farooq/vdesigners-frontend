@@ -2,10 +2,10 @@
   <div class="bg-background">
     <!-- CARDS -->
     <div class="w-full grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-5 mb-7">
-      <AnalyticsCard heading="Total Brands" cardValue="$100" backGround="bg-gradient-primary" shadow="shadow-primary" icon="mdi:users" />
-      <AnalyticsCard heading="Total Designers" cardValue="$100" backGround="bg-gradient-success" shadow="shadow-success" icon="mdi:user" />
+      <AnalyticsCard heading="Total Brands" :cardValue="totalDesigners" backGround="bg-gradient-primary" shadow="shadow-primary" icon="mdi:users" />
+      <AnalyticsCard heading="Total Designers" :cardValue="totalDesigners" backGround="bg-gradient-success" shadow="shadow-success" icon="mdi:user" />
       <AnalyticsCard heading="Total Revenue" cardValue="$100" backGround="bg-gradient-dark" shadow="shadow-dark" icon="ph:currency-dollar-bold" />
-      <AnalyticsCard heading="Total Projects" cardValue="$100" backGround="bg-gradient-info" shadow="shadow-info" icon="ic:baseline-snippet-folder" />
+      <AnalyticsCard heading="Total Patterns" :cardValue="totalProjects" backGround="bg-gradient-info" shadow="shadow-info" icon="ic:baseline-snippet-folder" />
     </div>
     <!-- charts -->
     <div id="charts" class="flex flex-col lg:flex-row md:flex-col mt-3">
@@ -19,9 +19,8 @@
       </div>
       <!-- Right Cards -->
       <div class="flex flex-col gap-6 mt-[10px]">
-        
         <div class="flex flex-[1] bg-white features feature-primary shadow-[-1px_3px_10px_0_rgba(0,0,0,0.025)] p-5 items-center justify-center rounded h-1/3">
-          <ProgressBar/>
+          <ProgressBar :tposts="totalPosts" :tprojects="totalProjects" :tdesigners="totalDesigners" :tbrands="totalBrands"/>
         </div>
 
         <!-- List of Registered brands -->
@@ -42,8 +41,7 @@
           </div>
         </div>
         <!----------END----------- -->
-        
-        </div>
+      </div>
       <!-- Right Cards end-->
     </div>
   </div>
@@ -64,11 +62,16 @@ export default {
     AreaChart,
     BubbleChart,
     AnalyticsCard,
-    ProgressBar
+    ProgressBar,
   },
 
   data() {
     return {
+      totalBrands: 0,
+      totalDesigners: 0,
+      totalRevenue: 0,
+      totalProjects: 0,
+      totalPosts: 0,
       slicedData: [],
       brandData: [],
     };
@@ -86,10 +89,39 @@ export default {
       .then((response) => {
         // console.log(response.data);
         this.brandData = response.data;
+        this.totalBrands = this.brandData.length;
         this.slicedData = this.brandData.slice(0, 4);
         console.log("Data is printed");
         console.log(this.brandData);
         console.log(this.slicedData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
+      .then((response) => {
+        this.totalDesigners = response.data.length;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get(`https://vdesigners.herokuapp.com/api/project/getProjects`)
+      .then((response) => {
+        this.totalProjects = response.data.length;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios
+      .get("http://localhost:5172/api/pattern/getPosts")
+      .then((response) => {
+        // console.log(response.data);
+        this.totalPosts = response.data.length;
       })
       .catch((error) => {
         console.log(error);

@@ -28,7 +28,7 @@
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteDesigner(item._id)"></Icon>
-          <router-link to="/user/Update Designer/{{userType}}/updateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link :to="`/user/Update Designer/${userType}/updateDesigner`"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
           <button
             @click="
               toggleModal();

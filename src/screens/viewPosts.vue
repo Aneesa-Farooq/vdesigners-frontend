@@ -18,9 +18,9 @@
           <p class="inline-block decidedBG text-xs text-white py-1 px-3 text-center rounded-xl w-fit mb-2">{{ post.category }}</p>
         </div>
         <div class="flex ml-auto self-center mr-2 gap-4">
-          <button class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
+          <button @click="deletePost(post._id)" class="bg-lightgrey text-black px-8 py-2 rounded-md">Delete</button>
           <router-link :to="`/user/Post Detail/${userType}/viewPost/${post._id}`">
-            <button class="decidedBG text-white px-8 py-2 rounded-md">View Post</button>
+            <button class="decidedBG text-white px-8 py-2 rounded-md hover:opacity-70">View Post</button>
           </router-link>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default {
         });
     },
 
-    deleteBrand(id) {
+    deletePost(id) {
       swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this file!",
@@ -76,7 +76,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5172/api/admin/deleteBrand/${id}`)
+            .delete(`http://localhost:5172/api/pattern/deletePost/${id}`)
             .then((response) => {
               console.log(response.status);
             })

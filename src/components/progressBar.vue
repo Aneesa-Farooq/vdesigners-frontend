@@ -13,6 +13,7 @@ import axios from "axios";
 export default {
   name: "ProgressBar",
   components: {},
+  props: ["tpost", "tdesigners", "tbrands", "tpatterns"],
   data() {
     return (
       {
@@ -52,7 +53,7 @@ export default {
               },
             },
           },
-          labels: ["Apples", "Oranges", "Bananas", "Berries"],
+          labels: ["Brands","Designers", "Posts", "Patterns"],
         },
       }
     );

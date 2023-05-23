@@ -20,11 +20,11 @@ export default {
           data: [11, 12, 45, 32]
         },
         {
-          name: "series2",
+          name: "Posts",
           data: [90, 1, 70, 30],
         },
         {
-          name: "series3",
+          name: "Patterns",
           data: [50, 2, 5, 32],
         },
       ],
