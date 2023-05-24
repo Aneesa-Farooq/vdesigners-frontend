@@ -13,6 +13,16 @@
         </button>
         <p class="text-red text-base font-normal self-start">{{ imageMesg }} &emsp;</p>
 
+        <div v-if="userType == 'admin'">
+          <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Designer </label>
+          <select v-model="designerId" class="my-2 w-full h-[50px] p-4 rounded-[7px] font-poppins outline-none text-base tracking-[0.5px] bg-lightgrey border border-borderColor hover:bg-white hover:border-borderColor hover:shadow-[0_0_0_4px_rgba(234,76,137,0.1)] focus:border-border-color-focus focus:shadow-[0_0_0_4px_rgba(234,76,137,0.1)] focus:bg-white">
+            <option value="">Select Designer</option>
+            <option v-for="(option, index) in options" :key="index" :value="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+
         <div class="flex items-end gap-4">
           <label class="block font-poppins tracking-[1px] text-lg font-bold text-gray-700 mt-4 mb-2"> Name </label>
           <p class="text-red text-base font-normal self-start mt-4 mb-2">{{ nameMesg }}</p>
@@ -82,6 +92,7 @@ export default {
   },
   data() {
     return {
+      userType: "",
       isUrls: false,
       selected: false,
       urls: [],
@@ -93,6 +104,7 @@ export default {
       imageMesg: "",
       nameMesg: "",
       catMesg: "",
+      options: [],
     };
   },
   watch: {
@@ -140,10 +152,15 @@ export default {
   },
 
   mounted() {
-    let user = localStorage.getItem("user-info");
-    console.log(user);
-    this.designerId = JSON.parse(user).user._id;
-    console.log(this.designerId);
+    this.userType = this.$route.params.type;
+    console.log(this.userType);
+    if (this.userType == "admin") {
+      this.getDesigners();
+    } else {
+      const User = localStorage.getItem("user-info");
+      const user1 = JSON.parse(User);
+      this.designerId = user1.user._id;
+    }
     this.getGallery();
   },
 
@@ -187,6 +204,24 @@ export default {
         .get(`http://localhost:5172/api/project/getProjects`)
         .then((response) => {
           this.GalleryData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getDesigners() {
+      axios
+        .get("http://localhost:5172/api/designers/getAlldesigners")
+        .then((response) => {
+          console.log(response.data);
+          let data = response.data;
+          for (let i = 0; i < data.length; i++) {
+            this.options.push({
+              value: data[i]._id,
+              text: data[i].designerName,
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
