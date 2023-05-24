@@ -76,7 +76,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5172/api/pattern/deletePost/${id}`)
+            .delete(`https://vdesigners.herokuapp.com/api/pattern/deletePost/${id}`)
             .then((response) => {
               console.log(response.status);
             })

@@ -171,7 +171,7 @@ export default {
             }
           } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-            const someRes = await axios.post("https://vdesigners.herokuapp.capi/brands/login", {
+            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/login", {
               brandEmail: this.formValues.email,
               password: this.formValues.password,
             });

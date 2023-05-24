@@ -119,7 +119,7 @@
         e.preventDefault();
         (async () => {
           try {
-            const someRes = await axios.put(`http://localhost:5172/api/designers/updatedesigner/${this.formValues.id}`, {
+            const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updatedesigner/${this.formValues.id}`, {
               _id:this.formValues.id,
               designerName: this.formValues.designerName,
               designerEmail: this.formValues.email,

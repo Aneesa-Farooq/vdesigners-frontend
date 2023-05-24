@@ -103,7 +103,7 @@ export default {
   mounted() {
     console.log(this.$route.params.id);
     axios
-      .get(`http://localhost:5172/api/pattern/postid/${this.$route.params.id}`)
+      .get(`https://vdesigners.herokuapp.com/api/pattern/postid/${this.$route.params.id}`)
       .then((response) => {
         console.log(response.data);
         this.postData = response.data;
@@ -118,7 +118,7 @@ export default {
     addComment() {
       console.log(this.newComment);
       axios
-        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment })
+        .put(`https://vdesigners.herokuapp.com/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment })
         .then((response) => {
           console.log(response.data);
           this.postData.comments = this.newComment;

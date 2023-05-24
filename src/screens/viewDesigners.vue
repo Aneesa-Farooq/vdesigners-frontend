@@ -132,7 +132,7 @@ export default {
     getData(){
       this.designerData = [];
       axios
-      .get("http://localhost:5172/api/designers/getAlldesigners")
+      .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
       .then((response) => {
         console.log(response.data);
         let Data = response.data;
@@ -160,7 +160,7 @@ export default {
 
     async changeStatus(designer, status) {
       try {
-        const someRes = await axios.put(`http://localhost:5172/api/designers/updateStatus/${designer._id}`, {
+        const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updateStatus/${designer._id}`, {
           status: status,
         });
         console.log(someRes);
@@ -197,7 +197,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete(`http://localhost:5172/api/designers/deletedesigner/${id}`)
+            .delete(`https://vdesigners.herokuapp.com/api/designers/deletedesigner/${id}`)
             .then((response) => {
               console.log(response.status);
               if (response.status == "200") {

@@ -99,7 +99,7 @@ export default {
       console.log(repayload);
 
       axios
-        .get(`http://localhost:5172/api/brands/checkregister/${repayload.email}`)
+        .get(`https://vdesigners.herokuapp.com/api/brands/checkregister/${repayload.email}`)
         .then((response) => {
           if (response.data.msg == "user doesnot exist") {
             console.log(response.data.msg);
@@ -129,7 +129,7 @@ export default {
               if (plan) {
                 (async () => {
                   try {
-                    const someRes = await axios.post("http://localhost:5172/api/brands/socialLogin", {
+                    const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/socialLogin", {
                       brandName: repayload.given_name,
                       brandEmail: repayload.email,
                       subscriptionplan: plan,
@@ -195,7 +195,7 @@ export default {
           }
           
           else {
-            const optp = await axios.post("http://localhost:5172/api/brands/verifyAccount", { brandEmail: this.formValues.email });
+            const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", { brandEmail: this.formValues.email });
             console.log("optp");
             console.log(optp.data.number);
 
@@ -214,7 +214,7 @@ export default {
             });
 
             if (ipAddress == optp.data.number) {
-              const someRes = await axios.post("http://localhost:5172/api/brands", {
+              const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands", {
                 brandName: this.formValues.brandName,
                 brandEmail: this.formValues.email,
                 brandContactnumber: this.formValues.contact,

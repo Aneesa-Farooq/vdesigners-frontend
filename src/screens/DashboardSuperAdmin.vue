@@ -118,7 +118,7 @@ export default {
       });
 
       axios
-      .get("http://localhost:5172/api/pattern/getPosts")
+      .get("https://vdesigners.herokuapp.com/api/pattern/getPosts")
       .then((response) => {
         // console.log(response.data);
         this.totalPosts = response.data.length;

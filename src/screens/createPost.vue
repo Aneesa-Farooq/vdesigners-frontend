@@ -184,7 +184,7 @@ export default {
 
     getGallery() {
       axios
-        .get(`http://localhost:5172/api/project/getProjects`)
+        .get(`https://vdesigners.herokuapp.com/api/project/getProjects`)
         .then((response) => {
           this.GalleryData = response.data;
         })
@@ -216,7 +216,7 @@ export default {
 
     postImage() {
       if (this.urls.length > 0 && this.designerId != "" && this.category != "" && this.patternName != "") {
-        const someRes = axios.post(`http://localhost:5172/api/pattern/`, {
+        const someRes = axios.post(`https://vdesigners.herokuapp.com/api/pattern/`, {
           image: this.urls,
           designerId: this.designerId,
           category: this.category,
