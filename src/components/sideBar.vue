@@ -170,7 +170,7 @@ export default {
         {
           name: "Feedbacks",
           icon: "bx-like",
-          path: "/user/Feedbacks/brand/feedbacks",
+          path: "/user/Feedbacks/brand/enterFeedback",
         },
         {
           name: "Subscriptions",
