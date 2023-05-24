@@ -4,7 +4,7 @@
     <div class="w-full grid xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-5 mb-7">
       <AnalyticsCard heading="Total Designers" :cardValue="totalDesigners" backGround="bg-gradient-success" shadow="shadow-success" icon="mdi:users" />
       <AnalyticsCard heading="Total Posts" :cardValue="totalPosts" backGround="bg-gradient-orange" shadow="shadow-orange" icon="mdi:user" />
-      <AnalyticsCard heading="Total Revenue" cardValue="$100" backGround="bg-gradient-dark" shadow="shadow-dark" icon="ph:currency-dollar-bold" />
+      <AnalyticsCard heading="Total Revenue" cardValue="Rs.100" backGround="bg-gradient-dark" shadow="shadow-dark" icon="ph:currency-dollar-bold" />
       <AnalyticsCard heading="Total Patterns" :cardValue="totalProjects" backGround="bg-gradient-info" shadow="shadow-info" icon="ic:baseline-snippet-folder" />
     </div>
     <!-- charts -->
