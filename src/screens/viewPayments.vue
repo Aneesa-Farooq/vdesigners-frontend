@@ -123,7 +123,7 @@ export default {
 
   methods: {
     storeBrand(item) {
-      this.formValues.Name = item._id;
+      this.formValues.Name = item.userName;
       this.formValues.plan = item.plan;
       this.formValues.amount = item.price;
       this.formValues.date = item.createdAt;

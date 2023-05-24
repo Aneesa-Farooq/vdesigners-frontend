@@ -22,16 +22,16 @@
               <img class="h-auto w-auto" :src="postData.designerId.designerImg" alt="" />
             </div>
             <p class="flex items-center text-xl font-bold text-black">{{ postData.designerId.designerName }}</p>
-            <p v-if="postData.status=='pending'" class="flex bg-yellow-300 blink_me items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
-            <p v-if="postData.status=='accepted'" class="flex bg-green-600 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
-            <p v-if="postData.status=='rejected'" class="flex bg-[#FA5252] items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
+            <p v-if="postData.status == 'pending'" class="flex bg-yellow-300 blink_me items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
+            <p v-if="postData.status == 'accepted'" class="flex bg-green-600 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
+            <p v-if="postData.status == 'rejected'" class="flex bg-[#FA5252] items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
           </div>
 
           <h1 class="text-gray-700 text-2xl font-bold mb-2 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
           <p class="text-gray-500 mb-8 tracking-wide">{{ $filters.formatDate(postData.createdAt, "MMM dd, yyyy, hh:mm:ss a") }}</p>
           <p class="text-gray-700 text-lg">{{ postData.description }}</p>
         </div>
-        <div class="flex items-center gap-4 mb-4">
+        <div v-if="userType !== 'designer'" class="flex items-center gap-4 mb-4">
           <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('accepted')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Accept</button>
           <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('rejected')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Reject</button>
           <button :class="`${postData.status == 'accepted' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('rejected')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Reject</button>
@@ -46,7 +46,7 @@
           </div>
           <div v-else>No comments to show.</div>
 
-          <form @submit.prevent="addComment" class="mt-6">
+          <form v-if="userType !== 'designer'" @submit.prevent="addComment" class="mt-6">
             <label for="comment" class="block mb-2">Add a comment:</label>
             <textarea id="comment" v-model="newComment" class="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4" placeholder="Write your comment here..."></textarea>
             <button type="submit" class="decidedBG text-white px-4 py-2 rounded-lg" @click="addComment">Submit</button>
@@ -102,11 +102,13 @@ export default {
       },
       newComment: "",
       newStatus: "",
+      userType: "",
     };
   },
 
   mounted() {
     console.log(this.$route.params.id);
+    this.userType = this.$route.params.type;
     axios
       .get(`https://vdesigners.herokuapp.com/api/pattern/postid/${this.$route.params.id}`)
       .then((response) => {
@@ -123,9 +125,7 @@ export default {
     addComment() {
       console.log(this.newComment);
       axios
-        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`,
-         { comments: this.newComment ,
-           status:this.newStatus})
+        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment, status: this.newStatus })
         .then((response) => {
           console.log(response.data);
           this.postData.comments = this.newComment;

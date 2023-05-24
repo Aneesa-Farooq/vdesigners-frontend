@@ -42,13 +42,23 @@ export default {
   },
   mounted() {
     const User = localStorage.getItem("user-info");
+    console.log("user",User);
     const user1 = JSON.parse(User);
+    console.log("user1",User);
     this.userType = this.$route.params.type;
     if (this.userType == "admin") {
       this.image = user1.user.adminImg;
     }
     else if (this.userType == "brand") {
-      this.image = user1.user.brandImg;
+      const isSocialLogin=localStorage.getItem("isSocialLogin");
+      console.log(isSocialLogin);
+      if(isSocialLogin){
+        this.image = user1.picture;
+        console.log(this.image);
+      }
+      else{
+        this.image = user1.user.brandImg;
+      }
     }
     else{
         this.image = user1.user.designerImg;

@@ -6,9 +6,9 @@
     <div class="h-screen overflow-auto flex-[1] xl:flex-[2] py-14">
       <div class="flex flex-col p-6 relative items-center justify-center">
         <div class="w-full flex flex-col items-center max-w-[500px]">
-          <p class="self-start block font-poppins font-extrabold text-2xl text-grey">Sign Up to V-Designers</p>
+          <p class="self-start block font-poppins font-extrabold text-2xl text-grey">Sign Up For Brands</p>
           <br />
-          <GoogleLogin class="flex self-start" :callback="callback" />
+          <GoogleLogin class="flex self-start" :callback="callback"/>
           <hr class="border-t-[1px] border-solid w-full border-[#e0e0e0] overflow-visible m-12 after:content-['or'] after:relative text-center after:bg-white after:px-[16px] after:top-[-14px]" />
 
           <form @submit="submitForm" class="w-full flex flex-col items-center max-w-[500px]">
@@ -72,6 +72,7 @@ import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   name: "Signup",
@@ -93,6 +94,8 @@ export default {
   },
 
   setup() {
+    const router = useRouter();
+    const route = useRoute();
     const callback = (response) => {
       console.log("Handle the response", response);
       const repayload = jwt_decode(response.credential);
@@ -157,7 +160,9 @@ export default {
             })();
           } else {
             localStorage.setItem("user-info", JSON.stringify(repayload));
-            window.location.href = "/dbSuperAdmin";
+            localStorage.setItem("isSocialLogin", true);
+            console.log("here")
+            router.push({ name: "DashboardBrand", params: { pageName: "Dashboard", type: "brand" } });
           }
         })
         .catch((error) => {
