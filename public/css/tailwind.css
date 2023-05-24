@@ -1921,10 +1921,6 @@ video {
   --tw-ring-color: rgb(199 210 254 / var(--tw-ring-opacity));
 }
 
-.disabled\:opacity-40:disabled {
-  opacity: 0.4;
-}
-
 @media (min-width: 640px) {
   .sm\:p-8 {
     padding: 2rem;
