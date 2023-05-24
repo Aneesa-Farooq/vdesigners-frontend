@@ -32,6 +32,7 @@
 import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
+import { format } from 'date-fns';
 
 export default {
   name: "Feedbacks",
@@ -72,7 +73,7 @@ export default {
             brandName: element.brandId.brandName,
             brandImg: element.brandId.brandImg,
             feedback: element.feedback,
-            createdAt: element.createdAt,
+            createdAt: format(new Date(element.createdAt), "MMM dd, yyyy, hh:mm:ss a"),
           });
         });
         console.log(this.feedbackData);

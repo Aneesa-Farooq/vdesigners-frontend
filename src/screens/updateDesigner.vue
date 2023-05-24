@@ -60,7 +60,7 @@
 
         <div class="flex flex-col md:flex-row w-full gap-6">
           <router-link :to="`/user/Designers/${userType}/viewDesigners`" class="my-[22px] w-full text-center self-start block bg-white border  text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
-          <input class="my-[22px] w-full self-start block decidedBG  text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
+          <input class="my-[22px] w-full self-start block decidedBG  text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Update" />
         </div>
       </div>
     </form>
