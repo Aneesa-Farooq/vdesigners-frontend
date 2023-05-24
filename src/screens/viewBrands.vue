@@ -21,7 +21,7 @@
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
           <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/user/Update Brand/{{userType}}/updateBrand"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <router-link :to="`/user/Update Brand/${userType}/updateBrand`"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
           <button
             @click="
               toggleModal();
@@ -93,7 +93,7 @@ export default {
         { text: "Contact", width: 200, sortable: true, value: "brandContactnumber", sortable: true },
         { text: "Email", sortable: true, value: "brandEmail", width: 200, sortable: true },
         { text: "Address", sortable: true, value: "brandAddress", width: 200, sortable: true },
-        { text: "Subscription Plan", sortable: true, value: "subscriptionplan", width: 170, sortable: true },
+        // { text: "Subscription Plan", sortable: true, value: "subscriptionplan", width: 170, sortable: true },
         {
           text: "No of Designers",
           value: "countDesigner",
@@ -204,6 +204,7 @@ export default {
           axios
             .delete(`http://localhost:5172/api/admin/deleteBrand/${id}`)
             .then((response) => {
+              console.log("request made");
               console.log(response.status);
               if (response.status == "200") {
                 swal("Deleted!", {

@@ -11,7 +11,10 @@
               <img class="h-auto w-auto" :src="post.designerId.designerImg" alt="" />
             </div>
             <p class="flex items-center text-base lg:text-lg font-bold text-black">{{ post.designerId.designerName }}</p>
-            <p :class="`${post.status == 'pending' ? 'blink_me' : 'bg-Green'}`" class="flex bg-yellow-300 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
+            <p v-if="post.status=='pending'" class="flex bg-yellow-300 blink_me items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
+            <p v-if="post.status=='accepted'" class="flex bg-green-600 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
+            <p v-if="post.status=='rejected'" class="flex bg-[#FA5252] items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ post.status }}</p>
+          
           </div>
           <p class="text-base font-semibold text-[#616161] mb-2">{{ post.patternName }}</p>
           <p class="text-xs tracking-wide text-navIcons mb-2">{{ post.description }}</p>
