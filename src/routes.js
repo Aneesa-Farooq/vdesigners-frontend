@@ -22,6 +22,7 @@ import DashboardDesigner from "./screens/DashboardDesigner.vue";
 import ViewPost from "./screens/viewPost.vue"
 import Gallery from "./screens/gallery.vue"
 import DashboardBrand from "./screens/DashboardBrand.vue"
+import EnterFeedback from "./screens/enterFeedback.vue"
 
 const routes = [
   {
@@ -58,6 +59,8 @@ const routes = [
       {name:"ViewPosts", path: "viewPosts", component: ViewPosts },
 
       {name:"Feedbacks", path: "feedbacks", component: Feedbacks },
+
+      {name:"EnterFeedback", path: "enterFeedback", component: EnterFeedback},
 
       {name:"Subscriptions", path: "subscriptions", component: Subscriptions },
 

@@ -99,6 +99,7 @@
         contact: "",
         url: "",
         passBackup: "",
+        password: "",
       },
       };
     },
@@ -120,7 +121,8 @@
         e.preventDefault();
         (async () => {
           try {
-            const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/designers/updatedesigner/${this.formValues.id}`, {
+            console.log(this.formValues);
+            const someRes = await axios.put(`http://localhost:5172/api/designers/updatedesigner/${this.formValues.id}`, {
               _id:this.formValues.id,
               designerName: this.formValues.designerName,
               designerEmail: this.formValues.email,
@@ -215,10 +217,8 @@
       this.formValues.contact = designer.designerContactnumber;
       this.formValues.location = designer.designerAddress;
       this.formValues.brandName = designer.brandName;
-      this.formValues.posts = designer.countPost;
       this.formValues.projects = designer.countProject;
       this.formValues.id = designer._id;
-      this.formValues.passBackup = designer.password;
       this.formValues.url = designer.designerImg;
   
       var myName = document.getElementById("name");
