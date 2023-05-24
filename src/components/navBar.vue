@@ -100,6 +100,7 @@ export default {
         if (this.url) {
           const user = localStorage.getItem("user-info");
           const id = JSON.parse(user)._id;
+          console.log(id)
           const someRes = await axios.put(`https://vdesigners.herokuapp.com/api/admin/updateProfile/${id}`, {
             adminImg: this.url,
           });

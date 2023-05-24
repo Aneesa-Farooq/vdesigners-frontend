@@ -160,7 +160,7 @@ export default {
       (async () => {
         try {
           if (this.formValues.actor == "Admin") {
-            const someRes = await axios.post("http://localhost:5172/api/admin/loginAdmin", {
+            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/admin/loginAdmin", {
               adminEmail: this.formValues.email,
               password: this.formValues.password,
             });
@@ -171,7 +171,7 @@ export default {
             }
           } else if (this.formValues.actor == "Brand") {
             console.log("brand");
-            const someRes = await axios.post("http://localhost:5172/api/brands/login", {
+            const someRes = await axios.post("https://vdesigners.herokuapp.capi/brands/login", {
               brandEmail: this.formValues.email,
               password: this.formValues.password,
             });
@@ -188,7 +188,7 @@ export default {
               });
             }
           } else if (this.formValues.actor == "Designer") {
-            const someRes = await axios.post("http://localhost:5172/api/designers/login", {
+            const someRes = await axios.post("https://vdesigners.herokuapp.com/api/designers/login", {
               designerEmail: this.formValues.email,
               password: this.formValues.password,
             });
