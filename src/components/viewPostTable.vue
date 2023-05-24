@@ -39,7 +39,7 @@
 
           <template #item-operation="item">
             <div class="operation-wrapper">
-              <router-link to="/"><ion-icon name="eye-outline" class="operation-icon" @click="storeBrand(item)"></ion-icon></router-link>
+              <router-link :to="`/user/Post Detail/designer/viewPost/${item._id}`"><ion-icon name="eye-outline" class="operation-icon" @click="storeBrand(item)"></ion-icon></router-link>
             </div>
           </template>
         </EasyDataTable>

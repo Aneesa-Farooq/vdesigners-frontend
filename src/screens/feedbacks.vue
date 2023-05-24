@@ -9,19 +9,17 @@
       <template #loading>
         <img src="/img/loading.gif" class="w-28 h-28" />
       </template>
-<!-- 
-      <template #item-brandName="{ designerName, brandImg }">
+
+      <template #item-brandName="{ brandName, brandImg }">
         <div class="player-wrapper">
           <img class="avator" :src="brandImg" alt="" />
           {{ brandName }}
         </div>
-      </template> -->
+      </template>
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <Icon icon="tabler:trash" class="operation-icon" @click="deleteBrand(item._id)"></Icon>
-          <router-link to="/UpdateDesigner"><Icon icon="material-symbols:edit-square-outline" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
-          <router-link to="/viewDetailsD"><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></router-link>
+          <button ><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></button>
         </div>
       </template>
 
@@ -52,9 +50,8 @@ export default {
       designerCriteria: [20, 30],
       searchValue: "",
       headers: [
-        { text: "Brand Name", align: "start", sortable: true, value: "brandId" },
-        //{ text: "Brand", value: "brandId.brandName" },
-        { text: "Feedback", sortable: true, value: "feedback" },
+        { text: "Brand", value: "brandName" },
+        { text: "Review", sortable: true, value: "feedback" },
         { text: "Time", sortable: true, value: "createdAt" },
         { text: "Operations", sortable: true, value: "operation" },
       ],
@@ -68,7 +65,16 @@ export default {
       .get("https://vdesigners.herokuapp.com/api/admin/getAllfeedback")
       .then((response) => {
         console.log(response.data);
-        this.feedbackData = response.data;
+        let data = response.data;
+        data.forEach((element) => {
+          this.feedbackData.push({
+            _id: element._id,
+            brandName: element.brandId.brandName,
+            brandImg: element.brandId.brandImg,
+            feedback: element.feedback,
+            createdAt: element.createdAt,
+          });
+        });
         console.log(this.feedbackData);
         this.loading = false;
       })
@@ -76,6 +82,7 @@ export default {
         console.log(error);
       });
   },
+
 
   methods: {
     storeBrand(designer) {
