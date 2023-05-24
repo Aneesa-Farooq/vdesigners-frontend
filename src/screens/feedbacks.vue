@@ -19,12 +19,28 @@
 
       <template #item-operation="item">
         <div class="operation-wrapper flex items-center justify-center">
-          <button ><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></button>
+          <button><Icon icon="ic:outline-remove-red-eye" class="operation-icon" @click="storeBrand(item)"></Icon></button>
         </div>
       </template>
-
     </EasyDataTable>
-    
+
+    <ViewDetail @close="toggleModal" :modalActive="modalActive">
+      <div class="flex flex-col w-full max-w-[800px] bg-white rounded-[15px] h-full items-center justify-center my-3">
+        <div class="flex flex-col w-full">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="bg-white h-[100px] w-[100px] overflow-hidden rounded-full">
+              <img class="h-auto w-auto" :src="formValues.image" alt="" />
+            </div>
+            <div>
+              <p class="flex items-center text-xl font-bold text-black">{{ formValues.Name }}</p>
+              <p class="flex items-center text-xl font-normal text-gray-500">{{ formValues.date }}</p>
+            </div>
+          </div>
+          <p class="flex items-center text-xl font-bold text-black">{{ formValues.feedback }}</p>
+
+        </div>
+      </div>
+    </ViewDetail>
   </div>
 </template>
 
@@ -32,17 +48,25 @@
 import axios from "axios";
 import { Icon } from "@iconify/vue";
 import swal from "sweetalert";
-import { format } from 'date-fns';
+import { format } from "date-fns";
+import { ref } from "vue";
+import ViewDetail from "../components/viewDetail.vue";
 
 export default {
   name: "Feedbacks",
   components: {
     Icon,
-    
+    ViewDetail,
   },
 
   data() {
     return {
+      formValues: {
+        Name: "",
+        feedback: "",
+        image: "",
+        date: "",
+      },
       blocked: false,
       loading: true,
       //sortBy: "brandName",
@@ -59,6 +83,14 @@ export default {
       feedbackData: [],
       filterOptionsArray: [],
     };
+  },
+
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
   },
 
   mounted() {
@@ -84,10 +116,13 @@ export default {
       });
   },
 
-
   methods: {
-    storeBrand(designer) {
-      localStorage.setItem("designer-to-update", JSON.stringify(designer));
+    storeBrand(feedback) {
+      this.formValues.Name = feedback.brandName;
+      this.formValues.feedback = feedback.feedback;
+      this.formValues.image = feedback.brandImg;
+      this.formValues.date = feedback.createdAt;
+      this.toggleModal();
     },
     deleteBrand(id) {
       console.log(id);
@@ -265,11 +300,3 @@ export default {
   transition: 0.5s ease;
 }
 </style>
-
-
-
-
-
-
-
-
