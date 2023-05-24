@@ -46,12 +46,21 @@ export default {
     return {
       postData: {},
       userType: "",
+      loggedinuser: "",
     };
   },
 
   mounted() {
+    const User = localStorage.getItem("user-info");
+    const user1 = JSON.parse(User);
     this.userType = this.$route.params.type;
-    this.getData();
+    this.loggedinuser = user1.user._id;
+   
+    if (this.userType == "admin") {
+      this.getData();
+    } else if (this.userType == "designer") {
+      this.getOneDesignerPosts();
+    }
   },
 
   methods: {
@@ -60,6 +69,21 @@ export default {
         .get("http://localhost:5172/api/pattern/getPosts")
         .then((response) => {
           // console.log(response.data);
+          this.postData = response.data;
+          console.log("Data is printed");
+          console.log(this.postData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getOneDesignerPosts() {
+      console.log("here")
+      axios
+        .get(`http://localhost:5172/api/pattern/getonePosts/?designerId=${this.loggedinuser}`)
+        .then((response) => {
+          console.log(response.data);
           this.postData = response.data;
           console.log("Data is printed");
           console.log(this.postData);
