@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="flex flex-col md:flex-row w-full gap-6">
-          <router-link to="/user/Dashboard/admin/dbAdmin" class="my-[22px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
+          <router-link :to="`/user/Brands/${userType}/viewBrands`" class="my-[22px] w-full text-center self-start block bg-white border border-Green text-Green font-[700] text-lg cursor-pointer rounded-[7px] px-10 py-[10px] transition duration-[0.5s] hover:text-white hover:bg-Green">Back</router-link>
           <input class="my-[22px] w-full self-start block decidedBG border-none text-white font-[700] text-lg cursor-pointer hover:opacity-70 rounded-[7px] px-10 py-[10px] transition duration-[0.5s]" type="submit" value="Add" />
         </div>
       </div>
@@ -84,6 +84,7 @@ export default {
   },
   data() {
     return {
+      userType: "",
       isUrl: true,
       formValues: {
         id: "",
@@ -207,6 +208,7 @@ export default {
   },
 
   mounted() {
+    this.userType=this.$route.params.type;
     let brand = JSON.parse(localStorage.getItem("brand-to-update"));
     console.log(brand);
     this.formValues.id = brand._id;

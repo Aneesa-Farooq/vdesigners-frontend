@@ -23,7 +23,7 @@
           <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
         </svg>
         <span class="text-2xl font-normal leading-tight text-gray-500"
-          >User Name: <b>{{name}}</b></span
+          >User Name: <b>{{ name }}</b></span
         >
       </li>
     </ul>
@@ -33,7 +33,7 @@
 
       <div id="card-errors" role="alert" class="mx-3 text-error-message text-lg font-semibold"></div>
       <div class="justify-center mx-3">
-        <button class="w-full h-8 mb-3 text-white shadow-md decidedBG border mt-5 rounded-md hover:opaciy-70 pb-1" :disabled="disabled" @click="Submit">Pay with Stripe</button>
+        <button id="checkout-btn" :onClick="checkout" class="w-full h-8 mb-3 text-white shadow-md decidedBG border mt-5 rounded-md hover:opaciy-70 pb-1" :disabled="disabled"><span class="spinner-border spinner-border-sm d-none mr-4" role="status" aria-hidden="true"></span>Pay with Stripe</button>
       </div>
     </div>
   </div>
@@ -43,18 +43,19 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import swal from "sweetalert";
 import { id } from "date-fns/locale";
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
+import { sub } from "date-fns";
 
 export default {
   name: "Checkout",
 
-  name:'',
+  name: "",
   setup() {
-    const router = useRouter()
-    const route = useRoute()
-    const Userid=ref('');
-    const name=ref('');
-    const userType=ref(route.params.type);
+    const router = useRouter();
+    const route = useRoute();
+    const Userid = ref("");
+    const name = ref("");
+    const userType = ref(route.params.type);
     const disabled = ref(false);
     const card = ref(null);
     const stripe = window.Stripe("pk_test_51MBkcnBRretLP9OvhqZg2LfOIC47Ld1uXxHuiFJ7jRz5adpDxqkgKr8v8Fiy1Wq5TVCpNAXF9258HuaE3oLPDiWa00QfqSRK0Y");
@@ -88,27 +89,24 @@ export default {
     }
 
     onMounted(() => {
-    
       const User = localStorage.getItem("user-info");
       const user1 = JSON.parse(User);
-      console.log (route.params.type)
-      console.log(2222,userType.value)
-      if (userType.value == 'admin'){
-        name.value=user1.user.adminName;
-        console.log(name.value,111111);
+      console.log(route.params.type);
+      console.log(2222, userType.value);
+      if (userType.value == "admin") {
+        name.value = user1.user.adminName;
+        console.log(name.value, 111111);
+      } else if (userType.value == "designer") {
+        name.value = user1.user.designerName;
+        console.log(name.value, 22222111);
+      } else if (userType.value == "brand") {
+        name.value = user1.user.brandName;
+        console.log(name.value, 333331111);
       }
-      else if (userType.value == 'designer'){
-       name.value=user1.user.designerName;
-       console.log(name.value,22222111);
-      }
-      else if (userType.value== 'brand'){
-        name.value=user1.user.brandName;
-        console.log(name.value,333331111);
-      }
-      
-      console.log(user1.user._id)
+
+      console.log(user1.user._id);
       Userid.value = user1.user._id;
-    //  name.value=user1.user.adminName;
+      //  name.value=user1.user.adminName;
       el.mount(card.value);
       card.value = el;
       el.on("change", (event) => {
@@ -134,7 +132,7 @@ export default {
           },
         },
       });
-      console.log(".....",result);
+      console.log(".....", result);
       console.log(result.paymentIntent.amount);
       if (result.error) {
         disabled.value = false;
@@ -154,6 +152,9 @@ export default {
             icon: "success",
             button: true,
           }).then(() => {
+            const checkoutBtn = document.querySelector("#checkout-btn");
+            checkoutBtn.disabled = false;
+            checkoutBtn.querySelector("span").classList.add("d-none");
             router.push({
               name: "ViewPayments",
               params: { pageName: "ViewPayments" },
@@ -168,8 +169,17 @@ export default {
       disabled,
       card,
       Submit,
-      name
+      name,
     };
+  },
+  methods: {
+    checkout(e) {
+      e.preventDefault();
+      const checkoutBtn = e.target.closest("#checkout-btn");
+      checkoutBtn.disabled = true;
+      checkoutBtn.querySelector("span").classList.remove("d-none");
+      this.Submit();
+    },
   },
 };
 </script>

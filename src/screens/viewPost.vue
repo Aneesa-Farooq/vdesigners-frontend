@@ -16,22 +16,26 @@
 
       <!-- <img class="img-fluid flex-[1] rounded-lg" :src="postData.image" alt="" /> -->
       <div class="flex flex-col flex-[1]">
-        <div class="mb-12">
-          <div class="flex items-center gap-3 mb-8">
+        <div class="mb-8">
+          <div class="flex items-center gap-3 mb-4">
             <div class="bg-white h-10 w-10 overflow-hidden rounded-full">
               <img class="h-auto w-auto" :src="postData.designerId.designerImg" alt="" />
             </div>
             <p class="flex items-center text-xl font-bold text-black">{{ postData.designerId.designerName }}</p>
-            <!-- <p :class="`${post.status == 'pending' ? 'blink_me' : 'bg-Green'}`" class="flex bg-yellow-300 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">status</p> -->
+            <p v-if="postData.status=='pending'" class="flex bg-yellow-300 blink_me items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
+            <p v-if="postData.status=='accepted'" class="flex bg-green-600 items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
+            <p v-if="postData.status=='rejected'" class="flex bg-[#FA5252] items-center justify-center text-[10px] lg:text-xs tracking-wide font-medium text-white p-1 lg:px-3 text-center rounded-xl w-fit h-fit">{{ postData.status }}</p>
           </div>
 
           <h1 class="text-gray-700 text-2xl font-bold mb-2 tracking-normal">{{ $filters.capitalizeWords(postData.patternName) }}</h1>
           <p class="text-gray-500 mb-8 tracking-wide">{{ $filters.formatDate(postData.createdAt, "MMM dd, yyyy, hh:mm:ss a") }}</p>
           <p class="text-gray-700 text-lg">{{ postData.description }}</p>
         </div>
-        <div class="flex items-center justify-between">
-          <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(postData, 'accept')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Accepted</button>
-          <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="changeStatus(postData, 'reject')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Rejected</button>
+        <div class="flex items-center gap-4 mb-4">
+          <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('accepted')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Accept</button>
+          <button :class="`${postData.status == 'pending' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('rejected')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Reject</button>
+          <button :class="`${postData.status == 'accepted' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center w-[105px] h-[35px] bg-[#FA5252] text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('rejected')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Reject</button>
+          <button :class="`${postData.status == 'rejected' ? '' : 'hidden'}`" class="flex items-center p-2 justify-center h-[35px] bg-green-600 text-white font-[700] text-sm cursor-pointer rounded-[7px] transition duration-[0.5s]" @click="addStatus('accepted')"><Icon class="w-[15px] h-[15px] mr-2 text-white" icon="mdi:ban" />Accept</button>
         </div>
         <div>
           <p class="text-gray-700 text-2xl font-semibold mb-3 tracking-normal">Comments</p>
@@ -97,6 +101,7 @@ export default {
         },
       },
       newComment: "",
+      newStatus: "",
     };
   },
 
@@ -118,7 +123,9 @@ export default {
     addComment() {
       console.log(this.newComment);
       axios
-        .put(`https://vdesigners.herokuapp.com/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment })
+        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`,
+         { comments: this.newComment ,
+           status:this.newStatus})
         .then((response) => {
           console.log(response.data);
           this.postData.comments = this.newComment;
@@ -129,6 +136,10 @@ export default {
           console.error(error);
           // handle error
         });
+    },
+    addStatus(status) {
+      this.newStatus = status;
+      this.postData.status = this.newStatus;
     },
   },
 };

@@ -180,10 +180,11 @@ export default {
       this.formValues.email = designer.designerEmail;
       this.formValues.contact = designer.designerContactnumber;
       this.formValues.location = designer.designerAddress;
-      this.formValues.brandName = designer.brandId.brandName;
+      this.formValues.brandName = designer.brandName;
       this.formValues.posts = designer.countPost;
       this.formValues.projects = designer.countProject;
       this.formValues.image = designer.designerImg;
+      console.log("designer should be stored")
       localStorage.setItem("designer-to-update", JSON.stringify(designer));
     },
     deleteDesigner(id) {

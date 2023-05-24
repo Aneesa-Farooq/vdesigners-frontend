@@ -51,6 +51,7 @@ import axios from "axios";
 import { Icon } from "@iconify/vue";
 import ViewDetail from "../components/viewDetail.vue";
 import { ref } from "vue";
+import { format } from 'date-fns';
 
 export default {
   name: "ViewPayments",
@@ -110,7 +111,7 @@ export default {
             userImg: data[i].userId.brandImg,
             plan: data[i].plan,
             price: data[i].price,
-            createdAt: data[i].createdAt,
+            createdAt: format(new Date(data[i].createdAt), "MMM dd, yyyy, hh:mm:ss a"),
           });
         }
         this.loading = false;
