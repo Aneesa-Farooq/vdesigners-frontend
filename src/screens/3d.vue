@@ -10,7 +10,7 @@ export default {
   mounted() {
     const message = "Hello-from-the-main-page!";
     const iframe = document.createElement("iframe");
-    iframe.src = `http://localhost:5174?data=${message}`;
+    iframe.src = `https://3d-vue-app.vercel.app/?data=${message}`;
     iframe.classList.add("h-[calc(100vh-68px-3rem)]", "w-full");
     document.querySelector("#iframeContainer").appendChild(iframe);
   },
