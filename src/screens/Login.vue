@@ -7,7 +7,7 @@
       <div class="w-full flex flex-col items-center max-w-[500px]">
         <p class="self-start block font-poppins font-extrabold text-2xl text-grey">Sign In to V-Designers</p>
         <br />
-        <GoogleLogin class="flex self-start" :callback="callback" />
+        <GoogleLogin class="flex self-start" :callback="callback"/>
         <hr class="border-t-[1px] border-solid w-full border-[#e0e0e0] overflow-visible m-12 after:content-['or'] after:relative text-center after:bg-white after:px-[16px] after:top-[-14px]" />
         <form @submit="submitForm" class="w-full flex flex-col items-center max-w-[500px]">
           <!-- <label class="self-start block font-poppins tracking-[1px] text-base">Email</label> -->
@@ -52,6 +52,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
 import swal from "sweetalert";
 import jwt_decode from "jwt-decode";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   name: "Login",
@@ -62,6 +63,8 @@ export default {
     SelectField,
   },
   setup() {
+    const router = useRouter();
+    const route = useRoute();
     const modalActive = ref(false);
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
@@ -79,60 +82,37 @@ export default {
             console.log(response.data.msg);
 
             (async () => {
-              const { value: plan } = await Swal.fire({
-                title: "Select field validation",
-                input: "select",
-                inputOptions: {
-                  monthly: "Monthly",
-                  yearly: "Yearly",
-                  premium: "Premium",
-                },
-                inputPlaceholder: "Select your Susbscription Plan",
-                showCancelButton: true,
-                inputValidator: (value) => {
-                  return new Promise((resolve) => {
-                    if (value) {
-                      resolve();
-                    } else {
-                      resolve("You need to select a plan :)");
-                    }
+              try {
+                const someRes = await axios.post("http://localhost:5172/api/brands/socialLogin", {
+                  brandName: repayload.given_name,
+                  brandEmail: repayload.email,
+                  subscriptionplan: plan,
+                  brandImg: repayload.picture,
+                });
+                console.log(someRes);
+                if (someRes.statusText == "Created") {
+                  swal("Successfully Registered", {
+                    icon: "success",
+                    button: true,
+                  }).then(() => {
+                    localStorage.setItem("user-info", JSON.stringify(repayload));
+                    router.push({ name: "DashboardBrand", params: { pageName: "Dashboard", type: "brand" } });
                   });
-                },
-              });
-
-              if (plan) {
-                (async () => {
-                  try {
-                    const someRes = await axios.post("http://localhost:5172/api/brands/socialLogin", {
-                      brandName: repayload.given_name,
-                      brandEmail: repayload.email,
-                      subscriptionplan: plan,
-                      brandImg: repayload.picture,
-                    });
-                    console.log(someRes);
-                    if (someRes.statusText == "Created") {
-                      swal("Successfully Registered", {
-                        icon: "success",
-                        button: true,
-                      }).then(() => {
-                        localStorage.setItem("user-info", JSON.stringify(repayload));
-                        this.$router.push({ name: "Admin", params: { pageName: "Dashboard", type: "brand" } });
-                      });
-                    }
-                  } catch (e) {
-                    swal({
-                      title: `${e.response.data.mesg}`,
-                      text: "Please Fill all Fields",
-                      icon: "error",
-                      button: true,
-                    });
-                  }
-                })();
+                }
+              } catch (e) {
+                swal({
+                  title: `${e.response.data.mesg}`,
+                  text: "Please Fill all Fields",
+                  icon: "error",
+                  button: true,
+                });
               }
             })();
           } else {
             localStorage.setItem("user-info", JSON.stringify(repayload));
-            this.$router.push({ name: "Admin", params: { pageName: "Dashboard", type: "brand" } });
+            localStorage.setItem("isSocialLogin", true);
+            console.log("here")
+            router.push({ name: "DashboardBrand", params: { pageName: "Dashboard", type: "brand" } });
           }
         })
         .catch((error) => {
