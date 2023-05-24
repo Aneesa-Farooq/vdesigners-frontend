@@ -212,7 +212,7 @@ export default {
 
     getDesigners() {
       axios
-        .get("http://localhost:5172/api/designers/getAlldesigners")
+        .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
         .then((response) => {
           console.log(response.data);
           let data = response.data;

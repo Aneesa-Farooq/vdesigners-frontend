@@ -97,7 +97,7 @@ export default {
 
     addFeedback() {
       axios
-        .post(`http://localhost:5172/api/admin/postfeedback`, { brandId: this.loggedInUser.id, feedback: this.newFeedback })
+        .post(`https://vdesigners.herokuapp.com/api/admin/postfeedback`, { brandId: this.loggedInUser.id, feedback: this.newFeedback })
         .then((response) => {
           if (response.data) {
             swal("Feedback Added Successfully", "", "success");

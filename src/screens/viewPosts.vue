@@ -66,7 +66,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get("http://localhost:5172/api/pattern/getPosts")
+        .get("https://vdesigners.herokuapp.com/api/pattern/getPosts")
         .then((response) => {
           // console.log(response.data);
           this.postData = response.data;
@@ -81,7 +81,7 @@ export default {
     getOneDesignerPosts() {
       console.log("here")
       axios
-        .get(`http://localhost:5172/api/pattern/getonePosts/?designerId=${this.loggedinuser}`)
+        .get(`https://vdesigners.herokuapp.com/api/pattern/getonePosts/?designerId=${this.loggedinuser}`)
         .then((response) => {
           console.log(response.data);
           this.postData = response.data;

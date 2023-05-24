@@ -125,7 +125,7 @@ export default {
     addComment() {
       console.log(this.newComment);
       axios
-        .put(`http://localhost:5172/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment, status: this.newStatus })
+        .put(`https://vdesigners.herokuapp.com/api/pattern/AddcommentStatus/${this.$route.params.id}`, { comments: this.newComment, status: this.newStatus })
         .then((response) => {
           console.log(response.data);
           this.postData.comments = this.newComment;
