@@ -142,7 +142,7 @@ export default {
     getData() {
       this.designerData = [];
       axios
-        .get("http://localhost:5172/api/designers/getAlldesigners")
+        .get("https://vdesigners.herokuapp.com/api/designers/getAlldesigners")
         .then((response) => {
           console.log(response.data);
           let Data = response.data;
@@ -170,7 +170,7 @@ export default {
     getOneBrandDesigner() {
       this.designerData = [];
       axios
-        .get(`http://localhost:5172/api/designers/getbranddesigner/?brandId=${this.loggedinuser}`)
+        .get(`https://vdesigners.herokuapp.com/api/designers/getbranddesigner/?brandId=${this.loggedinuser}`)
         .then((response) => {
           console.log("designer response",response.data);
           let Data = response.data.Allbranddesigners

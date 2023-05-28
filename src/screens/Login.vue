@@ -76,14 +76,14 @@ export default {
       console.log(repayload);
 
       axios
-        .get(`http://localhost:5172/api/brands/checkregister/${repayload.email}`)
+        .get(`https://vdesigners.herokuapp.com/api/brands/checkregister/${repayload.email}`)
         .then((response) => {
           if (response.data.msg == "user doesnot exist") {
             console.log(response.data.msg);
 
             (async () => {
               try {
-                const someRes = await axios.post("http://localhost:5172/api/brands/socialLogin", {
+                const someRes = await axios.post("https://vdesigners.herokuapp.com/api/brands/socialLogin", {
                   brandName: repayload.given_name,
                   brandEmail: repayload.email,
                   subscriptionplan: plan,
