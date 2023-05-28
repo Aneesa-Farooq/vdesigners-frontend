@@ -4,7 +4,7 @@
     <div class="flex items-baseline justify-center text-gray-900">
       <span class="text-3xl font-semibold">$</span>
       <span class="text-5xl font-extrabold tracking-tight">{{ amount }}</span>
-      <span class="ml-1 text-xl font-normal text-gray-500">/month</span>
+      <span class="ml-1 text-xl font-normal text-gray-500">/{{ time }}</span>
     </div>
     <!-- List -->
     <ul role="list" class="my-7 space-y-5">
@@ -31,6 +31,6 @@
 <script>
 export default {
   name: "SunsCard",
-  props: ["amount", "title", "icon1", "icon2"],
+  props: ["amount", "title", "icon1", "icon2","time"],
 };
 </script>

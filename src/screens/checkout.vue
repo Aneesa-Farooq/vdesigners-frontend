@@ -55,6 +55,7 @@ export default {
     const route = useRoute();
     const Userid = ref("");
     const name = ref("");
+
     const userType = ref(route.params.type);
     const disabled = ref(false);
     const card = ref(null);
@@ -103,7 +104,7 @@ export default {
         name.value = user1.user.brandName;
         console.log(name.value, 333331111);
       }
-
+console.log("plan",route.params.plan);
       console.log(user1.user._id);
       Userid.value = user1.user._id;
       //  name.value=user1.user.adminName;
@@ -116,7 +117,7 @@ export default {
     const Submit = async () => {
       const response = await axios.post("https://vdesigners.herokuapp.com/api/subscription/createPayment", {
         email: "alishbaiftikhar2001@gmail.com",
-        priceId: "price_1Mht7sBRretLP9OvbEjwoxDw",
+        priceId: route.params.priceId,
       });
       const { subscriptionId, clientSecret, subscriptionStatus } = response.data;
       console.log(clientSecret);
@@ -141,7 +142,7 @@ export default {
         //    Successful subscription payment
         //   The subscription automatically becomes active upon payment.
         const response = await axios.post("https://vdesigners.herokuapp.com/api/subscription/subscribe", {
-          plan: "premium",
+          plan: route.params.plan,
           price: result.paymentIntent.amount,
           status: result.paymentIntent.status,
           stripeSubscriptionId: subscriptionId,
