@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white p-6 rounded-lg shadow-lg">
     <div class="flex gap-10 mb-10">
-      <div class="flex flex-[1] carousel__item">
+      <div class="flex flex-col flex-[1] carousel__item">
         <Carousel itemsToScroll="1" itemsToShow="1" :breakpoints="breakpoints" snapAlign="center">
           <Slide v-for="slide in postData.image" :key="slide">
             <img class="carousel__item" :src="slide" />
@@ -12,6 +12,7 @@
             <Navigation />
           </template>
         </Carousel>
+        <router-link to="/user/3D/{{userType}}/3d" class="flex justify-center items-center absolute bg-white h-[80px] w-[80px] left-[870px] top-[170px] rounded-full"><Icon class="flex text-6xl font-bold mr-2 text-black" icon="cil:3d" /></router-link>
       </div>
 
       <!-- <img class="img-fluid flex-[1] rounded-lg" :src="postData.image" alt="" /> -->

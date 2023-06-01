@@ -565,6 +565,106 @@ video {
   top: -15px;
 }
 
+.left-44 {
+  left: 11rem;
+}
+
+.right-4 {
+  right: 1rem;
+}
+
+.left-10 {
+  left: 2.5rem;
+}
+
+.left-\[\] {
+  left: ;
+}
+
+.left-\[300px\] {
+  left: 300px;
+}
+
+.left-\[1000px\] {
+  left: 1000px;
+}
+
+.left-\[00px\] {
+  left: 00px;
+}
+
+.left-\[700px\] {
+  left: 700px;
+}
+
+.left-\[800px\] {
+  left: 800px;
+}
+
+.left-\[850px\] {
+  left: 850px;
+}
+
+.left-\[85\.0px\] {
+  left: 85.0px;
+}
+
+.top-\[\] {
+  top: ;
+}
+
+.top-\[200px\] {
+  top: 200px;
+}
+
+.left-\[90px\] {
+  left: 90px;
+}
+
+.top-\[00px\] {
+  top: 00px;
+}
+
+.top-\[300px\] {
+  top: 300px;
+}
+
+.top-\[500px\] {
+  top: 500px;
+}
+
+.top-\[700px\] {
+  top: 700px;
+}
+
+.left-\[900px\] {
+  left: 900px;
+}
+
+.left-\[0px\] {
+  left: 0px;
+}
+
+.left-\[870px\] {
+  left: 870px;
+}
+
+.top-\[0px\] {
+  top: 0px;
+}
+
+.top-\[10px\] {
+  top: 10px;
+}
+
+.top-\[100px\] {
+  top: 100px;
+}
+
+.top-\[170px\] {
+  top: 170px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -623,6 +723,11 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.my-20 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -631,6 +736,11 @@ video {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .my-7 {
@@ -648,17 +758,8 @@ video {
   margin-bottom: 22px;
 }
 
-.my-6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
-}
-
-.mb-12 {
-  margin-bottom: 3rem;
 }
 
 .mb-2 {
@@ -773,6 +874,10 @@ video {
   height: 2.5rem;
 }
 
+.h-2\/3 {
+  height: 66.666667%;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -870,8 +975,12 @@ video {
   height: 100vh;
 }
 
-.h-2\/3 {
-  height: 66.666667%;
+.h-\[\] {
+  height: ;
+}
+
+.h-\[80px\] {
+  height: 80px;
 }
 
 .max-h-\[230px\] {
@@ -977,6 +1086,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[\] {
+  width: ;
+}
+
+.w-\[80px\] {
+  width: 80px;
 }
 
 .max-w-\[440px\] {
@@ -1555,6 +1672,11 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
 }
 
 .font-\[500\] {

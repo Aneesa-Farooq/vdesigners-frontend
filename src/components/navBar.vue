@@ -52,7 +52,7 @@ export default {
     else if (this.userType == "brand") {
       const isSocialLogin=localStorage.getItem("isSocialLogin");
       console.log(isSocialLogin);
-      if(isSocialLogin){
+      if("if social login",isSocialLogin){
         this.image = user1.picture;
         console.log(this.image);
       }
