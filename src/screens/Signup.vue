@@ -8,7 +8,7 @@
         <div class="w-full flex flex-col items-center max-w-[500px]">
           <p class="self-start block font-poppins font-extrabold text-2xl text-grey">Sign Up For Brands</p>
           <br />
-          <GoogleLogin class="flex self-start" :callback="callback"/>
+          <GoogleLogin class="flex self-start" :callback="callback" />
           <hr class="border-t-[1px] border-solid w-full border-[#e0e0e0] overflow-visible m-12 after:content-['or'] after:relative text-center after:bg-white after:px-[16px] after:top-[-14px]" />
 
           <form @submit="submitForm" class="w-full flex flex-col items-center max-w-[500px]">
@@ -17,7 +17,7 @@
             <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Email </label>
-            <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
+            <InputField type="text" id="email" place_holder="Enter Email" @Click="clearInput('email')" class="my-2" v-model="formValues.email" />
             <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Contact </label>
@@ -29,7 +29,7 @@
 
             <label class="self-start block font-poppins tracking-[1px] text-base my-2"> Password </label>
             <p class="w-full flex relative items-center">
-              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" />
+              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" @Click="clearInput('password')" class="my-2 w-full" v-model="formValues.password" />
               <button class="absolute right-[20px] hidden"><Icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
               <button class="absolute right-[20px]"><Icon @click="togglePass('psw')" class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
             </p>
@@ -73,6 +73,7 @@ import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
 import { useRouter, useRoute } from "vue-router";
+
 
 export default {
   name: "Signup",
@@ -186,6 +187,10 @@ export default {
       }
     },
 
+    clearInput(inputField) {
+     this.formValues[inputField] = "";
+    },
+
     submitForm(e) {
       e.preventDefault();
       (async () => {
@@ -198,7 +203,7 @@ export default {
                   button: true,
                 });
           }
-          
+
           else {
             const optp = await axios.post("https://vdesigners.herokuapp.com/api/brands/verifyAccount", { brandEmail: this.formValues.email });
             console.log("optp");
@@ -423,7 +428,7 @@ export default {
 
 <style>
 .swal-button--confirm {
-  padding: 7px 19px ;
+  padding: 7px 19px;
   border-radius: 2px;
   background-color: #f3677f !important;
   font-size: 12px;

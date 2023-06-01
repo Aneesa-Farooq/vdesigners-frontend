@@ -9,7 +9,7 @@
             <p id="eName" class="invalid hidden m-2">only upper and lowercase letters</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Email </label>
-            <InputField type="text" id="email" place_holder="Enter Email" class="my-2" v-model="formValues.email" />
+            <InputField type="text" id="email" place_holder="Enter Email" class="my-2"  @Click="clearInput('email')" v-model="formValues.email" />
             <p id="eEmail" class="invalid hidden m-2">follow format abc@gmail.com</p>
 
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Contact </label>
@@ -23,7 +23,7 @@
           <div class="flex flex-col flex-[1]">
             <label class="self-start block font-poppins tracking-[1px] text-lg font-bold text-gray-700 my-2"> Password </label>
             <p class="w-full flex relative items-center">
-              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full" v-model="formValues.password" />
+              <InputField type="Password" id="psw" name="psw" place_holder="Enter Password" class="my-2 w-full"  @Click="clearInput('password')" v-model="formValues.password" />
               <button type="button" @click="togglePass('psw')" class="absolute right-[20px] hidden"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-outline" /></button>
               <button type="button" @click="togglePass('psw')" class="absolute right-[20px]"><Icon class="w-[20px] h-[22px] text-gray-500" icon="mdi:eye-off-outline" /></button>
             </p>
@@ -265,6 +265,9 @@ export default {
   },
 
   methods: {
+    clearInput(inputField) {
+     this.formValues[inputField] = "";
+    },
     submitForm(e) {
       e.preventDefault();
       (async () => {

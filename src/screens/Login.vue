@@ -19,13 +19,13 @@
           </select>
 
           <label class="self-start block font-poppins tracking-[1px] text-base">Email</label>
-          <InputField type="text" place_holder="Enter email" class="my-2" v-model="formValues.email" />
+          <InputField type="text" place_holder="Enter email" class="my-2" @Click="clearInput('email')" v-model="formValues.email" />
           <div class="flex items-center w-full justify-between mt-2">
             <label class="self-start font-poppins tracking-[1px] text-base">Password</label>
             <button class="self-end block font-poppins font-normal text-sm text-[#F33757] hover:opacity-70" type="button" @click="toggleModal">Forgot Password?</button>
           </div>
 
-          <InputField place_holder="Enter Password" type="Password" class="my-2" v-model="formValues.password" />
+          <InputField place_holder="Enter Password" type="Password" class="my-2" @Click="clearInput('password')" v-model="formValues.password" />
           <p class="text-red text-base font-normal self-start">{{ formValues.errorMesg }}</p>
           <div class="flex flex-col xl:flex-row gap-2 w-full xl:justify-between mt-2 xl:items-end my-[1.6rem]">
             <button id="signin-btn" type="submit" :onClick="signIn" class="self-start block bg-[#F33757] border-none text-white font-[700] text-lg cursor-pointer rounded-[7px] px-8 py-[6px] transition duration-[0.5s] hover:opacity-70"><span class="spinner-border spinner-border-sm d-none mr-4" role="status" aria-hidden="true"></span> Sign In</button>
@@ -134,7 +134,11 @@ export default {
       },
     };
   },
+  
   methods: {
+    clearInput(inputField) {
+     this.formValues[inputField] = "";
+    },
     submitForm(e) {
       e.preventDefault();
       (async () => {
