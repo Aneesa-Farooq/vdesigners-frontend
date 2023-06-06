@@ -23,7 +23,7 @@ export default {
     console.log(this.id);
     const message = this.id;
     const iframe = document.createElement("iframe");
-    iframe.src = `https://pattern-generation-main.vercel.app/?data=${message}`;
+    iframe.src = `https://pattern-generation-main-i38ao3d3e-alishbaiftikhar.vercel.app/?data=${message}`;
     iframe.classList.add("h-[calc(100vh-68px-3rem)]", "w-full");
     document.querySelector("#iframeContainerPattern").appendChild(iframe);
   }
