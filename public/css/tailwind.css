@@ -899,6 +899,19 @@ video {
   max-height: 250px;
 }
 
+.max-h-fit {
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
+
+.max-h-\[\] {
+  max-height: ;
+}
+
+.max-h-\[128px\] {
+  max-height: 128px;
+}
+
 .min-h-\[120px\] {
   min-height: 120px;
 }

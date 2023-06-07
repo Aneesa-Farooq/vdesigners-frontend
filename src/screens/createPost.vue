@@ -56,8 +56,8 @@
   </ViewDetail>
 
   <ViewDetail @close="toggleModal1" :modalActive="modalActive1">
-    <div class="grid h-[calc(100vh-200px)] w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 overflow-y-auto">
-      <div @click="toggleSelected(post)" class="image-container max-h-[250px] bg-yellow-400 relative z-0" v-for="(post, index) in GalleryData" :key="index">
+    <div class="grid  w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 overflow-y-auto">
+      <div @click="toggleSelected(post)" class="image-container max-h-[128px] bg-yellow-400 relative z-0" v-for="(post, index) in GalleryData" :key="index">
         <img class="img-fluid" :src="post.image" alt="" />
         <div :class="`${post.selected ? '' : 'hidden'}`" class="h-full w-full top-0 right-0 left-0 bottom-0 absolute bg-black opacity-50 flex justify-center items-center">
           <Icon class="text-2xl text-white" icon="mdi:tick-circle" />
@@ -230,6 +230,7 @@ export default {
     newPost() {
       (async () => {
         try {
+          this.toggleModal()
           const { value: files } = await Swal.fire({
             title: "Select image",
             input: "file",
