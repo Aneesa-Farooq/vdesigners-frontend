@@ -45,7 +45,7 @@ export default {
 
   data() {
     return {
-      postData: {},
+      postData: [],
       userType: "",
       loggedinuser: "",
     };
@@ -99,17 +99,22 @@ export default {
 
     getDesignersForOneBrand() {
       axios
-        .get(`http://localhost:5172/api/pattern/branddesign/${this.loggedinuser}`)
+        .get(`https://vdesigners.herokuapp.com/api/pattern/branddesign/${this.loggedinuser}`)
         .then((response) => {
           // console.log(response.data);
           console.log(response.data);
-          let data=response.data[0];
+          let data=response.data;
           console.log(data);
             if(data.length == 0){
               this.postData = [];
             }
             else{
-              this.postData = data;
+              for(let i=0; i<data.length; i++){
+                for(let j=0; j<data[i].length; j++){
+                  console.log(data[i][j]);
+                  this.postData.push(data[i][j]);
+                }      
+            }
             }
           })
         .catch((error) => {
