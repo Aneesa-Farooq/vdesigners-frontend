@@ -11,7 +11,7 @@
     <ul class="nav-links">
       <li v-for="(item, index) in menuItems" :key="index">
         <div v-if="item.hasOwnProperty('submenu')" class="iocn-link" @click="toggleSubMenu">
-          <a href="#">
+          <a>
             <i :class="`${item.icon}`" class="bx"></i>
             <span class="link_name">{{ index + 1 }}. {{ item.name }}</span>
           </a>
