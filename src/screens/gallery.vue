@@ -1,6 +1,7 @@
 <template>
   <div class="bg-background">
-    <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
+    <div v-if="isLoading" class="loader h-[80vh] w-full flex items-center justify-center"><span class="spinner-border spinner-border-sm mr-4 !w-10 !h-10" role="status" aria-hidden="true"></span> </div>
+    <div v-else class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
       <div class="max-h-[250px] overflow-hidden bg-white relative" v-for="(post, index) in GalleryData" :key="index">
         <img class="img-fluid" :src="post.image" alt="" />
         <div class="h-full w-full absolute top-0 bottom-0 left-0 right-0 bg-black opacity-0 hover:opacity-50 flex justify-center items-center gap-3">
@@ -25,22 +26,29 @@ export default {
     return {
       GalleryData: {},
       userType: "",
+      isLoading: true,
     };
   },
   mounted() {
     this.userType = this.$route.params.type;
-    axios
+    this.getData();
+
+  },
+  methods: {
+    getData(){
+      axios
       .get(`https://vdesigners.herokuapp.com/api/project/getProjects`)
       .then((response) => {
         console.log(response.data);
         this.GalleryData = response.data;
         console.log(this.GalleryData);
+        this.isLoading = false; // Add this line
       })
       .catch((error) => {
         console.log(error);
+        this.isLoading = false; // Add this line
       });
-  },
-  methods: {
+    },
     navigate(image) {
       const encodedPart = "%2F";
       const placeholder = "PLACEHOLDER";
@@ -72,7 +80,7 @@ export default {
             icon: "success",
             button: true,
           }).then(() => {
-            location.reload();
+            this.getData();
           });
         }
       });
